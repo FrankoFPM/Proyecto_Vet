@@ -1,18 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package Vista;
 
-/**
- *
- * @author franc
- */
+import Controlador.LoginController;
+
 public class Login extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Login
-     */
+    Dashboard_UI dash = new Dashboard_UI();
+
     public Login() {
         initComponents();
         txtUser.putClientProperty("JTextField.placeholderText", "Ingresa tu usuario");
@@ -40,7 +33,7 @@ public class Login extends javax.swing.JFrame {
         txtUser = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         txtPass = new javax.swing.JPasswordField();
-        jButton1 = new javax.swing.JButton();
+        btnIngresar = new javax.swing.JButton();
         panelRound5 = new Styles.PanelRound();
         jLabel6 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -95,7 +88,6 @@ public class Login extends javax.swing.JFrame {
 
         jLabel3.setBackground(new java.awt.Color(0, 0, 0));
         jLabel3.setFont(new java.awt.Font("Roboto", 1, 20)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Usuario");
         panelRound4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 170, 190, -1));
 
@@ -112,7 +104,6 @@ public class Login extends javax.swing.JFrame {
         panelRound4.add(txtUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 210, 240, 40));
 
         jLabel2.setFont(new java.awt.Font("Roboto", 1, 20)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Contraseña");
         panelRound4.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 270, 190, -1));
 
@@ -120,12 +111,17 @@ public class Login extends javax.swing.JFrame {
         txtPass.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         panelRound4.add(txtPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 310, 240, 40));
 
-        jButton1.setBackground(new java.awt.Color(4, 157, 217));
-        jButton1.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("INGRESAR");
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        panelRound4.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 390, 280, 30));
+        btnIngresar.setBackground(new java.awt.Color(4, 157, 217));
+        btnIngresar.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        btnIngresar.setForeground(new java.awt.Color(255, 255, 255));
+        btnIngresar.setText("INGRESAR");
+        btnIngresar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnIngresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIngresarActionPerformed(evt);
+            }
+        });
+        panelRound4.add(btnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 390, 280, 30));
 
         panelRound5.setBackground(new java.awt.Color(145, 205, 242));
         panelRound5.setRoundBottomLeft(20);
@@ -182,6 +178,10 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
+        LoginController.Autenticar(this, dash);
+    }//GEN-LAST:event_btnIngresarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -218,7 +218,7 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnIngresar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -231,7 +231,7 @@ public class Login extends javax.swing.JFrame {
     private Styles.Jpanelmage jpanelmage2;
     private Styles.PanelRound panelRound4;
     private Styles.PanelRound panelRound5;
-    private javax.swing.JPasswordField txtPass;
-    private javax.swing.JTextField txtUser;
+    public javax.swing.JPasswordField txtPass;
+    public javax.swing.JTextField txtUser;
     // End of variables declaration//GEN-END:variables
 }

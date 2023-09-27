@@ -21,7 +21,7 @@ public class Test {
      */
     public static void main(String[] args) {
         //FlatLightLaf.setup();
-        SwingUtilities.invokeLater(new Runnable() {
+        /*SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 // Aquí estableces el look and feel
                 try {
@@ -38,7 +38,16 @@ public class Test {
                 Login fr = new Login();
                 fr.setVisible(true);
             }
-        });
+        });*/
+        try {
+            UIManager.setLookAndFeel(new FlatLightLaf());
+            //UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+            UIManager.put("Button.arc", 15);
+            UIManager.put("TextComponent.arc", 15);
+            Login fr = new Login();
+            fr.setVisible(true);
+        } catch (Exception e) {
+        }
     }
 
 }
