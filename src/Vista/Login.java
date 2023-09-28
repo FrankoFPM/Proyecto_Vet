@@ -1,6 +1,7 @@
 package Vista;
 
 import Controlador.LoginController;
+import com.formdev.flatlaf.FlatLaf;
 
 public class Login extends javax.swing.JFrame {
 
@@ -101,7 +102,7 @@ public class Login extends javax.swing.JFrame {
 
         txtUser.setBackground(new java.awt.Color(145, 205, 242));
         txtUser.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        panelRound4.add(txtUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 210, 240, 40));
+        panelRound4.add(txtUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 210, 220, 40));
 
         jLabel2.setFont(new java.awt.Font("Roboto", 1, 20)); // NOI18N
         jLabel2.setText("Contraseña");
@@ -109,7 +110,7 @@ public class Login extends javax.swing.JFrame {
 
         txtPass.setBackground(new java.awt.Color(145, 205, 242));
         txtPass.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        panelRound4.add(txtPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 310, 240, 40));
+        panelRound4.add(txtPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 310, 220, 40));
 
         btnIngresar.setBackground(new java.awt.Color(4, 157, 217));
         btnIngresar.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N

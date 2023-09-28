@@ -15,8 +15,9 @@ public class Dashboard_UI extends javax.swing.JFrame {
      */
     public Dashboard_UI() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -26,17 +27,119 @@ public class Dashboard_UI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        panelRound1 = new Styles.PanelRound();
+        jLabel8 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        panelRound5 = new Styles.PanelRound();
+        panelRound2 = new Styles.PanelRound();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        labelUsername = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(143, 208, 255));
+        setType(java.awt.Window.Type.POPUP);
+
+        panelRound1.setBackground(new java.awt.Color(143, 208, 255));
+        panelRound1.setRoundBottomRight(20);
+        panelRound1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Logo.png"))); // NOI18N
+        panelRound1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
+
+        jButton1.setBackground(new java.awt.Color(181, 224, 255));
+        jButton1.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
+        jButton1.setText("Home");
+        jButton1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        panelRound1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 202, 210, 45));
+
+        jButton2.setBackground(new java.awt.Color(181, 224, 255));
+        jButton2.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
+        jButton2.setText("Gestion de cliente");
+        jButton2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        panelRound1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 247, 210, 45));
+
+        jButton3.setBackground(new java.awt.Color(181, 224, 255));
+        jButton3.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
+        jButton3.setText("Gestion de paciente");
+        jButton3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        panelRound1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 292, 210, 45));
+
+        jButton4.setBackground(new java.awt.Color(181, 224, 255));
+        jButton4.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
+        jButton4.setText("Gestion de cita");
+        jButton4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        panelRound1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 337, 210, 45));
+
+        panelRound5.setBackground(new java.awt.Color(181, 224, 255));
+
+        javax.swing.GroupLayout panelRound5Layout = new javax.swing.GroupLayout(panelRound5);
+        panelRound5.setLayout(panelRound5Layout);
+        panelRound5Layout.setHorizontalGroup(
+            panelRound5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 210, Short.MAX_VALUE)
+        );
+        panelRound5Layout.setVerticalGroup(
+            panelRound5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 250, Short.MAX_VALUE)
+        );
+
+        panelRound1.add(panelRound5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 210, 210, 250));
+
+        panelRound2.setBackground(new java.awt.Color(230, 245, 255));
+
+        jLabel2.setText("jLabel2");
+
+        jLabel1.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        jLabel1.setText("Home");
+
+        labelUsername.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        labelUsername.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        labelUsername.setText("User");
+
+        javax.swing.GroupLayout panelRound2Layout = new javax.swing.GroupLayout(panelRound2);
+        panelRound2.setLayout(panelRound2Layout);
+        panelRound2Layout.setHorizontalGroup(
+            panelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelRound2Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 183, Short.MAX_VALUE)
+                .addComponent(labelUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        panelRound2Layout.setVerticalGroup(
+            panelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelRound2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
+                    .addComponent(jLabel1)
+                    .addComponent(labelUsername))
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(panelRound1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panelRound2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(panelRound1, javax.swing.GroupLayout.DEFAULT_SIZE, 567, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(panelRound2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -78,5 +181,16 @@ public class Dashboard_UI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel8;
+    public javax.swing.JLabel labelUsername;
+    private Styles.PanelRound panelRound1;
+    private Styles.PanelRound panelRound2;
+    private Styles.PanelRound panelRound5;
     // End of variables declaration//GEN-END:variables
 }
