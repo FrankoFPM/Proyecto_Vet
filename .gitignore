@@ -2,5 +2,8 @@
 /nbproject/configs/Java20.properties
 /nbproject/genfiles.properties
 /nbproject/project.properties
+genfiles.properties
+project.properties
+Java20.properties
 /build/
 /dist/

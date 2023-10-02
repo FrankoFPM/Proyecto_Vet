@@ -4,6 +4,9 @@
  */
 package Vista;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+
 /**
  *
  * @author franc
@@ -16,8 +19,18 @@ public class Dashboard_UI extends javax.swing.JFrame {
     public Dashboard_UI() {
         initComponents();
         this.setLocationRelativeTo(null);
+        /**/
+        Cliente_UI home = new Cliente_UI();
+        home.setPreferredSize(new Dimension(1000, 500)); // Tamaño inicial
+
+        content.removeAll();
+        content.setLayout(new BorderLayout());
+        content.add(home, BorderLayout.CENTER);
+        content.revalidate();
+        content.repaint();
+
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -38,9 +51,10 @@ public class Dashboard_UI extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         labelUsername = new javax.swing.JLabel();
+        content = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new java.awt.Color(143, 208, 255));
+        setBackground(new java.awt.Color(255, 247, 223));
         setType(java.awt.Window.Type.POPUP);
 
         panelRound1.setBackground(new java.awt.Color(143, 208, 255));
@@ -93,7 +107,8 @@ public class Dashboard_UI extends javax.swing.JFrame {
 
         panelRound2.setBackground(new java.awt.Color(230, 245, 255));
 
-        jLabel2.setText("jLabel2");
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/user-ico32.png"))); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         jLabel1.setText("Home");
@@ -109,9 +124,9 @@ public class Dashboard_UI extends javax.swing.JFrame {
             .addGroup(panelRound2Layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 183, Short.MAX_VALUE)
-                .addComponent(labelUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 417, Short.MAX_VALUE)
+                .addComponent(labelUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -119,11 +134,24 @@ public class Dashboard_UI extends javax.swing.JFrame {
             panelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRound2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
-                    .addComponent(jLabel1)
-                    .addComponent(labelUsername))
+                .addGroup(panelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(labelUsername, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2))
                 .addContainerGap())
+        );
+
+        content.setBackground(new java.awt.Color(0, 51, 51));
+
+        javax.swing.GroupLayout contentLayout = new javax.swing.GroupLayout(content);
+        content.setLayout(contentLayout);
+        contentLayout.setHorizontalGroup(
+            contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        contentLayout.setVerticalGroup(
+            contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -132,14 +160,17 @@ public class Dashboard_UI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(panelRound1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(panelRound2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panelRound2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(content, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelRound1, javax.swing.GroupLayout.DEFAULT_SIZE, 567, Short.MAX_VALUE)
+            .addComponent(panelRound1, javax.swing.GroupLayout.DEFAULT_SIZE, 596, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(panelRound2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, 0)
+                .addComponent(content, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -181,6 +212,7 @@ public class Dashboard_UI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel content;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
