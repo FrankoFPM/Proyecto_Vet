@@ -1,13 +1,73 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Controlador;
 
-/**
- *
- * @author franc
- */
-public class DashboardController {
-    
+import Vista.Cliente_UI;
+import Vista.Dashboard_UI;
+import Vista.Home_UI;
+import Vista.Paciente_UI;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+
+public class DashboardController implements ActionListener {
+
+    Dashboard_UI vista;
+    String user;
+    //panels
+    Home_UI home = new Home_UI();
+    Cliente_UI cliente = new Cliente_UI();
+    Paciente_UI paciente = new Paciente_UI();
+    //model
+    DefaultTableModel modeloCita;
+
+    public DashboardController(Dashboard_UI dash, String user) {
+        this.vista = dash;
+        this.user = user;
+        vista.btnHome.addActionListener(this);
+        vista.btnCliente.addActionListener(this);
+        vista.btnPaciente.addActionListener(this);
+        vista.btnCita.addActionListener(this);
+        launchApp();
+    }
+
+    void launchApp() {
+        vista.labelUsername.setText("Bienvenido, " + user.toUpperCase());
+        vista.getRootPane().putClientProperty("JRootPane.titleBarForeground", Color.WHITE);
+        vista.getRootPane().putClientProperty("JRootPane.titleBarBackground", new Color(23, 180, 252));
+        vista.setLocationRelativeTo(null);
+        //ChangePanel(home);
+        showHome();
+        vista.setVisible(true);
+    }
+
+    void showHome() {
+        UI_HomeController controllerHome = new UI_HomeController(home, vista);
+    }
+
+    void ChangePanel(JPanel box) {
+        box.setPreferredSize(new Dimension(1000, 500)); // Tamaño inicial
+
+        vista.content.removeAll();
+        vista.content.setLayout(new BorderLayout());
+        vista.content.add(box, BorderLayout.CENTER);
+        vista.content.revalidate();
+        vista.content.repaint();
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == vista.btnHome) {
+            System.out.println("Home");
+            //ChangePanel(home);
+            showHome();
+        } else if (e.getSource() == vista.btnCliente) {
+            UI_ClienteController controllerCliente = new UI_ClienteController(cliente, vista);
+        } else if (e.getSource() == vista.btnPaciente) {
+            UI_PacienteController controllerPaciente = new UI_PacienteController(paciente, vista);
+        }
+    }
+
 }
