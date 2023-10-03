@@ -1,5 +1,7 @@
 package Test;
 
+import Controlador.DashboardController;
+import Vista.Dashboard_UI;
 import Vista.Login;
 import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.Color;
@@ -16,10 +18,14 @@ import javax.swing.UIManager;
  */
 public class Test {
 
+    
+    //public static Dashboard_UI dashboard;
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+             //dashboard = new Dashboard_UI();
+            //DashboardController controllerDash  = new DashboardController(dashboard);
         //FlatLightLaf.setup();
         /*SwingUtilities.invokeLater(new Runnable() {
             public void run() {
