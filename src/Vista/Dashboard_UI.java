@@ -18,8 +18,8 @@ public class Dashboard_UI extends javax.swing.JFrame {
      */
     public Dashboard_UI() {
         initComponents();
-        this.setLocationRelativeTo(null);
-        /**/
+        //this.setLocationRelativeTo(null);
+        /*
         Cliente_UI home = new Cliente_UI();
         home.setPreferredSize(new Dimension(1000, 500)); // Tamaño inicial
 
@@ -27,7 +27,7 @@ public class Dashboard_UI extends javax.swing.JFrame {
         content.setLayout(new BorderLayout());
         content.add(home, BorderLayout.CENTER);
         content.revalidate();
-        content.repaint();
+        content.repaint();*/
 
     }
 
@@ -42,10 +42,10 @@ public class Dashboard_UI extends javax.swing.JFrame {
 
         panelRound1 = new Styles.PanelRound();
         jLabel8 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnHome = new javax.swing.JButton();
+        btnCliente = new javax.swing.JButton();
+        btnPaciente = new javax.swing.JButton();
+        btnCita = new javax.swing.JButton();
         panelRound5 = new Styles.PanelRound();
         panelRound2 = new Styles.PanelRound();
         jLabel2 = new javax.swing.JLabel();
@@ -64,31 +64,31 @@ public class Dashboard_UI extends javax.swing.JFrame {
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Logo.png"))); // NOI18N
         panelRound1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
-        jButton1.setBackground(new java.awt.Color(181, 224, 255));
-        jButton1.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
-        jButton1.setText("Home");
-        jButton1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        panelRound1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 202, 210, 45));
+        btnHome.setBackground(new java.awt.Color(181, 224, 255));
+        btnHome.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
+        btnHome.setText("Home");
+        btnHome.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnHome.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        panelRound1.add(btnHome, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 202, 210, 45));
 
-        jButton2.setBackground(new java.awt.Color(181, 224, 255));
-        jButton2.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
-        jButton2.setText("Gestion de cliente");
-        jButton2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        panelRound1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 247, 210, 45));
+        btnCliente.setBackground(new java.awt.Color(181, 224, 255));
+        btnCliente.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
+        btnCliente.setText("Gestion de cliente");
+        btnCliente.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        panelRound1.add(btnCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 247, 210, 45));
 
-        jButton3.setBackground(new java.awt.Color(181, 224, 255));
-        jButton3.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
-        jButton3.setText("Gestion de paciente");
-        jButton3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        panelRound1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 292, 210, 45));
+        btnPaciente.setBackground(new java.awt.Color(181, 224, 255));
+        btnPaciente.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
+        btnPaciente.setText("Gestion de paciente");
+        btnPaciente.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        panelRound1.add(btnPaciente, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 292, 210, 45));
 
-        jButton4.setBackground(new java.awt.Color(181, 224, 255));
-        jButton4.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
-        jButton4.setText("Gestion de cita");
-        jButton4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        panelRound1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 337, 210, 45));
+        btnCita.setBackground(new java.awt.Color(181, 224, 255));
+        btnCita.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
+        btnCita.setText("Gestion de cita");
+        btnCita.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnCita.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        panelRound1.add(btnCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 337, 210, 45));
 
         panelRound5.setBackground(new java.awt.Color(181, 224, 255));
 
@@ -212,11 +212,11 @@ public class Dashboard_UI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel content;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    public javax.swing.JButton btnCita;
+    public javax.swing.JButton btnCliente;
+    public javax.swing.JButton btnHome;
+    public javax.swing.JButton btnPaciente;
+    public javax.swing.JPanel content;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel8;

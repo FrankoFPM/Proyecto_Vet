@@ -28,7 +28,7 @@ public class Home_UI extends javax.swing.JPanel {
 
         panelRound3 = new Styles.PanelRound();
         panelRound4 = new Styles.PanelRound();
-        jLabel4 = new javax.swing.JLabel();
+        btnlblCitas = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         lblCitas = new javax.swing.JLabel();
@@ -38,13 +38,13 @@ public class Home_UI extends javax.swing.JPanel {
         jTable1 = new javax.swing.JTable();
         panelRound5 = new Styles.PanelRound();
         panelRound6 = new Styles.PanelRound();
-        jLabel6 = new javax.swing.JLabel();
+        btnlblUsuarios = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         lblUsuarios = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         panelRound7 = new Styles.PanelRound();
         panelRound8 = new Styles.PanelRound();
-        jLabel7 = new javax.swing.JLabel();
+        btnlblIngresos = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         lblIngresos = new javax.swing.JLabel();
@@ -60,22 +60,22 @@ public class Home_UI extends javax.swing.JPanel {
         panelRound4.setRoundBottomLeft(20);
         panelRound4.setRoundBottomRight(20);
 
-        jLabel4.setBackground(new java.awt.Color(242, 72, 34));
-        jLabel4.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Agregar clientes");
-        jLabel4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnlblCitas.setBackground(new java.awt.Color(242, 72, 34));
+        btnlblCitas.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        btnlblCitas.setForeground(new java.awt.Color(255, 255, 255));
+        btnlblCitas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnlblCitas.setText("Agregar clientes");
+        btnlblCitas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout panelRound4Layout = new javax.swing.GroupLayout(panelRound4);
         panelRound4.setLayout(panelRound4Layout);
         panelRound4Layout.setHorizontalGroup(
             panelRound4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnlblCitas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         panelRound4Layout.setVerticalGroup(
             panelRound4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+            .addComponent(btnlblCitas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
         );
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -150,23 +150,24 @@ public class Home_UI extends javax.swing.JPanel {
         panelRound5.setRoundTopRight(20);
 
         panelRound6.setBackground(new java.awt.Color(255, 205, 41));
+        panelRound6.setPreferredSize(new java.awt.Dimension(107, 25));
         panelRound6.setRoundBottomLeft(20);
         panelRound6.setRoundBottomRight(20);
 
-        jLabel6.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("Agregar clientes");
-        jLabel6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnlblUsuarios.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        btnlblUsuarios.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnlblUsuarios.setText("Agregar usuarios");
+        btnlblUsuarios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout panelRound6Layout = new javax.swing.GroupLayout(panelRound6);
         panelRound6.setLayout(panelRound6Layout);
         panelRound6Layout.setHorizontalGroup(
             panelRound6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnlblUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         panelRound6Layout.setVerticalGroup(
             panelRound6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+            .addComponent(btnlblUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
         );
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -186,7 +187,7 @@ public class Home_UI extends javax.swing.JPanel {
         panelRound5.setLayout(panelRound5Layout);
         panelRound5Layout.setHorizontalGroup(
             panelRound5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelRound6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelRound6, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRound5Layout.createSequentialGroup()
                 .addGroup(panelRound5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelRound5Layout.createSequentialGroup()
@@ -206,12 +207,13 @@ public class Home_UI extends javax.swing.JPanel {
                 .addGroup(panelRound5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(panelRound5Layout.createSequentialGroup()
-                        .addGap(13, 13, 13)
+                        .addGap(10, 10, 10)
                         .addComponent(lblUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelRound6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(panelRound6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         panelRound7.setBackground(new java.awt.Color(75, 195, 131));
@@ -226,21 +228,21 @@ public class Home_UI extends javax.swing.JPanel {
         panelRound8.setRoundBottomLeft(20);
         panelRound8.setRoundBottomRight(20);
 
-        jLabel7.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setText("Agregar clientes");
-        jLabel7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnlblIngresos.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        btnlblIngresos.setForeground(new java.awt.Color(255, 255, 255));
+        btnlblIngresos.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnlblIngresos.setText("Administrar ingresos");
+        btnlblIngresos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout panelRound8Layout = new javax.swing.GroupLayout(panelRound8);
         panelRound8.setLayout(panelRound8Layout);
         panelRound8Layout.setHorizontalGroup(
             panelRound8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnlblIngresos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         panelRound8Layout.setVerticalGroup(
             panelRound8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+            .addComponent(btnlblIngresos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
         );
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -334,27 +336,39 @@ public class Home_UI extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JLabel btnlblCitas;
+    private javax.swing.JLabel btnlblCitas1;
+    private javax.swing.JLabel btnlblCitas2;
+    private javax.swing.JLabel btnlblCitas3;
+    private javax.swing.JLabel btnlblCitas4;
+    public javax.swing.JLabel btnlblIngresos;
+    public javax.swing.JLabel btnlblUsuarios;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JLabel lblCitas;
-    private javax.swing.JLabel lblIngresos;
-    private javax.swing.JLabel lblUsuarios;
+    public javax.swing.JLabel lblCitas;
+    public javax.swing.JLabel lblIngresos;
+    public javax.swing.JLabel lblUsuarios;
+    private Styles.PanelRound panelRound10;
+    private Styles.PanelRound panelRound11;
+    private Styles.PanelRound panelRound12;
+    private Styles.PanelRound panelRound13;
+    private Styles.PanelRound panelRound14;
+    private Styles.PanelRound panelRound15;
+    private Styles.PanelRound panelRound16;
     private Styles.PanelRound panelRound3;
     private Styles.PanelRound panelRound4;
     private Styles.PanelRound panelRound5;
     private Styles.PanelRound panelRound6;
     private Styles.PanelRound panelRound7;
     private Styles.PanelRound panelRound8;
+    private Styles.PanelRound panelRound9;
     // End of variables declaration//GEN-END:variables
 }

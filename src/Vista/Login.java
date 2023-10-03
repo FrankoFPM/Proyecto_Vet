@@ -5,13 +5,12 @@ import com.formdev.flatlaf.FlatLaf;
 
 public class Login extends javax.swing.JFrame {
 
-    Dashboard_UI dash = new Dashboard_UI();
-
+    //Dashboard_UI dash = new Dashboard_UI();
     public Login() {
         initComponents();
-        txtUser.putClientProperty("JTextField.placeholderText", "Ingresa tu usuario");
-        txtPass.putClientProperty("JTextField.placeholderText", "Ingresa tu contraseña");
-        this.setLocationRelativeTo(null);
+        //txtUser.putClientProperty("JTextField.placeholderText", "Ingresa tu usuario");
+        //txtPass.putClientProperty("JTextField.placeholderText", "Ingresa tu contraseña");
+        //this.setLocationRelativeTo(null);
     }
 
     /**
@@ -117,11 +116,6 @@ public class Login extends javax.swing.JFrame {
         btnIngresar.setForeground(new java.awt.Color(255, 255, 255));
         btnIngresar.setText("INGRESAR");
         btnIngresar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnIngresar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnIngresarActionPerformed(evt);
-            }
-        });
         panelRound4.add(btnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 390, 280, 30));
 
         panelRound5.setBackground(new java.awt.Color(145, 205, 242));
@@ -179,10 +173,6 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
-        LoginController.Autenticar(this, dash);
-    }//GEN-LAST:event_btnIngresarActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -219,7 +209,7 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnIngresar;
+    public javax.swing.JButton btnIngresar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
