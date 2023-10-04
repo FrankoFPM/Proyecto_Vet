@@ -17,9 +17,9 @@ public class DashboardController implements ActionListener {
     Dashboard_UI vista;
     String user;
     //panels
-    Home_UI home = new Home_UI();
-    Cliente_UI cliente = new Cliente_UI();
-    Paciente_UI paciente = new Paciente_UI();
+    Home_UI home = null;
+    Cliente_UI cliente = null;
+    Paciente_UI paciente = null;
     //model
     DefaultTableModel modeloCita;
 
@@ -44,6 +44,7 @@ public class DashboardController implements ActionListener {
     }
 
     void showHome() {
+        home = new Home_UI();
         UI_HomeController controllerHome = new UI_HomeController(home, vista);
     }
 
@@ -64,8 +65,10 @@ public class DashboardController implements ActionListener {
             //ChangePanel(home);
             showHome();
         } else if (e.getSource() == vista.btnCliente) {
+            cliente = new Cliente_UI();
             UI_ClienteController controllerCliente = new UI_ClienteController(cliente, vista);
         } else if (e.getSource() == vista.btnPaciente) {
+            paciente = new Paciente_UI();
             UI_PacienteController controllerPaciente = new UI_PacienteController(paciente, vista);
         }
     }

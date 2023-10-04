@@ -5,7 +5,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import javax.swing.JPanel;
 
-public class PanelController {
+public abstract class PanelController {
 
     JPanel panel;
     Dashboard_UI app;

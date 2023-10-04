@@ -25,7 +25,7 @@ public class UI_HomeController extends PanelController implements MouseListener 
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        System.out.println(e.getSource());
+        //System.out.println(e.getSource());
         if (e.getSource() == homeUI.btnlblCitas) {
             System.out.println("cita");
         } else if (e.getSource() == homeUI.btnlblIngresos) {
