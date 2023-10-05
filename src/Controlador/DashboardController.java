@@ -66,6 +66,7 @@ public class DashboardController implements ActionListener {
             showHome();
         } else if (e.getSource() == vista.btnCliente) {
             cliente = new Cliente_UI();
+            //cliente.txtNombres.putClientProperty("JTextField.placeholderText", "Ingresar ");
             UI_ClienteController controllerCliente = new UI_ClienteController(cliente, vista);
         } else if (e.getSource() == vista.btnPaciente) {
             paciente = new Paciente_UI();
