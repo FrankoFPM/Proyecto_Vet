@@ -26,6 +26,9 @@ create table cliente(
     dni int not null,
     direccion varchar(100) not null
 );
+create table paciente(
+	id_paciente varchar(8) primary key not null
+);
 insert into cliente(id_cliente, nombre, apellido, telefono, correo, dni, direccion)
 VALUES ('CLI-0001', 'Juan', 'Pérez', '123-456-7890', 'juan@example.com', 123456789, '123 Calle Principal');
 
