@@ -110,16 +110,88 @@ BEGIN
 END //
 DELIMITER ;
 
+DELIMITER //
+CREATE PROCEDURE sp_insertar_cliente(
+    IN id_cliente VARCHAR(8),
+    IN nombre VARCHAR(15),
+    IN apellido VARCHAR(15),
+    IN telefono VARCHAR(12),
+    IN correo VARCHAR(50),
+    IN dni INT,
+    IN direccion VARCHAR(100)
+)
+BEGIN
+    INSERT INTO cliente (id_cliente, nombre, apellido, telefono, correo, dni, direccion)
+    VALUES (id_cliente, nombre, apellido, telefono, correo, dni, direccion);
+END //
+DELIMITER ;
+
+
+DELIMITER //
+ CREATE PROCEDURE sp_eliminar(
+	IN tabla varchar(15),
+    IN columna varchar(15),
+    IN id_dato varchar(15)
+) 
+BEGIN 
+SET @sql = CONCAT('DELETE FROM ', tabla, ' WHERE ', columna, ' = "',id_dato,'"');
+	PREPARE stmt FROM @sql;
+	EXECUTE stmt;
+	DEALLOCATE PREPARE stmt;
+END //
+DELIMITER ;
+
+DELIMITER //
+ CREATE PROCEDURE sp_buscar(
+	IN tabla varchar(15),
+    IN columna varchar(15),
+    IN id_dato varchar(15)
+) 
+BEGIN 
+SET @sql = CONCAT('SELECT * FROM ', tabla, ' WHERE ', columna, ' = "',id_dato,'"');
+	PREPARE stmt FROM @sql;
+	EXECUTE stmt;
+	DEALLOCATE PREPARE stmt;
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_actualizar_cliente(
+    IN p_id_cliente VARCHAR(8),
+    IN p_nombre VARCHAR(15),
+    IN p_apellido VARCHAR(15),
+    IN p_telefono VARCHAR(12),
+    IN p_correo VARCHAR(50),
+    IN p_dni INT,
+    IN p_direccion VARCHAR(100)
+)
+BEGIN
+    UPDATE cliente
+    SET
+        nombre = p_nombre,
+        apellido = p_apellido,
+        telefono = p_telefono,
+        correo = p_correo,
+        dni = p_dni,
+        direccion = p_direccion
+    WHERE
+        id_cliente = p_id_cliente;
+END//
+
+DELIMITER ;
+
+
 CALL sp_codigo_autogenerado("cliente","id_cliente","CLI-",4,@xcodigoCliente);
 SELECT @xcodigoCliente;
 
 SELECT * FROM personal WHERE nombre = '<username>' AND pass = '' OR '1'='1';
-
+SELECT * FROM cliente;
 
 CALL ValidarCredenciales('Juan', "123", @resultado);
 SELECT @resultado;
 
-
+-- call sp_eliminar("cliente","id_cliente","CLI-0001");
+call sp_buscar("cliente","dni","123456789");
 -- Insertar datos en la tabla "cargo"
 INSERT INTO cargo (descripcion) VALUES
     ('Gerente'),
