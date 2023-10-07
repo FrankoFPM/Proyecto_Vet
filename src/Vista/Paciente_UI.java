@@ -158,10 +158,10 @@ public class Paciente_UI extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[SELECCIONAR]" }));
         jComboBox1.setPreferredSize(new java.awt.Dimension(225, 32));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[SELECCIONAR]", "Macho", "Hembra" }));
         jComboBox2.setPreferredSize(new java.awt.Dimension(225, 32));
 
         txtRaza.setPreferredSize(new java.awt.Dimension(225, 32));
