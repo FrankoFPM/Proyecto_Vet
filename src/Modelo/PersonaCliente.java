@@ -1,7 +1,5 @@
 package Modelo;
 
-import java.text.DecimalFormat;
-
 public class PersonaCliente extends Persona {
 
     /*
@@ -9,11 +7,10 @@ public class PersonaCliente extends Persona {
     private String apellido;
     private int dni;
      */
-    String telefono;
-    String correo;
-    String direccion;
-    static int contador=0;
-    
+    private String telefono;
+    private String correo;
+    private String direccion;
+
     public PersonaCliente() {
     }
 
@@ -22,10 +19,30 @@ public class PersonaCliente extends Persona {
         this.telefono = telefono;
         this.correo = correo;
         this.direccion = direccion;
-        
-        contador++;//incrementamos el contador
-        DecimalFormat df = new DecimalFormat("CLI-0000");
-        super.setCodigo(df.format(contador));
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
     }
 
 }
