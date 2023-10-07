@@ -14,7 +14,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class DashboardController implements ActionListener {
 
-    Dashboard_UI vista;
+    public static Dashboard_UI vista;
     String user;
     //panels
     Home_UI home = null;
@@ -48,7 +48,7 @@ public class DashboardController implements ActionListener {
         UI_HomeController controllerHome = new UI_HomeController(home, vista);
     }
 
-    void ChangePanel(JPanel box) {
+    public void ChangePanel(JPanel box) {
         box.setPreferredSize(new Dimension(1000, 500)); // Tamaño inicial
 
         vista.content.removeAll();
@@ -62,11 +62,9 @@ public class DashboardController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == vista.btnHome) {
             System.out.println("Home");
-            //ChangePanel(home);
             showHome();
         } else if (e.getSource() == vista.btnCliente) {
             cliente = new Cliente_UI();
-            //cliente.txtNombres.putClientProperty("JTextField.placeholderText", "Ingresar ");
             UI_ClienteController controllerCliente = new UI_ClienteController(cliente, vista);
         } else if (e.getSource() == vista.btnPaciente) {
             paciente = new Paciente_UI();

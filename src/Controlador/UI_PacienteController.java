@@ -12,8 +12,8 @@ public class UI_PacienteController extends PanelController implements ActionList
 
     Paciente_UI PacienteUI;
     
-    String titutos[] = {"COD", "Nombre", "Apellidos", "Telefono",
-        "Correo", "DNI", "Direccion"};
+    String titutos[] = {"COD", "Nombre", "Especie", "Raza",
+        "Color", "Dueño"};
 
     String msgCliente[] = {"Nombre", "Especie", "Raza",
         "Color"};
