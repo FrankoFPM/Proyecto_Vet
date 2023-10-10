@@ -27,7 +27,14 @@ create table cliente(
     direccion varchar(100) not null
 );
 create table paciente(
-	id_paciente varchar(8) primary key not null
+	id_paciente varchar(8) primary key not null,
+    nombre varchar(15) not null,
+    especie varchar(15) not null,
+    raza varchar(15) not null,
+    sexo varchar(15) not null,
+    color varchar(15) not null,
+    id_cliente varchar(15) not null,
+    FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente)
 );
 insert into cliente(id_cliente, nombre, apellido, telefono, correo, dni, direccion)
 VALUES ('CLI-0001', 'Juan', 'Pérez', '123-456-7890', 'juan@example.com', 123456789, '123 Calle Principal');
@@ -126,6 +133,24 @@ BEGIN
 END //
 DELIMITER ;
 
+DELIMITER //
+CREATE PROCEDURE sp_insertar_paciente(
+	IN p_id_paciente VARCHAR(8), 
+    IN p_nombre VARCHAR(15), 
+    IN p_especie VARCHAR(15), 
+    IN p_raza VARCHAR(15), 
+    IN p_sexo VARCHAR(15), 
+    IN p_color VARCHAR(15), 
+    IN p_id_cliente VARCHAR(8))
+BEGIN
+    INSERT INTO paciente(id_paciente, nombre, especie, raza, sexo, color, id_cliente) 
+    VALUES (p_id_paciente, p_nombre, p_especie, p_raza, p_sexo, p_color, p_id_cliente);
+END //
+DELIMITER ;
+CALL sp_insertar_paciente('PAC-0001', 'Fido', 'perro', 'chiwan', 'macho', 'negro', 'CLI-0001');
+select * from paciente;
+
+-- delete from cliente where id_cliente = "CLI-0001";
 
 DELIMITER //
  CREATE PROCEDURE sp_eliminar(
@@ -180,10 +205,49 @@ END//
 
 DELIMITER ;
 
+DELIMITER //
+CREATE PROCEDURE sp_actualizar_paciente (
+    IN p_id_paciente VARCHAR(8),
+    IN p_nombre VARCHAR(15),
+    IN p_especie VARCHAR(15),
+    IN p_raza VARCHAR(15),
+    IN p_sexo VARCHAR(15),
+    IN p_color VARCHAR(15),
+    IN p_id_cliente VARCHAR(15)
+)
+BEGIN
+    UPDATE paciente
+    SET nombre = p_nombre,
+        especie = p_especie,
+        raza = p_raza,
+        sexo = p_sexo,
+        color = p_color,
+        id_cliente = p_id_cliente
+    WHERE id_paciente = p_id_paciente;
+END //
+DELIMITER ;
 
-CALL sp_codigo_autogenerado("cliente","id_cliente","CLI-",4,@xcodigoCliente);
-SELECT @xcodigoCliente;
 
+DELIMITER //
+CREATE PROCEDURE sp_contar_clientes()
+BEGIN
+select count(*) from cliente;
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_listar_clientes()
+BEGIN
+select id_cliente, concat(nombre," ", apellido, " - ",dni) as "info" from cliente;
+END //
+DELIMITER ;
+
+CALL sp_listar_clientes();
+-- CALL sp_contar_clientes();
+
+-- CALL sp_codigo_autogenerado("cliente","id_cliente","CLI-",4,@xcodigoCliente);
+-- SELECT @xcodigoCliente;
+/*
 SELECT * FROM personal WHERE nombre = '<username>' AND pass = '' OR '1'='1';
 SELECT * FROM cliente;
 
@@ -192,6 +256,8 @@ SELECT @resultado;
 
 -- call sp_eliminar("cliente","id_cliente","CLI-0001");
 call sp_buscar("cliente","dni","123456789");
+
+*/
 -- Insertar datos en la tabla "cargo"
 INSERT INTO cargo (descripcion) VALUES
     ('Gerente'),
