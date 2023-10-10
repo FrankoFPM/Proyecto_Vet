@@ -25,6 +25,5 @@ public abstract class PanelController {
         app.content.repaint();
     }
 
-    protected void addListeners() {
-    }
+    protected abstract void addListeners();
 }
