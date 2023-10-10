@@ -1,6 +1,7 @@
 package Procesos;
 
 import DB.Conexion;
+import Modelo.Paciente;
 import Modelo.PersonaCliente;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -29,10 +30,34 @@ public class ProcesoInsert {
             cs_insert.setString(7, cliente.getDireccion());
             int resultado = cs_insert.executeUpdate();
             cs_insert.close();
-            if (resultado>0) {
+            if (resultado > 0) {
                 JOptionPane.showMessageDialog(null, "Cliente Registrado", "Success", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(null, "Error al insertar cliente (˘･_･˘)", "Error", JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (SQLException e) {
+        }
+    }
+
+    public static void insertarPaciente(Paciente paciente) {
+        Conexion objConn = new Conexion();
+        Connection cn = objConn.ObtenerConexion();
+        CallableStatement cs_insert;
+        try {
+            cs_insert = cn.prepareCall("{CALL sp_insertar_paciente(?,?,?,?,?,?,?)}");
+            cs_insert.setString(1, paciente.getCodigo());
+            cs_insert.setString(2, paciente.getNombre());
+            cs_insert.setString(3, paciente.getEspecie());
+            cs_insert.setString(4, paciente.getRaza());
+            cs_insert.setString(5, paciente.getSexo());
+            cs_insert.setString(6, paciente.getColor());
+            cs_insert.setString(7, paciente.getDueño());
+            int resultado = cs_insert.executeUpdate();
+            cs_insert.close();
+            if (resultado > 0) {
+                JOptionPane.showMessageDialog(null, "Paciente Registrado", "Success", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al insertar paciente (˘･_･˘)", "Error", JOptionPane.WARNING_MESSAGE);
             }
         } catch (SQLException e) {
         }
