@@ -14,8 +14,12 @@ public class PersonaCliente extends Persona {
     public PersonaCliente() {
     }
 
-    public PersonaCliente(String telefono, String correo, String direccion, String nombre, String apellido, int dni) {
-        super(nombre, apellido, dni);
+    public PersonaCliente(String codigo, String nombre) {
+        super(codigo, nombre);
+    }
+
+    public PersonaCliente(String telefono, String correo, String direccion, String codigo, String nombre, String apellido, int dni) {
+        super(codigo, nombre, apellido, dni);
         this.telefono = telefono;
         this.correo = correo;
         this.direccion = direccion;
