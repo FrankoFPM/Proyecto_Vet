@@ -1,13 +1,19 @@
 package Procesos;
 
 import DB.Conexion;
+import Modelo.PersonaCliente;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.text.Normalizer;
 import java.util.ArrayList;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 public class ProcesoListado {
@@ -34,12 +40,12 @@ public class ProcesoListado {
         return codigo;
     }
 
-    public static ArrayList<String[]> listarDatos(String tabla) {
+    public static List<String[]> listarDatos(String tabla) {
         Conexion objConn = new Conexion();
         Connection cn = objConn.ObtenerConexion();
         CallableStatement cs_listaClientes;
 
-        ArrayList<String[]> datos = new ArrayList<>();
+        List<String[]> datos = new ArrayList<>();
 
         try {
             String query = "{call sp_listarDatos(?)}";
@@ -63,18 +69,110 @@ public class ProcesoListado {
         }
         return datos;
     }
-    
-    public static void tituloTabla(JTable tabla,String[] titulos){
+
+    public static int contarClientes() {
+        Conexion objConn = new Conexion();
+        Connection cn = objConn.ObtenerConexion();
+        CallableStatement cs_listaClientes;
+
+        int numClientes = 0;
+
+        try {
+            String query = "{CALL sp_contar_clientes()}";
+            cs_listaClientes = cn.prepareCall(query);
+            boolean resultado = cs_listaClientes.execute();
+            if (resultado) {
+                ResultSet rs = cs_listaClientes.getResultSet();
+                if (rs.next()) {
+                    numClientes = rs.getInt(1);
+                }
+                rs.close();
+            }
+            cs_listaClientes.close();
+        } catch (SQLException e) {
+        }
+        return numClientes;
+    }
+
+    //Obtener clientes para el CBox
+    public static ArrayList<PersonaCliente> obtenerClientes() {
+
+        Conexion objConn = new Conexion();
+        Connection cn = objConn.ObtenerConexion();
+
+        ArrayList<PersonaCliente> listadoClientes = new ArrayList<>();
+        PersonaCliente cliente;
+        CallableStatement cs_listadoClientes;
+        ResultSet rs;
+
+        try {
+            cs_listadoClientes = cn.prepareCall("{call sp_listar_clientes}");
+            rs = cs_listadoClientes.executeQuery();
+            cliente = new PersonaCliente();
+            cliente.setCodigo("0");
+            cliente.setNombre("[Selecciona una opción...]");
+            listadoClientes.add(cliente);
+            while (rs.next()) {
+                cliente = new PersonaCliente();
+                cliente.setCodigo(rs.getString(1));
+                cliente.setNombre(rs.getString(2));
+                listadoClientes.add(cliente);
+            }
+
+        } catch (SQLException e) {
+            e.toString();
+        }
+        return listadoClientes;
+    }
+
+    public static void tituloTabla(JTable tabla, String[] titulos) {
         DefaultTableModel modelo = new DefaultTableModel(null, titulos);
         tabla.setModel(modelo);
     }
-    
-    public static void llenarTabla(JTable tabla, ArrayList<String[]> datos) {
+
+    public static void llenarTabla(JTable tabla, List<String[]> datos) {
         DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
         modelo.setRowCount(0);
 
         for (String[] fila : datos) {
             modelo.addRow(fila);
         }
+    }
+
+    //Filtrar comboClientes
+    public static void filterComboBox(String enteredText, JComboBox<PersonaCliente> comboBox) {
+        if (!comboBox.isPopupVisible()) {
+            comboBox.showPopup();
+        }
+
+        ArrayList<PersonaCliente> filterArray = new ArrayList<>();
+
+        if (enteredText.isEmpty()) {
+            filterArray = new ArrayList<>(ProcesoListado.obtenerClientes());
+        } else {
+            String normalizedEnteredText = normalize(enteredText);
+
+            for (PersonaCliente item : ProcesoListado.obtenerClientes()) {
+                String normalizedItem = normalize(item.toString());
+                if (normalizedItem.contains(normalizedEnteredText)) {
+                    filterArray.add(item);
+                }
+            }
+        }
+
+        DefaultComboBoxModel<PersonaCliente> model = (DefaultComboBoxModel<PersonaCliente>) comboBox.getModel();
+        model.removeAllElements();
+        for (PersonaCliente s : filterArray) {
+            model.addElement(s);
+        }
+
+        JTextField textField = (JTextField) comboBox.getEditor().getEditorComponent();
+        textField.setText(enteredText);
+    }
+    
+    public static String normalize(String str) {
+        String normalized = Normalizer.normalize(str, Normalizer.Form.NFD);
+        normalized = normalized.replaceAll("[^\\p{ASCII}]", ""); // quitar caracteres no ASCII
+        return normalized.toLowerCase(); // convertir a minúsculas
     }
 }
