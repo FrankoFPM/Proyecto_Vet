@@ -2,10 +2,12 @@ package Procesos;
 
 import DB.Conexion;
 import java.awt.HeadlessException;
+import java.util.List;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -39,11 +41,11 @@ public class ProcesoRD {
         }
     }
 
-    public static String[] buscarRegistros(String tabla, String columna, String codigo) {
+    public static List<String[]> buscarRegistros(String tabla, String columna, String codigo) {
         Conexion objConn = new Conexion();
         Connection cn = objConn.ObtenerConexion();
         CallableStatement cs_buscar;
-        String[] fila = {};
+        List<String[]> filas = new ArrayList<>();
 
         try {
             String query = "{call sp_buscar(?,?,?)}";
@@ -56,13 +58,14 @@ public class ProcesoRD {
                 ResultSet rs = cs_buscar.getResultSet();
 
                 while (rs.next()) {
-                    fila = new String[rs.getMetaData().getColumnCount()];
+                    String[] fila = new String[rs.getMetaData().getColumnCount()];
                     for (int i = 0; i < fila.length; i++) {
                         fila[i] = rs.getString(i + 1);
                     }
+                    filas.add(fila);
                 }
                 rs.close();
-                if (fila.length > 0) {
+                if (!filas.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Registro encontrado", "Success", JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     JOptionPane.showMessageDialog(null, "Registro no encontrado", "Warning", JOptionPane.INFORMATION_MESSAGE);
@@ -73,6 +76,6 @@ public class ProcesoRD {
             cs_buscar.close();
         } catch (HeadlessException | SQLException e) {
         }
-        return fila;
+        return filas;
     }
 }
