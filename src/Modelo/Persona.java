@@ -1,7 +1,7 @@
 package Modelo;
 
 public class Persona {
-    
+
     private String codigo;
     private String nombre;
     private String apellido;
@@ -10,7 +10,13 @@ public class Persona {
     public Persona() {
     }
 
-    public Persona(String nombre, String apellido, int dni) {
+    public Persona(String codigo, String nombre) {
+        this.codigo = codigo;
+        this.nombre = nombre;
+    }
+
+    public Persona(String codigo, String nombre, String apellido, int dni) {
+        this.codigo = codigo;
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
@@ -47,7 +53,10 @@ public class Persona {
     public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return getNombre();
+    }
 
 }
