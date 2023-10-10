@@ -10,6 +10,7 @@ import Vista.Cliente_UI;
 import Vista.Dashboard_UI;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -81,11 +82,12 @@ public class UI_ClienteController extends PanelController implements ActionListe
                 String dato = JOptionPane.showInputDialog(null, "Ingrese el DNI del cliente");
                 if (dato != null) {
                     if (!dato.isEmpty()) {
-                        String[] datos = ProcesoRD.buscarRegistros("cliente", "dni", dato);
-                        if (datos.length != 0) {
-                            ClienteUI.lblCodigo.setText(datos[0]);
+                        List<String[]> datos = ProcesoRD.buscarRegistros("cliente", "dni", dato);
+                        if (!datos.isEmpty()) {
+                            String[] primerRegistro = datos.get(0);
+                            ClienteUI.lblCodigo.setText(primerRegistro[0]);
                             for (int i = 0; i < txtCliente.length; i++) {
-                                txtCliente[i].setText(datos[i + 1]);
+                                txtCliente[i].setText(primerRegistro[i + 1]);
                             }
                             ClienteUI.btnEliminar.setEnabled(true);
                             ClienteUI.btnModificar.setEnabled(true);

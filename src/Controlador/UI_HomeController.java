@@ -1,5 +1,6 @@
 package Controlador;
 
+import Procesos.ProcesoListado;
 import Vista.Cliente_UI;
 import Vista.Dashboard_UI;
 import Vista.Home_UI;
@@ -11,7 +12,7 @@ public class UI_HomeController extends PanelController implements MouseListener 
 
     Home_UI homeUI;
     //panels
-    Home_UI home = null;
+    //Home_UI home = null;
     Cliente_UI cliente = null;
     Paciente_UI paciente = null;
 
@@ -20,6 +21,8 @@ public class UI_HomeController extends PanelController implements MouseListener 
         this.homeUI = panel;
         super.showWindow(panel);
         addListeners();
+
+        homeUI.lblUsuarios.setText(String.valueOf(ProcesoListado.contarClientes()));
     }
 
     @Override
@@ -37,7 +40,7 @@ public class UI_HomeController extends PanelController implements MouseListener 
         } else if (e.getSource() == homeUI.btnlblIngresos) {
             System.out.println("ingreso");
         } else if (e.getSource() == homeUI.btnlblUsuarios) {
-            cliente = new Cliente_UI();   
+            cliente = new Cliente_UI();
             UI_ClienteController controllerCliente = new UI_ClienteController(cliente, DashboardController.vista);
         }
     }
