@@ -20,4 +20,6 @@ public class ProcesoValidacion {
             inputs[i].putClientProperty("JTextField.placeholderText", "Ingresar " + nombre[i]);
         }
     }
+    
+    
 }
