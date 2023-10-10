@@ -44,8 +44,12 @@ public class Dashboard_UI extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         btnHome = new javax.swing.JButton();
         btnCliente = new javax.swing.JButton();
-        btnPaciente = new javax.swing.JButton();
+        btnPersonal = new javax.swing.JButton();
+        btnInventario = new javax.swing.JButton();
         btnCita = new javax.swing.JButton();
+        btnRpVentas = new javax.swing.JButton();
+        btnRpClinico = new javax.swing.JButton();
+        btnPaciente = new javax.swing.JButton();
         panelRound5 = new Styles.PanelRound();
         panelRound2 = new Styles.PanelRound();
         jLabel2 = new javax.swing.JLabel();
@@ -77,11 +81,19 @@ public class Dashboard_UI extends javax.swing.JFrame {
         btnCliente.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         panelRound1.add(btnCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 247, 210, 45));
 
-        btnPaciente.setBackground(new java.awt.Color(181, 224, 255));
-        btnPaciente.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
-        btnPaciente.setText("Gestion de paciente");
-        btnPaciente.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        panelRound1.add(btnPaciente, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 292, 210, 45));
+        btnPersonal.setBackground(new java.awt.Color(181, 224, 255));
+        btnPersonal.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
+        btnPersonal.setText("Gestión de personal");
+        btnPersonal.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnPersonal.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        panelRound1.add(btnPersonal, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 517, 210, 45));
+
+        btnInventario.setBackground(new java.awt.Color(181, 224, 255));
+        btnInventario.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
+        btnInventario.setText("Gestion de inventario");
+        btnInventario.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnInventario.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        panelRound1.add(btnInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 472, 210, 45));
 
         btnCita.setBackground(new java.awt.Color(181, 224, 255));
         btnCita.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
@@ -89,6 +101,26 @@ public class Dashboard_UI extends javax.swing.JFrame {
         btnCita.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnCita.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         panelRound1.add(btnCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 337, 210, 45));
+
+        btnRpVentas.setBackground(new java.awt.Color(181, 224, 255));
+        btnRpVentas.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
+        btnRpVentas.setText("Reporte de venta");
+        btnRpVentas.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnRpVentas.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        panelRound1.add(btnRpVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 427, 210, 45));
+
+        btnRpClinico.setBackground(new java.awt.Color(181, 224, 255));
+        btnRpClinico.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
+        btnRpClinico.setText("Reporte Clínico");
+        btnRpClinico.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnRpClinico.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        panelRound1.add(btnRpClinico, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 382, 210, 45));
+
+        btnPaciente.setBackground(new java.awt.Color(181, 224, 255));
+        btnPaciente.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
+        btnPaciente.setText("Gestion de paciente");
+        btnPaciente.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        panelRound1.add(btnPaciente, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 292, 210, 45));
 
         panelRound5.setBackground(new java.awt.Color(181, 224, 255));
 
@@ -100,10 +132,10 @@ public class Dashboard_UI extends javax.swing.JFrame {
         );
         panelRound5Layout.setVerticalGroup(
             panelRound5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 250, Short.MAX_VALUE)
+            .addGap(0, 320, Short.MAX_VALUE)
         );
 
-        panelRound1.add(panelRound5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 210, 210, 250));
+        panelRound1.add(panelRound5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, 210, 320));
 
         panelRound2.setBackground(new java.awt.Color(230, 245, 255));
 
@@ -215,7 +247,11 @@ public class Dashboard_UI extends javax.swing.JFrame {
     public javax.swing.JButton btnCita;
     public javax.swing.JButton btnCliente;
     public javax.swing.JButton btnHome;
+    public javax.swing.JButton btnInventario;
     public javax.swing.JButton btnPaciente;
+    public javax.swing.JButton btnPersonal;
+    public javax.swing.JButton btnRpClinico;
+    public javax.swing.JButton btnRpVentas;
     public javax.swing.JPanel content;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
