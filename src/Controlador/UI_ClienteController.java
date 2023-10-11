@@ -1,5 +1,6 @@
 package Controlador;
 
+import static Controlador.DashboardController.vista;
 import Modelo.PersonaCliente;
 import Procesos.ProcesoInsert;
 import Procesos.ProcesoListado;
@@ -8,6 +9,7 @@ import Procesos.ProcesoUpdate;
 import Procesos.ProcesoValidacion;
 import Vista.Cliente_UI;
 import Vista.Dashboard_UI;
+import Vista.Personal_UI;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -17,7 +19,6 @@ import javax.swing.JTextField;
 public class UI_ClienteController extends PanelController implements ActionListener {
 
     Cliente_UI ClienteUI;
-    PersonaCliente cliente;
 
     String titutos[] = {"COD", "Nombre", "Apellidos", "Telefono",
         "Correo", "DNI", "Direccion"};
@@ -36,7 +37,7 @@ public class UI_ClienteController extends PanelController implements ActionListe
         ProcesoListado.tituloTabla(ClienteUI.tbClientes, titutos);
         ProcesoListado.llenarTabla(ClienteUI.tbClientes, ProcesoListado.listarDatos("cliente"));
 
-        super.showWindow(panel);
+        //super.showWindow(panel);
 
         addListeners();
 
@@ -62,7 +63,7 @@ public class UI_ClienteController extends PanelController implements ActionListe
             ClienteUI.btnEliminar.setEnabled(false);
             ClienteUI.btnModificar.setEnabled(false);
             Cliente_UI newcliente = new Cliente_UI();
-            UI_ClienteController controllerCliente = new UI_ClienteController(newcliente, DashboardController.vista);
+            UI_ClienteController controllerCliente = new UI_ClienteController(newcliente, vista);
         } else if (e.getSource() == ClienteUI.btnRegistrar) {
             if (ProcesoValidacion.validarInputs(txtCliente, msgCliente)) {
                 PersonaCliente cliente = new PersonaCliente();
@@ -75,7 +76,7 @@ public class UI_ClienteController extends PanelController implements ActionListe
                 cliente.setDireccion(txtCliente[5].getText());
                 ProcesoInsert.insertarCliente(cliente);
                 Cliente_UI newcliente = new Cliente_UI();
-                UI_ClienteController controllerCliente = new UI_ClienteController(newcliente, DashboardController.vista);
+                UI_ClienteController controllerCliente = new UI_ClienteController(newcliente, vista);
             }
         } else if (e.getSource() == ClienteUI.btnBuscar) {
             if (ClienteUI.btnBuscar.getText().equals("Buscar")) {

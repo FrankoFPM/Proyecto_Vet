@@ -4,6 +4,7 @@ import Vista.Cliente_UI;
 import Vista.Dashboard_UI;
 import Vista.Home_UI;
 import Vista.Paciente_UI;
+import Vista.Personal_UI;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -20,6 +21,7 @@ public class DashboardController implements ActionListener {
     Home_UI home = null;
     Cliente_UI cliente = null;
     Paciente_UI paciente = null;
+    Personal_UI personal = null;
     //model
     DefaultTableModel modeloCita;
 
@@ -30,6 +32,7 @@ public class DashboardController implements ActionListener {
         vista.btnCliente.addActionListener(this);
         vista.btnPaciente.addActionListener(this);
         vista.btnCita.addActionListener(this);
+        vista.btnPersonal.addActionListener(this);
         launchApp();
     }
 
@@ -69,6 +72,11 @@ public class DashboardController implements ActionListener {
         } else if (e.getSource() == vista.btnPaciente) {
             paciente = new Paciente_UI();
             UI_PacienteController controllerPaciente = new UI_PacienteController(paciente, vista);
+        }else if (e.getSource() == vista.btnPersonal) {
+            personal = new Personal_UI();
+            UI_PersonalController controllerPersonal = new UI_PersonalController(personal, vista);
+            
+        }else if (e.getSource() == vista.btnCita) {
         }
     }
 

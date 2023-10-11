@@ -46,7 +46,7 @@ public class UI_PacienteController extends PanelController implements ActionList
         ProcesoListado.tituloTabla(PacienteUI.tbPacientes, titutos);
         ProcesoListado.llenarTabla(PacienteUI.tbPacientes, ProcesoListado.listarDatos("paciente"));
 
-        super.showWindow(panel);
+        //super.showWindow(panel);
         String cod = ProcesoListado.generarCodigo("paciente", "id_paciente", "PAC-", 4);
         PacienteUI.lblCodigo.setText(cod);
 
@@ -105,7 +105,7 @@ public class UI_PacienteController extends PanelController implements ActionList
                         List<String[]> datos = ProcesoRD.buscarRegistros("paciente", "id_cliente", dato);
                         if (!datos.isEmpty()) {
                             ProcesoListado.llenarTabla(PacienteUI.tbPacientes, datos);
-                            PacienteUI.btnEliminar.setEnabled(true);
+                            //PacienteUI.btnEliminar.setEnabled(true);
                             PacienteUI.btnActualizar.setEnabled(true);
                             PacienteUI.btnBuscar.setText("Cancelar");
                             buscar = true;
@@ -183,7 +183,7 @@ public class UI_PacienteController extends PanelController implements ActionList
                 datos[i] = (String) PacienteUI.tbPacientes.getValueAt(filaSeleccionada, i);
             }
 
-            // Ahora puedes usar estos datos para llenar tus campos de texto
+            PacienteUI.btnEliminar.setEnabled(true);
             PacienteUI.lblCodigo.setText(datos[0]);
             PacienteUI.txtNombre.setText(datos[1]);
             PacienteUI.txtEspecie.setText(datos[2]);
