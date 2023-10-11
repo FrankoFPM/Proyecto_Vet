@@ -8,13 +8,15 @@ create table cargo(
 );
 
 create table personal(
-	id_personal int primary key auto_increment not null,
+	id_registro int primary key auto_increment not null,
+    id_personal varchar(8) not null,
     nombre varchar(15) not null,
-    -- apellido
-    -- dni
-    pass varchar(10) not null,
-    cargo int,
-    FOREIGN KEY (cargo) REFERENCES cargo(id_cargo)
+    apellido varchar(15) not null,
+	pass varchar(10) not null,
+    correo varchar(50) not null,
+    dni int not null,
+    cargo varchar(15) not null,
+    nick varchar(15) not null
 );
 
 create table cliente(
@@ -36,6 +38,17 @@ create table paciente(
     id_cliente varchar(15) not null,
     FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente)
 );
+-- Vistas
+
+-- Vista personal
+CREATE VIEW v_personal AS
+SELECT id_personal, nombre, apellido, correo, dni, cargo, nick
+FROM personal;
+
+
+-- Fin Vistas
+
+
 insert into cliente(id_cliente, nombre, apellido, telefono, correo, dni, direccion)
 VALUES ('CLI-0001', 'Juan', 'Pérez', '123-456-7890', 'juan@example.com', 123456789, '123 Calle Principal');
 
@@ -49,7 +62,7 @@ BEGIN
     DECLARE v_cont INT;
     SELECT COUNT(*) INTO v_cont
     FROM personal
-    WHERE nombre = p_nombre_usuario AND pass = p_contraseña;
+    WHERE nick = p_nombre_usuario AND pass = p_contraseña;
     
     IF v_cont = 1 THEN
         SET valido = TRUE;
@@ -116,6 +129,35 @@ BEGIN
     END IF;
 END //
 DELIMITER ;
+-- Codigo autogenerado modificado
+DELIMITER //
+CREATE PROCEDURE sp_codigo_autogenerado_modificado(
+    IN tabla CHAR(64),
+    IN columna CHAR(64),
+    IN prefijo CHAR(4),
+    IN longitud_codigo INT,
+    OUT codigo_generado CHAR(64)
+)
+BEGIN
+    DECLARE max_codigo_existente INT;
+    DECLARE consulta VARCHAR(1000);
+
+    SET @consulta = CONCAT('SELECT MAX(', columna, ') INTO @max_codigo_existente FROM ', tabla);
+    PREPARE stmt FROM @consulta;
+    EXECUTE stmt;
+    DEALLOCATE PREPARE stmt;
+
+    IF @max_codigo_existente IS NULL THEN
+        SET codigo_generado = CONCAT(prefijo, LPAD('1', longitud_codigo, '0'));
+    ELSE
+        SET codigo_generado = CONCAT(prefijo, LPAD(@max_codigo_existente + 1, longitud_codigo, '0'));
+    END IF;
+END //
+DELIMITER ;
+
+
+-- fin del mod
+
 
 DELIMITER //
 CREATE PROCEDURE sp_insertar_cliente(
@@ -245,8 +287,51 @@ DELIMITER ;
 CALL sp_listar_clientes();
 -- CALL sp_contar_clientes();
 
--- CALL sp_codigo_autogenerado("cliente","id_cliente","CLI-",4,@xcodigoCliente);
--- SELECT @xcodigoCliente;
+DELIMITER //
+CREATE PROCEDURE sp_insertar_personal(
+    IN p_id_personal VARCHAR(8),
+    IN p_nombre VARCHAR(15),
+    IN p_apellido VARCHAR(15),
+    IN p_pass VARCHAR(10),
+    IN p_correo VARCHAR(50),
+    IN p_dni INT,
+    IN p_cargo VARCHAR(15),
+    IN p_nick VARCHAR(15)
+)
+BEGIN
+    INSERT INTO personal (id_personal, nombre, apellido, pass, correo, dni, cargo, nick)
+    VALUES (p_id_personal, p_nombre, p_apellido, p_pass, p_correo, p_dni, p_cargo, p_nick);
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_actualizar_personal(
+    IN p_id_personal VARCHAR(8),
+    IN p_nombre VARCHAR(15),
+    IN p_apellido VARCHAR(15),
+    IN p_pass VARCHAR(10),
+    IN p_correo VARCHAR(50),
+    IN p_dni INT,
+    IN p_cargo VARCHAR(15),
+    IN p_nick VARCHAR(15)
+)
+BEGIN
+    UPDATE personal 
+    SET nombre = p_nombre,
+        apellido = p_apellido,
+        pass = p_pass,
+        correo = p_correo,
+        dni = p_dni,
+        cargo = p_cargo,
+        nick = p_nick
+    WHERE id_personal = p_id_personal;
+END //
+DELIMITER ;
+
+
+
+CALL sp_codigo_autogenerado_modificado("personal","id_registro","EMP-",4,@xcodigoCliente);
+SELECT @xcodigoCliente;
 /*
 SELECT * FROM personal WHERE nombre = '<username>' AND pass = '' OR '1'='1';
 SELECT * FROM cliente;
@@ -266,8 +351,10 @@ INSERT INTO cargo (descripcion) VALUES
     ('Técnico');
 
 -- Insertar datos en la tabla "personal"
-INSERT INTO personal (nombre, pass, cargo) VALUES
-    ('Juan', '123', 1),
-    ('Maria', '123', 2),
-    ('Carlos', '123', 3),
-    ('Luis', '123', 4);  
+select * from personal;
+INSERT INTO personal (id_personal, nombre, apellido, pass, correo, dni, cargo, nick)
+VALUES 
+('EMP-0001', 'Juan', 'Perez', '123', 'juan.perez@email.com', 12345678, 'Vet','juan'),
+('EMP-0002', 'Maria', 'Gomez', '123', 'maria.gomez@email.com', 23456789, 'Recep','mari'),
+('EMP-0003', 'Carlos', 'Rodriguez', '123', 'carlos.rodriguez@email.com', 34567890, 'venta','carlos');
+ 
