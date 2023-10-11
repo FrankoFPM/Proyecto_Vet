@@ -78,4 +78,38 @@ public class ProcesoRD {
         }
         return filas;
     }
+    public static List<String[]> buscarCitas(String dni) {
+        Conexion objConn = new Conexion();
+        Connection cn = objConn.ObtenerConexion();
+        CallableStatement cs_buscar;
+        List<String[]> filas = new ArrayList<>();
+
+        try {
+            String query = "{call buscar_citas(?)}";
+            cs_buscar = cn.prepareCall(query);
+            cs_buscar.setString(1, dni);
+            boolean resultado = cs_buscar.execute();
+            if (resultado) {
+                ResultSet rs = cs_buscar.getResultSet();
+                while (rs.next()) {
+                    String[] fila = new String[rs.getMetaData().getColumnCount()];
+                    for (int i = 0; i < fila.length; i++) {
+                        fila[i] = rs.getString(i + 1);
+                    }
+                    filas.add(fila);
+                }
+                rs.close();
+                if (!filas.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Citas encontradas", "Success", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "No hay citas registradas", "Warning", JOptionPane.INFORMATION_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al buscar (˘･_･˘)", "Error", JOptionPane.WARNING_MESSAGE);
+            }
+            cs_buscar.close();
+        } catch (HeadlessException | SQLException e) {
+        }
+        return filas;
+    }
 }
