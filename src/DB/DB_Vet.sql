@@ -34,10 +34,22 @@ create table paciente(
     especie varchar(15) not null,
     raza varchar(15) not null,
     sexo varchar(15) not null,
-    color varchar(15) not null,
+    color varchar(50) not null,
     id_cliente varchar(15) not null,
     FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente)
 );
+create table cita(
+	id_cita varchar(8) primary key not null,
+    id_cliente varchar(8) not null,
+    cliente varchar(15) not null,
+    paciente varchar(15) not null,
+    veterinario varchar(15) not null,
+    fecha date not null,
+    hora time not null,
+    estado varchar(20) not null
+);
+
+
 -- Vistas
 
 -- Vista personal
@@ -49,8 +61,20 @@ FROM personal;
 -- Fin Vistas
 
 
-insert into cliente(id_cliente, nombre, apellido, telefono, correo, dni, direccion)
-VALUES ('CLI-0001', 'Juan', 'Pérez', '123-456-7890', 'juan@example.com', 123456789, '123 Calle Principal');
+
+
+DELIMITER //
+CREATE PROCEDURE buscar_citas(IN dni varchar(11))
+BEGIN
+    SELECT cita.* 
+    FROM cliente 
+    JOIN cita ON cliente.id_cliente = cita.id_cliente 
+    WHERE cliente.dni = dni;
+END //
+DELIMITER ;
+
+call buscar_citas('12345678');
+
 
 DELIMITER //
 CREATE PROCEDURE ValidarCredenciales(
@@ -182,15 +206,13 @@ CREATE PROCEDURE sp_insertar_paciente(
     IN p_especie VARCHAR(15), 
     IN p_raza VARCHAR(15), 
     IN p_sexo VARCHAR(15), 
-    IN p_color VARCHAR(15), 
+    IN p_color VARCHAR(50), 
     IN p_id_cliente VARCHAR(8))
 BEGIN
     INSERT INTO paciente(id_paciente, nombre, especie, raza, sexo, color, id_cliente) 
     VALUES (p_id_paciente, p_nombre, p_especie, p_raza, p_sexo, p_color, p_id_cliente);
 END //
 DELIMITER ;
-CALL sp_insertar_paciente('PAC-0001', 'Fido', 'perro', 'chiwan', 'macho', 'negro', 'CLI-0001');
-select * from paciente;
 
 -- delete from cliente where id_cliente = "CLI-0001";
 
@@ -284,7 +306,21 @@ select id_cliente, concat(nombre," ", apellido, " - ",dni) as "info" from client
 END //
 DELIMITER ;
 
-CALL sp_listar_clientes();
+DELIMITER //
+CREATE PROCEDURE sp_listar_pacientes(in p_cliente varchar(15))
+BEGIN
+select id_paciente, concat(nombre, " - ",Especie) as "info" from paciente where id_cliente = p_cliente;
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_listar_veterinarios()
+BEGIN
+select id_personal, concat(nombre, " ",apellido) as "info" from personal where cargo = "Veterinario";
+END //
+DELIMITER ;
+CALL sp_listar_pacientes('CLI-0001');
+-- select * from paciente;
 -- CALL sp_contar_clientes();
 
 DELIMITER //
@@ -328,6 +364,43 @@ BEGIN
 END //
 DELIMITER ;
 
+DELIMITER //
+CREATE PROCEDURE sp_insertar_cita(
+	IN p_id_cita VARCHAR(8), 
+    IN p_id_cliente VARCHAR(8), 
+    IN p_cliente VARCHAR(100), 
+    IN p_paciente VARCHAR(15), 
+    IN p_veterinario VARCHAR(15), 
+    IN p_fecha DATE, IN p_hora TIME,
+    IN p_estado varchar(20))
+BEGIN
+    INSERT INTO cita(id_cita,id_cliente, cliente, paciente, veterinario, fecha, hora, estado) 
+    VALUES (p_id_cita,p_id_cliente , p_cliente, p_paciente, p_veterinario, p_fecha, p_hora, p_estado);
+END //
+DELIMITER ;
+
+
+DELIMITER //
+CREATE PROCEDURE sp_actualizar_cita(
+	IN p_id_cita VARCHAR(8),
+    IN p_id_cliente VARCHAR(12), 
+    IN p_cliente VARCHAR(50), 
+    IN p_paciente VARCHAR(50), 
+    IN p_veterinario VARCHAR(50), 
+    IN p_fecha DATE, IN p_hora TIME,
+    IN p_estado varchar(20))
+BEGIN
+    UPDATE cita 
+    SET cliente = p_cliente,
+		id_cliente = p_id_cliente,
+        paciente = p_paciente,
+        veterinario = p_veterinario,
+        fecha = p_fecha,
+        hora = p_hora,
+        estado = p_estado
+    WHERE id_cita = p_id_cita;
+END //
+DELIMITER ;
 
 
 CALL sp_codigo_autogenerado_modificado("personal","id_registro","EMP-",4,@xcodigoCliente);
@@ -354,7 +427,25 @@ INSERT INTO cargo (descripcion) VALUES
 select * from personal;
 INSERT INTO personal (id_personal, nombre, apellido, pass, correo, dni, cargo, nick)
 VALUES 
-('EMP-0001', 'Juan', 'Perez', '123', 'juan.perez@email.com', 12345678, 'Vet','juan'),
+('EMP-0001', 'Juan', 'Perez', '123', 'juan.perez@email.com', 12345678, 'Veterinario','juan'),
 ('EMP-0002', 'Maria', 'Gomez', '123', 'maria.gomez@email.com', 23456789, 'Recep','mari'),
 ('EMP-0003', 'Carlos', 'Rodriguez', '123', 'carlos.rodriguez@email.com', 34567890, 'venta','carlos');
- 
+ -- Insertar clientes
+INSERT INTO cliente(id_cliente, nombre, apellido, telefono, correo, dni, direccion)
+VALUES 
+('CLI-0001', 'Juan', 'Pérez', '123-456-7890', 'juan@example.com', 123456789, '123 Calle Principal'),
+('CLI-0002', 'Maria', 'Gonzalez', '098-765-4321', 'maria@example.com', 987654321, '456 Calle Secundaria'),
+('CLI-0003', 'Carlos', 'Rodriguez','111-222-3333','carlos@example.com','112233445','789 Calle Tercera');
+
+-- Insertar pacientes
+CALL sp_insertar_paciente('PAC-0001', 'Fido', 'perro', 'chiwan', 'macho', 'negro', 'CLI-0001');
+CALL sp_insertar_paciente('PAC-0002', 'Rex', 'perro', 'labrador', 'macho', 'marrón', 'CLI-0001');
+CALL sp_insertar_paciente('PAC-0003', 'Luna', 'gato', 'siamese', 'hembra', 'blanco y negro', 'CLI-0001');
+CALL sp_insertar_paciente('PAC-0004', 'Bella', 'gato', 'persa', 'hembra', 'gris', 'CLI-0002');
+CALL sp_insertar_paciente('PAC-0005', 'Max', 'perro', 'bulldog francés', 'macho', 'blanco y negro', 'CLI-0002');
+CALL sp_insertar_paciente('PAC-0006', 'Simba', 'gato', 'bengalí', 'macho', 'naranja y negro', 'CLI-0002');
+CALL sp_insertar_paciente('PAC-0007','Coco','loro','guacamayo azul','macho','azul y amarillo','CLI-0003');
+CALL sp_insertar_paciente('PAC-0008','Nemo','pez','payaso','macho','naranja y blanco','CLI-0003');
+CALL sp_insertar_paciente('PAC-0009','Daisy','conejo','angora','hembra','blanco','CLI-0003');
+
+select * from paciente;
