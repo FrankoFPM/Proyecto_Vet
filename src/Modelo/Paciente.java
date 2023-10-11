@@ -1,6 +1,7 @@
 package Modelo;
 
 public class Paciente {
+
     private String codigo;
     private String nombre;
     private String especie;
@@ -10,6 +11,11 @@ public class Paciente {
     private String dueño;
 
     public Paciente() {
+    }
+
+    public Paciente(String codigo, String nombre) {
+        this.codigo = codigo;
+        this.nombre = nombre;
     }
 
     public Paciente(String codigo, String nombre, String especie, String raza, String sexo, String color, String dueño) {
@@ -78,6 +84,9 @@ public class Paciente {
         this.color = color;
     }
 
-   
-    
+    @Override
+    public String toString() {
+        return getNombre();
+    }
+
 }
