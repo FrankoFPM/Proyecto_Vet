@@ -5,6 +5,7 @@ public class Persona {
     private String codigo;
     private String nombre;
     private String apellido;
+    private String correo;
     private int dni;
 
     public Persona() {
@@ -15,10 +16,11 @@ public class Persona {
         this.nombre = nombre;
     }
 
-    public Persona(String codigo, String nombre, String apellido, int dni) {
+    public Persona(String codigo, String nombre, String apellido, String correo, int dni) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.apellido = apellido;
+        this.correo = correo;
         this.dni = dni;
     }
 
@@ -53,10 +55,19 @@ public class Persona {
     public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
+    
 
     @Override
     public String toString() {
         return getNombre();
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
     }
 
 }

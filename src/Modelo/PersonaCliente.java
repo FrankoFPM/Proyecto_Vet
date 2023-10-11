@@ -8,7 +8,6 @@ public class PersonaCliente extends Persona {
     private int dni;
      */
     private String telefono;
-    private String correo;
     private String direccion;
 
     public PersonaCliente() {
@@ -19,9 +18,8 @@ public class PersonaCliente extends Persona {
     }
 
     public PersonaCliente(String telefono, String correo, String direccion, String codigo, String nombre, String apellido, int dni) {
-        super(codigo, nombre, apellido, dni);
+        super(codigo, nombre, apellido, correo, dni);
         this.telefono = telefono;
-        this.correo = correo;
         this.direccion = direccion;
     }
 
@@ -39,14 +37,6 @@ public class PersonaCliente extends Persona {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
-    }
-
-    public String getCorreo() {
-        return correo;
-    }
-
-    public void setCorreo(String correo) {
-        this.correo = correo;
     }
 
 }
