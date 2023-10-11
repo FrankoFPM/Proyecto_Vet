@@ -1,6 +1,7 @@
 package Procesos;
 
 import DB.Conexion;
+import Modelo.Cita;
 import Modelo.Paciente;
 import Modelo.PersonaCliente;
 import Modelo.PersonaEmpleado;
@@ -85,6 +86,31 @@ public class ProcesoUpdate {
                 JOptionPane.showMessageDialog(null, "Error al modificar (˘･_･˘)", "Error", JOptionPane.WARNING_MESSAGE);
             }
         } catch (SQLException e) {
+        }
+    }
+    public static void actualizarCita(Cita reserva) {
+        Conexion objConn = new Conexion();
+        Connection cn = objConn.ObtenerConexion();
+        CallableStatement cs_update;
+        try {
+            cs_update = cn.prepareCall("{CALL sp_actualizar_cita(?,?,?,?,?,?,?,?)}");
+            cs_update.setString(1, reserva.getCodigo());
+            cs_update.setString(2, reserva.getCodigoCliente());
+            cs_update.setString(3, reserva.getCliente());
+            cs_update.setString(4, reserva.getPaciente());
+            cs_update.setString(5, reserva.getVeterinario());
+            cs_update.setDate(6, reserva.getFecha());
+            cs_update.setTime(7, reserva.getHora());
+            cs_update.setString(8, reserva.getEstado());
+            int resultado = cs_update.executeUpdate();
+            cs_update.close();
+            if (resultado > 0) {
+                JOptionPane.showMessageDialog(null, "Cita modificada", "Success", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al modificar (˘･_･˘)", "Error", JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

@@ -1,6 +1,7 @@
 package Procesos;
 
 import DB.Conexion;
+import Modelo.Cita;
 import Modelo.Paciente;
 import Modelo.PersonaCliente;
 import Modelo.PersonaEmpleado;
@@ -85,6 +86,31 @@ public class ProcesoInsert {
                 JOptionPane.showMessageDialog(null, "Error al insertar personal (˘･_･˘)", "Error", JOptionPane.WARNING_MESSAGE);
             }
         } catch (SQLException e) {
+        }
+    }
+    public static void insertarCita(Cita reserva) {
+        Conexion objConn = new Conexion();
+        Connection cn = objConn.ObtenerConexion();
+        CallableStatement cs_insert;
+        try {
+            cs_insert = cn.prepareCall("{CALL sp_insertar_cita(?,?,?,?,?,?,?,?)}");
+            cs_insert.setString(1, reserva.getCodigo());
+            cs_insert.setString(2, reserva.getCodigoCliente());
+            cs_insert.setString(3, reserva.getCliente());
+            cs_insert.setString(4, reserva.getPaciente());
+            cs_insert.setString(5, reserva.getVeterinario());
+            cs_insert.setDate(6, reserva.getFecha());
+            cs_insert.setTime(7, reserva.getHora());
+            cs_insert.setString(8, reserva.getEstado());
+            int resultado = cs_insert.executeUpdate();
+            cs_insert.close();
+            if (resultado > 0) {
+                JOptionPane.showMessageDialog(null, "Cita reservada", "Success", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al reservar (˘･_･˘)", "Error", JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

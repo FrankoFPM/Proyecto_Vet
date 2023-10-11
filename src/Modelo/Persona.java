@@ -55,12 +55,6 @@ public class Persona {
     public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
-    
-
-    @Override
-    public String toString() {
-        return getNombre();
-    }
 
     public String getCorreo() {
         return correo;
@@ -68,6 +62,11 @@ public class Persona {
 
     public void setCorreo(String correo) {
         this.correo = correo;
+    }
+
+    @Override
+    public String toString() {
+        return getNombre();
     }
 
 }

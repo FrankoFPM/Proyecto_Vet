@@ -207,6 +207,7 @@ public class UI_PacienteController extends PanelController implements ActionList
         String enteredText = textFieldCombo.getText();
         if (enteredText.equals("[Selecciona una opción...]")) {
             textFieldCombo.setText("");
+            PacienteUI.cbCliente.showPopup();
         }
     }
 

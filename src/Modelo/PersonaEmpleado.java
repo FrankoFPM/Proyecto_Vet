@@ -8,6 +8,9 @@ public class PersonaEmpleado extends Persona {
 
     public PersonaEmpleado() {
     }
+    public PersonaEmpleado(String codigo, String nombre) {
+        super(codigo, nombre);
+    }
     
     public PersonaEmpleado(String contraseña, String cargo, String nickname, String codigo, String nombre, String apellido, String correo, int dni) {
         super(codigo, nombre, apellido, correo, dni);
