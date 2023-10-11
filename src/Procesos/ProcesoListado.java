@@ -39,6 +39,27 @@ public class ProcesoListado {
         }
         return codigo;
     }
+    public static String generarCodigoUnico(String tabla, String col, String prefijo, int longitud) {
+        Conexion objConn = new Conexion();
+        Connection cn = objConn.ObtenerConexion();
+        CallableStatement cs_genCodigo;
+        String codigo = "";
+
+        try {
+            String query = "{call sp_codigo_autogenerado_modificado(?,?,?,?,?)}";
+            cs_genCodigo = cn.prepareCall(query);
+            cs_genCodigo.setString(1, tabla);
+            cs_genCodigo.setString(2, col);
+            cs_genCodigo.setString(3, prefijo);
+            cs_genCodigo.setInt(4, longitud);
+            cs_genCodigo.registerOutParameter(5, Types.VARCHAR);
+            cs_genCodigo.execute();
+            codigo = cs_genCodigo.getString(5);
+            cs_genCodigo.close();
+        } catch (SQLException e) {
+        }
+        return codigo;
+    }
 
     public static List<String[]> listarDatos(String tabla) {
         Conexion objConn = new Conexion();

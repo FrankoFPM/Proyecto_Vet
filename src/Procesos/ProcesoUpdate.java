@@ -3,6 +3,7 @@ package Procesos;
 import DB.Conexion;
 import Modelo.Paciente;
 import Modelo.PersonaCliente;
+import Modelo.PersonaEmpleado;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -56,6 +57,30 @@ public class ProcesoUpdate {
             cs_update.close();
             if (resultado > 0) {
                 JOptionPane.showMessageDialog(null, "Paciente modificado", "Success", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al modificar (˘･_･˘)", "Error", JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (SQLException e) {
+        }
+    }
+    public static void actualizarPersonal(PersonaEmpleado empleado) {
+        Conexion objConn = new Conexion();
+        Connection cn = objConn.ObtenerConexion();
+        CallableStatement cs_update;
+        try {
+            cs_update = cn.prepareCall("{CALL sp_actualizar_personal(?,?,?,?,?,?,?,?)}");
+            cs_update.setString(1, empleado.getCodigo());
+            cs_update.setString(2, empleado.getNombre());
+            cs_update.setString(3, empleado.getApellido());
+            cs_update.setString(4, empleado.getContraseña());
+            cs_update.setString(5, empleado.getCorreo());
+            cs_update.setInt(6, empleado.getDni());
+            cs_update.setString(7, empleado.getCargo());
+            cs_update.setString(8, empleado.getNickname());
+            int resultado = cs_update.executeUpdate();
+            cs_update.close();
+            if (resultado > 0) {
+                JOptionPane.showMessageDialog(null, "Personal modificado", "Success", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(null, "Error al modificar (˘･_･˘)", "Error", JOptionPane.WARNING_MESSAGE);
             }
