@@ -81,8 +81,7 @@ public class UI_PersonalController extends PanelController implements ActionList
 
                 ProcesoInsert.insertarPersonal(empleado);
 
-                Personal_UI newPersonal = new Personal_UI();
-                UI_PersonalController controllerPersonal = new UI_PersonalController(newPersonal, vista);
+                reloadWindow();
             }
         } else if (e.getSource() == PersonalUI.btnBuscar) {
             if (PersonalUI.btnBuscar.getText().equals("Buscar")) {
@@ -113,8 +112,7 @@ public class UI_PersonalController extends PanelController implements ActionList
                 PersonalUI.btnBuscar.setText("Buscar");
                 PersonalUI.btnEliminar.setEnabled(false);
                 PersonalUI.btnModificar.setEnabled(false);
-                Personal_UI newpersonal = new Personal_UI();
-                UI_PersonalController controllerPersonal = new UI_PersonalController(newpersonal, vista);
+                reloadWindow();
             }
         } else if (e.getSource() == PersonalUI.btnModificar) {
             if (ProcesoValidacion.validarInputs(txtPersonal, msgPersonal)) {
@@ -128,16 +126,14 @@ public class UI_PersonalController extends PanelController implements ActionList
                 empleado.setCargo(PersonalUI.cboCargo.getSelectedItem().toString());
                 empleado.setNickname(PersonalUI.txtNick.getText());
                 ProcesoUpdate.actualizarPersonal(empleado);
-                Personal_UI newpersonal = new Personal_UI();
-                UI_PersonalController controllerPersonal = new UI_PersonalController(newpersonal, vista);
+                reloadWindow();
             }
         } else if (e.getSource() == PersonalUI.btnEliminar) {
             ProcesoRD.eliminarRegistros("personal", "id_personal", PersonalUI.lblCodigo.getText());
             PersonalUI.btnBuscar.setText("Buscar");
             PersonalUI.btnEliminar.setEnabled(false);
             PersonalUI.btnModificar.setEnabled(false);
-            Personal_UI newpersonal = new Personal_UI();
-            UI_PersonalController controllerPersonal = new UI_PersonalController(newpersonal, vista);
+            reloadWindow();
         }
     }
 
@@ -153,6 +149,12 @@ public class UI_PersonalController extends PanelController implements ActionList
         } else if (e.getSource() == txtPersonal[4]) {
             generarNick();
         }
+    }
+
+    @Override
+    protected void reloadWindow() {
+        Personal_UI newpersonal = new Personal_UI();
+        UI_PersonalController controllerPersonal = new UI_PersonalController(newpersonal, vista);
     }
 
 }

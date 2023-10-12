@@ -35,7 +35,7 @@ public class Home_UI extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbCitasProximas = new javax.swing.JTable();
         panelRound5 = new Styles.PanelRound();
         panelRound6 = new Styles.PanelRound();
         btnlblUsuarios = new javax.swing.JLabel();
@@ -64,7 +64,7 @@ public class Home_UI extends javax.swing.JPanel {
         btnlblCitas.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         btnlblCitas.setForeground(new java.awt.Color(255, 255, 255));
         btnlblCitas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btnlblCitas.setText("Agregar clientes");
+        btnlblCitas.setText("Gestionar citas");
         btnlblCitas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout panelRound4Layout = new javax.swing.GroupLayout(panelRound4);
@@ -129,7 +129,7 @@ public class Home_UI extends javax.swing.JPanel {
 
         jSeparator1.setForeground(new java.awt.Color(181, 224, 255));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbCitasProximas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -140,7 +140,7 @@ public class Home_UI extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tbCitasProximas);
 
         panelRound5.setBackground(new java.awt.Color(255, 225, 127));
         panelRound5.setPreferredSize(new java.awt.Dimension(216, 127));
@@ -156,7 +156,7 @@ public class Home_UI extends javax.swing.JPanel {
 
         btnlblUsuarios.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         btnlblUsuarios.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btnlblUsuarios.setText("Agregar usuarios");
+        btnlblUsuarios.setText("Agregar clientes");
         btnlblUsuarios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout panelRound6Layout = new javax.swing.GroupLayout(panelRound6);
@@ -180,7 +180,7 @@ public class Home_UI extends javax.swing.JPanel {
 
         jLabel11.setFont(new java.awt.Font("Roboto Black", 1, 18)); // NOI18N
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel11.setText("USUARIOS");
+        jLabel11.setText("CLIENTES");
         jLabel11.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout panelRound5Layout = new javax.swing.GroupLayout(panelRound5);
@@ -337,10 +337,6 @@ public class Home_UI extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JLabel btnlblCitas;
-    private javax.swing.JLabel btnlblCitas1;
-    private javax.swing.JLabel btnlblCitas2;
-    private javax.swing.JLabel btnlblCitas3;
-    private javax.swing.JLabel btnlblCitas4;
     public javax.swing.JLabel btnlblIngresos;
     public javax.swing.JLabel btnlblUsuarios;
     private javax.swing.JLabel jLabel1;
@@ -352,23 +348,15 @@ public class Home_UI extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
     public javax.swing.JLabel lblCitas;
     public javax.swing.JLabel lblIngresos;
     public javax.swing.JLabel lblUsuarios;
-    private Styles.PanelRound panelRound10;
-    private Styles.PanelRound panelRound11;
-    private Styles.PanelRound panelRound12;
-    private Styles.PanelRound panelRound13;
-    private Styles.PanelRound panelRound14;
-    private Styles.PanelRound panelRound15;
-    private Styles.PanelRound panelRound16;
     private Styles.PanelRound panelRound3;
     private Styles.PanelRound panelRound4;
     private Styles.PanelRound panelRound5;
     private Styles.PanelRound panelRound6;
     private Styles.PanelRound panelRound7;
     private Styles.PanelRound panelRound8;
-    private Styles.PanelRound panelRound9;
+    public javax.swing.JTable tbCitasProximas;
     // End of variables declaration//GEN-END:variables
 }

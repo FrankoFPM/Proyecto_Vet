@@ -39,7 +39,7 @@ public class UI_CitaController extends PanelController implements ActionListener
 
     boolean buscar = false;
 
-    String titulos[] = {"COD", "Cod Cliente", "Cliente", "Paciente", "Veterinario", "Fecha", "Hora", "Estado"};
+    public static String[] titulosCitas = {"COD", "Cod Cliente", "Cliente", "Paciente", "Veterinario", "Fecha", "Hora", "Estado"};
     JTextField textFieldComboCliente;
     JTextField textFieldComboPaciente;
 
@@ -47,7 +47,7 @@ public class UI_CitaController extends PanelController implements ActionListener
         super(panel, app);
         this.CitaUI = panel;
 
-        ProcesoListado.tituloTabla(CitaUI.tbcitas, titulos);
+        ProcesoListado.tituloTabla(CitaUI.tbcitas, titulosCitas);
         ProcesoListado.llenarTabla(CitaUI.tbcitas, ProcesoListado.listarDatos("cita"));
 
         String cod = ProcesoListado.generarCodigo("cita", "id_cita", "CTA-", 4);
@@ -114,15 +114,15 @@ public class UI_CitaController extends PanelController implements ActionListener
     }
 
     private String CodigoCliente() {
-    Object itemSeleccionado = CitaUI.cbCliente.getSelectedItem();
-    if (itemSeleccionado instanceof PersonaCliente) {
-        PersonaCliente clienteSeleccionado = (PersonaCliente) itemSeleccionado;
-        String codigoCliente = clienteSeleccionado.getCodigo();
-        return codigoCliente;
-    } else {
-        return "000";
+        Object itemSeleccionado = CitaUI.cbCliente.getSelectedItem();
+        if (itemSeleccionado instanceof PersonaCliente) {
+            PersonaCliente clienteSeleccionado = (PersonaCliente) itemSeleccionado;
+            String codigoCliente = clienteSeleccionado.getCodigo();
+            return codigoCliente;
+        } else {
+            return "000";
+        }
     }
-}
 
     @Override
     protected void addListeners() {
@@ -135,7 +135,7 @@ public class UI_CitaController extends PanelController implements ActionListener
 
         textFieldComboCliente.addFocusListener(this);
         textFieldComboPaciente.addFocusListener(this);
-        
+
         CitaUI.tbcitas.getSelectionModel().addListSelectionListener(this);
     }
 
@@ -159,8 +159,7 @@ public class UI_CitaController extends PanelController implements ActionListener
 
                 ProcesoInsert.insertarCita(reserva);
 
-                Cita_UI newcita = new Cita_UI();
-                UI_CitaController controllerCita = new UI_CitaController(newcita, vista);
+                reloadWindow();
             }
         } else if (e.getSource() == CitaUI.btnBuscar) {
             if (CitaUI.btnBuscar.getText().equals("Buscar")) {
@@ -183,8 +182,7 @@ public class UI_CitaController extends PanelController implements ActionListener
                 CitaUI.btnBuscar.setText("Buscar");
                 CitaUI.btnEliminar.setEnabled(false);
                 CitaUI.btnModificar.setEnabled(false);
-                Cita_UI newcita = new Cita_UI();
-                UI_CitaController controllerCita = new UI_CitaController(newcita, vista);
+                reloadWindow();
                 buscar = false;
             }
         } else if (e.getSource() == CitaUI.btnModificar) {
@@ -205,16 +203,14 @@ public class UI_CitaController extends PanelController implements ActionListener
 
                 ProcesoUpdate.actualizarCita(reserva);
 
-                Cita_UI newcita = new Cita_UI();
-                UI_CitaController controllerCita = new UI_CitaController(newcita, vista);
+                reloadWindow();
             }
         } else if (e.getSource() == CitaUI.btnEliminar) {
             ProcesoRD.eliminarRegistros("cita", "id_cita", CitaUI.lblCodigo.getText());
             CitaUI.btnBuscar.setText("Buscar");
             CitaUI.btnEliminar.setEnabled(false);
             CitaUI.btnModificar.setEnabled(false);
-            Cita_UI newcita = new Cita_UI();
-            UI_CitaController controllerCita = new UI_CitaController(newcita, vista);
+            reloadWindow();
         }
     }
 
@@ -338,6 +334,12 @@ public class UI_CitaController extends PanelController implements ActionListener
                 llenarCboPacientes(CodigoCliente());
             }
         }
+    }
+
+    @Override
+    protected void reloadWindow() {
+        Cita_UI newcita = new Cita_UI();
+        UI_CitaController controllerCita = new UI_CitaController(newcita, vista);
     }
 
 }

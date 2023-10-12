@@ -26,4 +26,5 @@ public abstract class PanelController {
     }
 
     protected abstract void addListeners();
+    protected abstract void reloadWindow();
 }

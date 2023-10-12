@@ -1,5 +1,6 @@
 package Controlador;
 
+import static Controlador.UI_CitaController.titulosCitas;
 import Procesos.ProcesoListado;
 import Vista.Cliente_UI;
 import Vista.Dashboard_UI;
@@ -21,8 +22,12 @@ public class UI_HomeController extends PanelController implements MouseListener 
         this.homeUI = panel;
         super.showWindow(panel);
         addListeners();
+        
+        ProcesoListado.tituloTabla(homeUI.tbCitasProximas, titulosCitas);
+        ProcesoListado.llenarTabla(homeUI.tbCitasProximas, ProcesoListado.listarCitasProximas());
 
         homeUI.lblUsuarios.setText(String.valueOf(ProcesoListado.contarClientes()));
+        homeUI.lblCitas.setText(String.valueOf(ProcesoListado.contarCitasProgramadas()));
     }
 
     @Override
@@ -62,6 +67,10 @@ public class UI_HomeController extends PanelController implements MouseListener 
     @Override
     public void mouseExited(MouseEvent e) {
 
+    }
+
+    @Override
+    protected void reloadWindow() {
     }
 
 }

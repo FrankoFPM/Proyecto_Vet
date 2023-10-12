@@ -9,7 +9,6 @@ import Procesos.ProcesoUpdate;
 import Procesos.ProcesoValidacion;
 import Vista.Cliente_UI;
 import Vista.Dashboard_UI;
-import Vista.Personal_UI;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -38,7 +37,6 @@ public class UI_ClienteController extends PanelController implements ActionListe
         ProcesoListado.llenarTabla(ClienteUI.tbClientes, ProcesoListado.listarDatos("cliente"));
 
         //super.showWindow(panel);
-
         addListeners();
 
         String cod = ProcesoListado.generarCodigo("cliente", "id_cliente", "CLI-", 4);
@@ -62,8 +60,7 @@ public class UI_ClienteController extends PanelController implements ActionListe
             ClienteUI.btnBuscar.setText("Buscar");
             ClienteUI.btnEliminar.setEnabled(false);
             ClienteUI.btnModificar.setEnabled(false);
-            Cliente_UI newcliente = new Cliente_UI();
-            UI_ClienteController controllerCliente = new UI_ClienteController(newcliente, vista);
+            reloadWindow();
         } else if (e.getSource() == ClienteUI.btnRegistrar) {
             if (ProcesoValidacion.validarInputs(txtCliente, msgCliente)) {
                 PersonaCliente cliente = new PersonaCliente();
@@ -75,8 +72,7 @@ public class UI_ClienteController extends PanelController implements ActionListe
                 cliente.setDni(Integer.parseInt(txtCliente[4].getText()));
                 cliente.setDireccion(txtCliente[5].getText());
                 ProcesoInsert.insertarCliente(cliente);
-                Cliente_UI newcliente = new Cliente_UI();
-                UI_ClienteController controllerCliente = new UI_ClienteController(newcliente, vista);
+                reloadWindow();
             }
         } else if (e.getSource() == ClienteUI.btnBuscar) {
             if (ClienteUI.btnBuscar.getText().equals("Buscar")) {
@@ -104,8 +100,7 @@ public class UI_ClienteController extends PanelController implements ActionListe
                 ClienteUI.btnBuscar.setText("Buscar");
                 ClienteUI.btnEliminar.setEnabled(false);
                 ClienteUI.btnModificar.setEnabled(false);
-                Cliente_UI newcliente = new Cliente_UI();
-                UI_ClienteController controllerCliente = new UI_ClienteController(newcliente, DashboardController.vista);
+                reloadWindow();
             }
         } else if (e.getSource() == ClienteUI.btnModificar) {
             if (ProcesoValidacion.validarInputs(txtCliente, msgCliente)) {
@@ -118,9 +113,14 @@ public class UI_ClienteController extends PanelController implements ActionListe
                 cliente.setDni(Integer.parseInt(txtCliente[4].getText()));
                 cliente.setDireccion(txtCliente[5].getText());
                 ProcesoUpdate.actualizarCliente(cliente);
-                Cliente_UI newcliente = new Cliente_UI();
-                UI_ClienteController controllerCliente = new UI_ClienteController(newcliente, DashboardController.vista);
+                reloadWindow();
             }
         }
+    }
+
+    @Override
+    protected void reloadWindow() {
+        Cliente_UI newcliente = new Cliente_UI();
+        UI_ClienteController controllerCliente = new UI_ClienteController(newcliente, vista);
     }
 }

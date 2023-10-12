@@ -94,8 +94,7 @@ public class UI_PacienteController extends PanelController implements ActionList
 
                 ProcesoInsert.insertarPaciente(mascota);
 
-                Paciente_UI newpaciente = new Paciente_UI();
-                UI_PacienteController controllerPaciente = new UI_PacienteController(newpaciente, vista);
+                reloadWindow();
             }
         } else if (e.getSource() == PacienteUI.btnBuscar) {
             if (PacienteUI.btnBuscar.getText().equals("Buscar")) {
@@ -120,8 +119,7 @@ public class UI_PacienteController extends PanelController implements ActionList
                 PacienteUI.btnBuscar.setText("Buscar");
                 PacienteUI.btnEliminar.setEnabled(false);
                 PacienteUI.btnActualizar.setEnabled(false);
-                Paciente_UI newpaciente = new Paciente_UI();
-                UI_PacienteController controllerPaciente = new UI_PacienteController(newpaciente, vista);
+                reloadWindow();
                 buscar = false;
             }
         } else if (e.getSource() == PacienteUI.btnActualizar) {
@@ -137,16 +135,14 @@ public class UI_PacienteController extends PanelController implements ActionList
 
                 ProcesoUpdate.actualizarPaciente(mascota);
 
-                Paciente_UI newpaciente = new Paciente_UI();
-                UI_PacienteController controllerPaciente = new UI_PacienteController(newpaciente, vista);
+                reloadWindow();
             }
         } else if (e.getSource() == PacienteUI.btnEliminar) {
             ProcesoRD.eliminarRegistros("paciente", "id_paciente", PacienteUI.lblCodigo.getText());
             PacienteUI.btnBuscar.setText("Buscar");
             PacienteUI.btnEliminar.setEnabled(false);
             PacienteUI.btnActualizar.setEnabled(false);
-            Paciente_UI newpaciente = new Paciente_UI();
-            UI_PacienteController controllerPaciente = new UI_PacienteController(newpaciente, vista);
+            reloadWindow();
         }
     }
 
@@ -227,6 +223,12 @@ public class UI_PacienteController extends PanelController implements ActionList
                 PacienteUI.cbCliente.setSelectedIndex(0);
             }
         }
+    }
+
+    @Override
+    protected void reloadWindow() {
+        Paciente_UI newpaciente = new Paciente_UI();
+        UI_PacienteController controllerPaciente = new UI_PacienteController(newpaciente, vista);
     }
 
 }
