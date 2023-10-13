@@ -8,6 +8,7 @@ import Vista.Inventario_UI;
 import Vista.Paciente_UI;
 import Vista.Personal_UI;
 import Vista.RPClinico_UI;
+import Vista.RPVenta_UI;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -28,6 +29,7 @@ public class DashboardController implements ActionListener {
     Cita_UI cita = null;
     RPClinico_UI rpClinico = null;
     Inventario_UI inventario = null;
+    RPVenta_UI rpVenta = null;
     //model
     DefaultTableModel modeloCita;
 
@@ -93,6 +95,9 @@ public class DashboardController implements ActionListener {
         }else if (e.getSource() == vista.btnInventario) {
             inventario = new Inventario_UI();
             UI_InventarioController controllerRPclinico = new UI_InventarioController(inventario, vista);
+        }else if (e.getSource() == vista.btnRpVentas) {
+            rpVenta = new RPVenta_UI();
+            UI_ReporteVenta controllerRPventa = new UI_ReporteVenta(rpVenta, vista);
         }
     }
 
