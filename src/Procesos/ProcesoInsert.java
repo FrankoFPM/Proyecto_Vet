@@ -5,6 +5,7 @@ import Modelo.Cita;
 import Modelo.Paciente;
 import Modelo.PersonaCliente;
 import Modelo.PersonaEmpleado;
+import Modelo.ReporteClinico;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -108,6 +109,32 @@ public class ProcesoInsert {
                 JOptionPane.showMessageDialog(null, "Cita reservada", "Success", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(null, "Error al reservar (˘･_･˘)", "Error", JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void insertarReporteClinico(ReporteClinico rpClinico) {
+        Conexion objConn = new Conexion();
+        Connection cn = objConn.ObtenerConexion();
+        CallableStatement cs_insert;
+        try {
+            cs_insert = cn.prepareCall("{CALL sp_insertar_reporteclinico(?,?,?,?,?,?,?,?,?)}");
+            cs_insert.setString(1, rpClinico.getCodigo());
+            cs_insert.setString(2, rpClinico.getCodigo_entidad());
+            cs_insert.setString(3, rpClinico.getEntidad());
+            cs_insert.setString(4, rpClinico.getCausa());
+            cs_insert.setString(5, rpClinico.getPronostico());
+            cs_insert.setString(6, rpClinico.getSintomas());
+            cs_insert.setString(7, rpClinico.getTratamiento());
+            cs_insert.setDate(8, rpClinico.getFecha());
+            cs_insert.setTime(9, rpClinico.getHora());
+            int resultado = cs_insert.executeUpdate();
+            cs_insert.close();
+            if (resultado > 0) {
+                JOptionPane.showMessageDialog(null, "Reporte clinico guardado", "Success", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al guardar (˘･_･˘)", "Error", JOptionPane.WARNING_MESSAGE);
             }
         } catch (SQLException e) {
             e.printStackTrace();

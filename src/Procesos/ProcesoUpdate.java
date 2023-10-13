@@ -5,6 +5,7 @@ import Modelo.Cita;
 import Modelo.Paciente;
 import Modelo.PersonaCliente;
 import Modelo.PersonaEmpleado;
+import Modelo.ReporteClinico;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -106,6 +107,32 @@ public class ProcesoUpdate {
             cs_update.close();
             if (resultado > 0) {
                 JOptionPane.showMessageDialog(null, "Cita modificada", "Success", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al modificar (˘･_･˘)", "Error", JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void actualizarReporteClinico(ReporteClinico rpClinico) {
+        Conexion objConn = new Conexion();
+        Connection cn = objConn.ObtenerConexion();
+        CallableStatement cs_update;
+        try {
+            cs_update = cn.prepareCall("{CALL sp_actualizar_reporteclinico(?,?,?,?,?,?,?,?,?)}");
+            cs_update.setString(1, rpClinico.getCodigo());
+            cs_update.setString(2, rpClinico.getCodigo_entidad());
+            cs_update.setString(3, rpClinico.getEntidad());
+            cs_update.setString(4, rpClinico.getCausa());
+            cs_update.setString(5, rpClinico.getPronostico());
+            cs_update.setString(6, rpClinico.getSintomas());
+            cs_update.setString(7, rpClinico.getTratamiento());
+            cs_update.setDate(8, rpClinico.getFecha());
+            cs_update.setTime(9, rpClinico.getHora());
+            int resultado = cs_update.executeUpdate();
+            cs_update.close();
+            if (resultado > 0) {
+                JOptionPane.showMessageDialog(null, "Reporte clinico modificado", "Success", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(null, "Error al modificar (˘･_･˘)", "Error", JOptionPane.WARNING_MESSAGE);
             }
