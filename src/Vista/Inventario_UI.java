@@ -168,7 +168,7 @@ public class Inventario_UI extends javax.swing.JPanel {
 
         spPrecio.setPreferredSize(new java.awt.Dimension(225, 32));
 
-        cbCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Seleccionar]", "Medicina", "Alimento", "Accesorio", "Servicio" }));
         cbCategoria.setPreferredSize(new java.awt.Dimension(225, 32));
 
         spCantidad.setPreferredSize(new java.awt.Dimension(225, 32));
