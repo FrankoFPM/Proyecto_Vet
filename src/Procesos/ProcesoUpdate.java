@@ -5,6 +5,7 @@ import Modelo.Cita;
 import Modelo.Paciente;
 import Modelo.PersonaCliente;
 import Modelo.PersonaEmpleado;
+import Modelo.Producto;
 import Modelo.ReporteClinico;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -133,6 +134,30 @@ public class ProcesoUpdate {
             cs_update.close();
             if (resultado > 0) {
                 JOptionPane.showMessageDialog(null, "Reporte clinico modificado", "Success", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al modificar (˘･_･˘)", "Error", JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void actualizarProducto(Producto producto) {
+        Conexion objConn = new Conexion();
+        Connection cn = objConn.ObtenerConexion();
+        CallableStatement cs_update;
+        try {
+            cs_update = cn.prepareCall("{CALL sp_actualizar_producto(?,?,?,?,?,?,?)}");
+            cs_update.setString(1, producto.getCodigo());
+            cs_update.setString(2, producto.getNombre());
+            cs_update.setString(3, producto.getMarca());
+            cs_update.setDouble(4, producto.getPrecio());
+            cs_update.setInt(5, producto.getCantidad());
+            cs_update.setString(6, producto.getCategoria());
+            cs_update.setDate(7, producto.getFecha());
+            int resultado = cs_update.executeUpdate();
+            cs_update.close();
+            if (resultado > 0) {
+                JOptionPane.showMessageDialog(null, "Producto modificado", "Success", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(null, "Error al modificar (˘･_･˘)", "Error", JOptionPane.WARNING_MESSAGE);
             }
