@@ -83,6 +83,26 @@ FROM personal;
 -- Fin Vistas
 
 DELIMITER //
+CREATE PROCEDURE sp_listar_productos()
+BEGIN
+    SELECT id_producto, nombre, marca, precio, CONCAT(nombre, ' - Marca: ', marca) AS info
+    FROM Productos
+    WHERE categoria <> 'Servicio';
+END //
+DELIMITER ;
+
+
+DELIMITER //
+CREATE PROCEDURE sp_listar_servicios()
+BEGIN
+    SELECT id_producto, nombre, marca, precio
+    FROM Productos
+    WHERE categoria = 'Servicio';
+END //
+DELIMITER ;
+call sp_listar_servicios();
+
+DELIMITER //
 CREATE PROCEDURE sp_actualizar_producto(IN p_id_producto VARCHAR(8), IN p_nombre VARCHAR(50), IN p_marca VARCHAR(50), IN p_precio DECIMAL(5, 2), IN p_cantidad INT, IN p_categoria VARCHAR(50), IN p_fecha DATE)
 BEGIN
     UPDATE Productos 
@@ -542,4 +562,8 @@ CALL sp_insertar_paciente('PAC-0007','Coco','loro','guacamayo azul','macho','azu
 CALL sp_insertar_paciente('PAC-0008','Nemo','pez','payaso','macho','naranja y blanco','CLI-0003');
 CALL sp_insertar_paciente('PAC-0009','Daisy','conejo','angora','hembra','blanco','CLI-0003');
 
-select * from paciente;
+-- Insertar un producto
+INSERT INTO Productos(id_producto, nombre, marca, precio, cantidad, categoria, fecha)
+VALUES ('PRO-0001', 'Consulta', 'propia', 100.00, 10, 'Servicio', '2023-10-13');
+INSERT INTO Productos(id_producto, nombre, marca, precio, cantidad, categoria, fecha)
+VALUES ('PRO-0002', 'Paracetamol', 'China', 200.00, 20, 'Producto', '2023-10-13');

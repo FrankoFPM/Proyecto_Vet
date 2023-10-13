@@ -12,7 +12,19 @@ public class Producto {
     private String categoria;
     private Date fecha;
 
+    private String info;
+
     public Producto() {
+    }
+
+    public Producto(String codigo, String info) {
+        this.codigo = codigo;
+        this.info = info;
+    }
+    public Producto(String codigo, String info,String marca) {
+        this.codigo = codigo;
+        this.info = info;
+        this.marca = marca;
     }
 
     public Producto(String codigo, String nombre, String marca, double precio, int cantidad, String categoria, Date fecha) {
@@ -80,7 +92,18 @@ public class Producto {
     public void setCategoria(String categoria) {
         this.categoria = categoria;
     }
-    
-    
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
+    @Override
+    public String toString() {
+        return getInfo();
+    }
 
 }
