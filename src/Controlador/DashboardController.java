@@ -4,6 +4,7 @@ import Vista.Cita_UI;
 import Vista.Cliente_UI;
 import Vista.Dashboard_UI;
 import Vista.Home_UI;
+import Vista.Inventario_UI;
 import Vista.Paciente_UI;
 import Vista.Personal_UI;
 import Vista.RPClinico_UI;
@@ -26,6 +27,7 @@ public class DashboardController implements ActionListener {
     Personal_UI personal = null;
     Cita_UI cita = null;
     RPClinico_UI rpClinico = null;
+    Inventario_UI inventario = null;
     //model
     DefaultTableModel modeloCita;
 
@@ -88,6 +90,9 @@ public class DashboardController implements ActionListener {
         }else if (e.getSource() == vista.btnRpClinico) {
             rpClinico = new RPClinico_UI();
             UI_ReporteClinicoController controllerRPclinico = new UI_ReporteClinicoController(rpClinico, vista);
+        }else if (e.getSource() == vista.btnInventario) {
+            inventario = new Inventario_UI();
+            UI_InventarioController controllerRPclinico = new UI_InventarioController(inventario, vista);
         }
     }
 

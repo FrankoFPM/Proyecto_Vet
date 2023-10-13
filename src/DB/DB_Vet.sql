@@ -49,6 +49,28 @@ create table cita(
     estado varchar(20) not null
 );
 
+CREATE TABLE ReporteClinico (
+    id_rpclinico VARCHAR(8) PRIMARY KEY NOT NULL,
+    codigo_entidad VARCHAR(9),
+    entidad VARCHAR(50),
+    causa VARCHAR(150),
+    pronostico VARCHAR(40),
+    sintomas TEXT,
+    tratamiento TEXT,
+    fecha DATE,
+    hora TIME
+);
+
+CREATE TABLE Productos(
+    id_producto VARCHAR(8) NOT NULL PRIMARY KEY,
+    nombre VARCHAR(50),
+    marca VARCHAR(50),
+    precio DECIMAL(5, 2),
+    cantidad INT,
+    categoria VARCHAR(50),
+    fecha DATE
+);
+
 
 -- Vistas
 
@@ -60,7 +82,62 @@ FROM personal;
 
 -- Fin Vistas
 
+DELIMITER //
+CREATE PROCEDURE sp_actualizar_producto(IN p_id_producto VARCHAR(8), IN p_nombre VARCHAR(50), IN p_marca VARCHAR(50), IN p_precio DECIMAL(5, 2), IN p_cantidad INT, IN p_categoria VARCHAR(50), IN p_fecha DATE)
+BEGIN
+    UPDATE Productos 
+    SET nombre = p_nombre,
+        marca = p_marca,
+        precio = p_precio,
+        cantidad = p_cantidad,
+        categoria = p_categoria,
+        fecha = p_fecha
+    WHERE id_producto = p_id_producto;
+END //
+DELIMITER ;
 
+
+DELIMITER //
+CREATE PROCEDURE sp_insertar_producto(IN p_id_producto VARCHAR(8), IN p_nombre VARCHAR(50), IN p_marca VARCHAR(50), IN p_precio DECIMAL(5, 2), IN p_cantidad INT, IN p_categoria VARCHAR(50), IN p_fecha DATE)
+BEGIN
+    INSERT INTO Productos(id_producto, nombre, marca, precio, cantidad, categoria, fecha) 
+    VALUES (p_id_producto, p_nombre, p_marca, p_precio, p_cantidad, p_categoria, p_fecha);
+END //
+DELIMITER ;
+
+
+
+DELIMITER //
+CREATE PROCEDURE sp_insertar_reporteclinico(IN p_id_rpclinico VARCHAR(8), IN p_codigo_entidad VARCHAR(9), IN p_entidad VARCHAR(50), IN p_causa VARCHAR(150), IN p_pronostico VARCHAR(40), IN p_sintomas TEXT, IN p_tratamiento TEXT, IN p_fecha DATE, IN p_hora TIME)
+BEGIN
+    INSERT INTO ReporteClinico (id_rpclinico, codigo_entidad, entidad, causa, pronostico, sintomas, tratamiento, fecha, hora)
+    VALUES (p_id_rpclinico, p_codigo_entidad, p_entidad, p_causa, p_pronostico, p_sintomas, p_tratamiento, p_fecha, p_hora);
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_actualizar_reporteclinico(IN p_id_rpclinico VARCHAR(8), IN p_codigo_entidad VARCHAR(9), IN p_entidad VARCHAR(50), IN p_causa VARCHAR(150), IN p_pronostico VARCHAR(40), IN p_sintomas TEXT, IN p_tratamiento TEXT, IN p_fecha DATE, IN p_hora TIME)
+BEGIN
+    UPDATE ReporteClinico 
+    SET codigo_entidad = p_codigo_entidad,
+        entidad = p_entidad,
+        causa = p_causa,
+        pronostico = p_pronostico,
+        sintomas = p_sintomas,
+        tratamiento = p_tratamiento,
+        fecha = p_fecha,
+        hora = p_hora
+    WHERE id_rpclinico = p_id_rpclinico;
+END //
+DELIMITER ;
+
+
+DELIMITER //
+CREATE PROCEDURE sp_seleccionar_citas_programadas()
+BEGIN
+    SELECT * FROM cita WHERE estado = 'Programada';
+END //
+DELIMITER ;
 
 
 DELIMITER //
@@ -300,6 +377,13 @@ END //
 DELIMITER ;
 
 DELIMITER //
+CREATE PROCEDURE sp_contar_citas_programadas()
+BEGIN
+select count(*) from cita where  estado = 'Programada';
+END //
+DELIMITER ;
+
+DELIMITER //
 CREATE PROCEDURE sp_listar_clientes()
 BEGIN
 select id_cliente, concat(nombre," ", apellido, " - ",dni) as "info" from cliente;
@@ -309,9 +393,19 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE sp_listar_pacientes(in p_cliente varchar(15))
 BEGIN
-select id_paciente, concat(nombre, " - ",Especie) as "info" from paciente where id_cliente = p_cliente;
+select id_paciente, concat(nombre, " - ",especie) as "info" from paciente where id_cliente = p_cliente;
 END //
 DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_listar_todo_pacientes()
+BEGIN
+    SELECT p.id_paciente, CONCAT(p.nombre, " - ", p.especie, " - DNI Cliente: ", c.dni) AS "info"
+    FROM paciente p
+    INNER JOIN cliente c ON p.id_cliente = c.id_cliente;
+END //
+DELIMITER ;
+
 
 DELIMITER //
 CREATE PROCEDURE sp_listar_veterinarios()
