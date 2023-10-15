@@ -5,7 +5,7 @@ import Modelo.Cita;
 import Modelo.Paciente;
 import Modelo.PersonaCliente;
 import Modelo.PersonaEmpleado;
-import Modelo.Producto;
+import Modelo.ProductoInventario;
 import Modelo.ReporteClinico;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -141,7 +141,7 @@ public class ProcesoUpdate {
             e.printStackTrace();
         }
     }
-    public static void actualizarProducto(Producto producto) {
+    public static void actualizarProducto(ProductoInventario producto) {
         Conexion objConn = new Conexion();
         Connection cn = objConn.ObtenerConexion();
         CallableStatement cs_update;
