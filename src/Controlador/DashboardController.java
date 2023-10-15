@@ -97,7 +97,7 @@ public class DashboardController implements ActionListener {
             UI_InventarioController controllerRPclinico = new UI_InventarioController(inventario, vista);
         }else if (e.getSource() == vista.btnRpVentas) {
             rpVenta = new RPVenta_UI();
-            UI_ReporteVenta controllerRPventa = new UI_ReporteVenta(rpVenta, vista);
+            UI_ReporteVentaController controllerRPventa = new UI_ReporteVentaController(rpVenta, vista);
         }
     }
 
