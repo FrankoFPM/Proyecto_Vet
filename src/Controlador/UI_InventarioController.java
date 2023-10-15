@@ -1,7 +1,7 @@
 package Controlador;
 
 import static Controlador.DashboardController.vista;
-import Modelo.Producto;
+import Modelo.ProductoInventario;
 import Procesos.ProcesoInsert;
 import Procesos.ProcesoListado;
 import Procesos.ProcesoRD;
@@ -70,7 +70,7 @@ public class UI_InventarioController extends PanelController implements ActionLi
             reloadWindow();
         } else if (e.getSource() == InventarioUI.btnRegistrar) {
             if (ProcesoValidacion.validarInputs(txtinventario, msgInventario)) {
-                Producto producto = new Producto();
+                ProductoInventario producto = new ProductoInventario();
                 producto.setCodigo(InventarioUI.lblCodigo.getText());
                 producto.setNombre(txtinventario[0].getText());
                 producto.setMarca(txtinventario[1].getText());
@@ -123,7 +123,7 @@ public class UI_InventarioController extends PanelController implements ActionLi
             }
         } else if (e.getSource() == InventarioUI.btnModificar) {
             if (ProcesoValidacion.validarInputs(txtinventario, msgInventario)) {
-                Producto producto = new Producto();
+                ProductoInventario producto = new ProductoInventario();
                 producto.setCodigo(InventarioUI.lblCodigo.getText());
                 producto.setNombre(txtinventario[0].getText());
                 producto.setMarca(txtinventario[1].getText());
