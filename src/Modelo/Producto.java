@@ -1,48 +1,25 @@
 package Modelo;
 
-import java.sql.Date;
-
 public class Producto {
 
     private String codigo;
     private String nombre;
-    private String marca;
     private double precio;
     private int cantidad;
-    private String categoria;
-    private Date fecha;
-
-    private String info;
 
     public Producto() {
     }
 
-    public Producto(String codigo, String info) {
+    public Producto(String codigo, double precio) {
         this.codigo = codigo;
-        this.info = info;
-    }
-    public Producto(String codigo, String info,String marca) {
-        this.codigo = codigo;
-        this.info = info;
-        this.marca = marca;
-    }
+        this.precio = precio;
+    }   
 
-    public Producto(String codigo, String nombre, String marca, double precio, int cantidad, String categoria, Date fecha) {
+    public Producto(String codigo, String nombre, double precio, int cantidad) {
         this.codigo = codigo;
         this.nombre = nombre;
-        this.marca = marca;
         this.precio = precio;
         this.cantidad = cantidad;
-        this.categoria = categoria;
-        this.fecha = fecha;
-    }
-
-    public Date getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
     }
 
     public String getCodigo() {
@@ -61,14 +38,6 @@ public class Producto {
         this.nombre = nombre;
     }
 
-    public String getMarca() {
-        return marca;
-    }
-
-    public void setMarca(String marca) {
-        this.marca = marca;
-    }
-
     public double getPrecio() {
         return precio;
     }
@@ -84,26 +53,10 @@ public class Producto {
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
-
-    public String getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
-    }
-
-    public String getInfo() {
-        return info;
-    }
-
-    public void setInfo(String info) {
-        this.info = info;
-    }
-
-    @Override
-    public String toString() {
-        return getInfo();
+    
+    //metodos
+    public double total(){
+        return getCantidad() * getPrecio();
     }
 
 }
