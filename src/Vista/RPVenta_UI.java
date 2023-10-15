@@ -37,6 +37,12 @@ public class RPVenta_UI extends javax.swing.JPanel {
         spPrecioServ = new javax.swing.JSpinner();
         datePicker = new Styles.DatePickerCustom();
         timePicker = new Styles.TimePickerCustom();
+        jLabel1 = new javax.swing.JLabel();
+        lblTotal = new javax.swing.JLabel();
+        lblImpuesto = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        lblTotalFinal = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 247, 223));
 
@@ -55,57 +61,57 @@ public class RPVenta_UI extends javax.swing.JPanel {
 
         jSeparator2.setForeground(new java.awt.Color(181, 224, 255));
 
-        jLabel6.setFont(new java.awt.Font("Roboto Medium", 0, 24)); // NOI18N
         jLabel6.setText("Reporte de ventas");
         jLabel6.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jLabel6.setFont(new java.awt.Font("Roboto Medium", 0, 24)); // NOI18N
 
-        lblNombre.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
         lblNombre.setText("Cliente");
+        lblNombre.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
 
-        jLabel8.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
         jLabel8.setText("Producto");
+        jLabel8.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
 
-        jLabel9.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
         jLabel9.setText("Cantidad");
+        jLabel9.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
 
-        jLabel10.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
         jLabel10.setText("Servicio");
+        jLabel10.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
 
-        jLabel11.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
         jLabel11.setText("Precio del servicio");
+        jLabel11.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
 
-        jLabel12.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
         jLabel12.setText("Fecha y hora");
+        jLabel12.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
 
-        jLabel13.setFont(new java.awt.Font("Roboto Medium", 0, 24)); // NOI18N
         jLabel13.setText("Acciones");
+        jLabel13.setFont(new java.awt.Font("Roboto Medium", 0, 24)); // NOI18N
 
         jSeparator3.setForeground(new java.awt.Color(181, 224, 255));
 
         jPanel1.setBackground(new java.awt.Color(255, 247, 223));
 
+        btnBuscar.setText("Buscar");
         btnBuscar.setBackground(new java.awt.Color(13, 153, 255));
         btnBuscar.setFont(new java.awt.Font("Roboto Condensed", 1, 16)); // NOI18N
         btnBuscar.setForeground(new java.awt.Color(255, 255, 255));
-        btnBuscar.setText("Buscar");
         btnBuscar.setPreferredSize(new java.awt.Dimension(141, 33));
 
+        btnRegistrar.setText("Nuevo");
         btnRegistrar.setBackground(new java.awt.Color(13, 153, 255));
         btnRegistrar.setFont(new java.awt.Font("Roboto Condensed", 1, 16)); // NOI18N
         btnRegistrar.setForeground(new java.awt.Color(255, 255, 255));
-        btnRegistrar.setText("Registrar");
         btnRegistrar.setPreferredSize(new java.awt.Dimension(141, 33));
 
+        btnModificar.setText("Modificar");
         btnModificar.setBackground(new java.awt.Color(20, 174, 92));
         btnModificar.setFont(new java.awt.Font("Roboto Condensed", 1, 16)); // NOI18N
         btnModificar.setForeground(new java.awt.Color(255, 255, 255));
-        btnModificar.setText("Modificar");
         btnModificar.setPreferredSize(new java.awt.Dimension(141, 33));
 
+        btnEliminar.setText("Eliminar");
         btnEliminar.setBackground(new java.awt.Color(255, 0, 0));
         btnEliminar.setFont(new java.awt.Font("Roboto Condensed", 1, 16)); // NOI18N
         btnEliminar.setForeground(new java.awt.Color(255, 255, 255));
-        btnEliminar.setText("Eliminar");
         btnEliminar.setPreferredSize(new java.awt.Dimension(141, 33));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -141,9 +147,9 @@ public class RPVenta_UI extends javax.swing.JPanel {
         panelRound1.setRoundTopLeft(20);
         panelRound1.setRoundTopRight(20);
 
-        lblCodigo.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
         lblCodigo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblCodigo.setText("####");
+        lblCodigo.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
 
         javax.swing.GroupLayout panelRound1Layout = new javax.swing.GroupLayout(panelRound1);
         panelRound1.setLayout(panelRound1Layout);
@@ -170,16 +176,37 @@ public class RPVenta_UI extends javax.swing.JPanel {
 
         spCantidad.setPreferredSize(new java.awt.Dimension(100, 32));
 
+        btnAgregar.setText("Agregar");
         btnAgregar.setBackground(new java.awt.Color(20, 174, 92));
         btnAgregar.setFont(new java.awt.Font("Roboto Condensed", 1, 16)); // NOI18N
         btnAgregar.setForeground(new java.awt.Color(255, 255, 255));
-        btnAgregar.setText("Agregar");
         btnAgregar.setPreferredSize(new java.awt.Dimension(141, 33));
 
         cbServicio.setEditable(true);
         cbServicio.setPreferredSize(new java.awt.Dimension(225, 32));
 
         spPrecioServ.setPreferredSize(new java.awt.Dimension(225, 32));
+
+        jLabel1.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        jLabel1.setText("Importe total");
+
+        lblTotal.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        lblTotal.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblTotal.setText("00.00");
+
+        lblImpuesto.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        lblImpuesto.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblImpuesto.setText("00.00");
+
+        jLabel4.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        jLabel4.setText("| Impuestos (IGV 18%)");
+
+        lblTotalFinal.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        lblTotalFinal.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblTotalFinal.setText("00.00");
+
+        jLabel7.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        jLabel7.setText("| Importe final");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -188,14 +215,30 @@ public class RPVenta_UI extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jSeparator2)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblImpuesto, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblTotalFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(panelRound1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addGroup(layout.createSequentialGroup()
                                 .addGap(20, 20, 20)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -223,13 +266,10 @@ public class RPVenta_UI extends javax.swing.JPanel {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(timePicker, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                 .addGap(20, 20, 20))
-                            .addComponent(jScrollPane1)
-                            .addComponent(jSeparator3)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(20, 20, 20))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(20, 20, 20))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -272,15 +312,25 @@ public class RPVenta_UI extends javax.swing.JPanel {
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbServicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(29, 29, 29)
+                .addGap(10, 10, 10)
                 .addComponent(jLabel13)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
-                .addGap(20, 20, 20))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(lblTotal)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel4)
+                        .addComponent(lblImpuesto)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(lblTotalFinal))))
+                .addGap(21, 21, 21))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -292,14 +342,17 @@ public class RPVenta_UI extends javax.swing.JPanel {
     public javax.swing.JButton btnModificar;
     public javax.swing.JButton btnRegistrar;
     public javax.swing.JComboBox<Modelo.PersonaCliente> cbCliente;
-    public javax.swing.JComboBox<Modelo.Producto> cbProducto;
-    public javax.swing.JComboBox<Modelo.Producto> cbServicio;
+    public javax.swing.JComboBox<Modelo.ProductoInventario> cbProducto;
+    public javax.swing.JComboBox<Modelo.ProductoInventario> cbServicio;
     public Styles.DatePickerCustom datePicker;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
@@ -307,7 +360,10 @@ public class RPVenta_UI extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     public javax.swing.JLabel lblCodigo;
+    public javax.swing.JLabel lblImpuesto;
     private javax.swing.JLabel lblNombre;
+    public javax.swing.JLabel lblTotal;
+    public javax.swing.JLabel lblTotalFinal;
     private Styles.PanelRound panelRound1;
     public javax.swing.JSpinner spCantidad;
     public javax.swing.JSpinner spPrecioServ;
