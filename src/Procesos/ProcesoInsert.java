@@ -5,8 +5,10 @@ import Modelo.Cita;
 import Modelo.Paciente;
 import Modelo.PersonaCliente;
 import Modelo.PersonaEmpleado;
-import Modelo.Producto;
+import Modelo.ProductoInventario;
+import Modelo.ProductoItem;
 import Modelo.ReporteClinico;
+import Vista.RPVenta_UI;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -66,6 +68,7 @@ public class ProcesoInsert {
         } catch (SQLException e) {
         }
     }
+
     public static void insertarPersonal(PersonaEmpleado empleado) {
         Conexion objConn = new Conexion();
         Connection cn = objConn.ObtenerConexion();
@@ -90,6 +93,7 @@ public class ProcesoInsert {
         } catch (SQLException e) {
         }
     }
+
     public static void insertarCita(Cita reserva) {
         Conexion objConn = new Conexion();
         Connection cn = objConn.ObtenerConexion();
@@ -115,6 +119,7 @@ public class ProcesoInsert {
             e.printStackTrace();
         }
     }
+
     public static void insertarReporteClinico(ReporteClinico rpClinico) {
         Conexion objConn = new Conexion();
         Connection cn = objConn.ObtenerConexion();
@@ -141,7 +146,8 @@ public class ProcesoInsert {
             e.printStackTrace();
         }
     }
-    public static void insertarProducto(Producto producto) {
+
+    public static void insertarProducto(ProductoInventario producto) {
         Conexion objConn = new Conexion();
         Connection cn = objConn.ObtenerConexion();
         CallableStatement cs_insert;
@@ -164,5 +170,44 @@ public class ProcesoInsert {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    public static void insertarItemBoleta(ProductoItem item) {
+        Conexion objConn = new Conexion();
+        Connection cn = objConn.ObtenerConexion();
+        CallableStatement cs_insert;
+        try {
+            cs_insert = cn.prepareCall("{CALL sp_insertar_itemboleta(?,?,?,?,?,?)}");
+            cs_insert.setString(1, item.getCodigoBoleta());
+            cs_insert.setString(2, item.getCodigo());
+            cs_insert.setString(3, item.getNombre());
+            cs_insert.setDouble(4, item.getPrecio());
+            cs_insert.setInt(5, item.getCantidad());
+            cs_insert.setDouble(6, item.total());
+            int resultado = cs_insert.executeUpdate();
+            cs_insert.close();
+            if (resultado > 0) {
+                JOptionPane.showMessageDialog(null, "Productos registrados", "Success", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al registrar (˘･_･˘)", "Error", JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static ProductoInventario obtenerItem(RPVenta_UI ui) {
+        ProductoInventario item = new ProductoInventario();
+        if (ui.cbProducto.getSelectedIndex() != 0) {
+            item.setCodigo(ui.cbProducto.getItemAt(ui.cbProducto.getSelectedIndex()).getCodigo());
+            item.setNombre(ui.cbProducto.getItemAt(ui.cbProducto.getSelectedIndex()).getInfo());;
+            item.setCantidad((int) ui.spCantidad.getValue());
+            item.setPrecio((double) ui.cbProducto.getItemAt(    ui.cbProducto.getSelectedIndex()).getPrecio());
+        } else if (ui.cbServicio.getSelectedIndex() != 0) {
+            item.setCodigo(ui.cbServicio.getItemAt(ui.cbServicio.getSelectedIndex()).getCodigo());
+            item.setNombre(ui.cbServicio.getItemAt(ui.cbServicio.getSelectedIndex()).getInfo());;
+            item.setCantidad(1);
+            item.setPrecio(Double.valueOf((Integer) ui.spPrecioServ.getValue()));
+        }
+        return item;
     }
 }

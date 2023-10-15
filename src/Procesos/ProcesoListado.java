@@ -4,7 +4,7 @@ import DB.Conexion;
 import Modelo.Paciente;
 import Modelo.PersonaCliente;
 import Modelo.PersonaEmpleado;
-import Modelo.Producto;
+import Modelo.ProductoInventario;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -264,20 +264,20 @@ public class ProcesoListado {
         return listadoEmpleados;
     }
 
-    public static ArrayList<Producto> obtenerProducto() {
+    public static ArrayList<ProductoInventario> obtenerProducto() {
 
         Conexion objConn = new Conexion();
         Connection cn = objConn.ObtenerConexion();
 
-        ArrayList<Producto> listadoProductos = new ArrayList<>();
-        Producto producto;
+        ArrayList<ProductoInventario> listadoProductos = new ArrayList<>();
+        ProductoInventario producto;
         CallableStatement cs_listadoProductos;
         ResultSet rs;
 
         try {
             cs_listadoProductos = cn.prepareCall("{call sp_listar_productos}");
             rs = cs_listadoProductos.executeQuery();
-            producto = new Producto();
+            producto = new ProductoInventario();
             producto.setCodigo("0");
             producto.setNombre("[Selecciona una opción...]");
             producto.setMarca("none");
@@ -285,7 +285,7 @@ public class ProcesoListado {
             producto.setInfo("[Selecciona una opción...]");
             listadoProductos.add(producto);
             while (rs.next()) {
-                producto = new Producto();
+                producto = new ProductoInventario();
                 producto.setCodigo(rs.getString(1));
                 producto.setNombre(rs.getString(2));
                 producto.setMarca(rs.getString(3));
@@ -299,20 +299,21 @@ public class ProcesoListado {
         }
         return listadoProductos;
     }
-    public static ArrayList<Producto> obtenerServicios() {
+
+    public static ArrayList<ProductoInventario> obtenerServicios() {
 
         Conexion objConn = new Conexion();
         Connection cn = objConn.ObtenerConexion();
 
-        ArrayList<Producto> listadoProductos = new ArrayList<>();
-        Producto producto;
+        ArrayList<ProductoInventario> listadoProductos = new ArrayList<>();
+        ProductoInventario producto;
         CallableStatement cs_listadoServicios;
         ResultSet rs;
 
         try {
             cs_listadoServicios = cn.prepareCall("{call sp_listar_servicios}");
             rs = cs_listadoServicios.executeQuery();
-            producto = new Producto();
+            producto = new ProductoInventario();
             producto.setCodigo("0");
             producto.setNombre("[Selecciona una opción...]");
             producto.setMarca("none");
@@ -320,7 +321,7 @@ public class ProcesoListado {
             producto.setInfo("[Selecciona una opción...]");
             listadoProductos.add(producto);
             while (rs.next()) {
-                producto = new Producto();
+                producto = new ProductoInventario();
                 producto.setCodigo(rs.getString(1));
                 producto.setNombre(rs.getString(2));
                 producto.setMarca(rs.getString(3));
@@ -347,6 +348,20 @@ public class ProcesoListado {
         for (String[] fila : datos) {
             modelo.addRow(fila);
         }
+    }
+
+    public static void insertarEnTabla(JTable tabla, ProductoInventario item) {
+        DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
+        //modelo.setRowCount(0);
+
+        String[] fila = new String[5];
+        fila[0] = item.getCodigo();
+        fila[1] = item.getNombre();
+        fila[2] = String.valueOf(item.getPrecio());
+        fila[3] = String.valueOf(item.getCantidad());
+        fila[4] = String.valueOf(item.total());
+        
+        modelo.addRow(fila);
     }
 
     //Filtrar comboClientes
@@ -470,19 +485,19 @@ public class ProcesoListado {
         textField.setText(enteredText);
     }
 
-    public static void filterComboBoxProductos(String enteredText, JComboBox<Producto> comboBox) {
+    public static void filterComboBoxProductos(String enteredText, JComboBox<ProductoInventario> comboBox) {
         if (!comboBox.isPopupVisible()) {
             comboBox.showPopup();
         }
 
-        ArrayList<Producto> filterArray = new ArrayList<>();
+        ArrayList<ProductoInventario> filterArray = new ArrayList<>();
 
         if (enteredText.isEmpty()) {
             filterArray = new ArrayList<>(ProcesoListado.obtenerProducto());
         } else {
             String normalizedEnteredText = normalize(enteredText);
 
-            for (Producto item : ProcesoListado.obtenerProducto()) {
+            for (ProductoInventario item : ProcesoListado.obtenerProducto()) {
                 String normalizedItem = normalize(item.toString());
                 if (normalizedItem.contains(normalizedEnteredText)) {
                     filterArray.add(item);
@@ -490,9 +505,9 @@ public class ProcesoListado {
             }
         }
 
-        DefaultComboBoxModel<Producto> model = (DefaultComboBoxModel<Producto>) comboBox.getModel();
+        DefaultComboBoxModel<ProductoInventario> model = (DefaultComboBoxModel<ProductoInventario>) comboBox.getModel();
         model.removeAllElements();
-        for (Producto s : filterArray) {
+        for (ProductoInventario s : filterArray) {
             model.addElement(s);
         }
 

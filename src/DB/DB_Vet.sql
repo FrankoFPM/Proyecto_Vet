@@ -36,7 +36,7 @@ create table paciente(
     sexo varchar(15) not null,
     color varchar(50) not null,
     id_cliente varchar(15) not null,
-    FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente)
+    FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente) ON DELETE CASCADE
 );
 create table cita(
 	id_cita varchar(8) primary key not null,
@@ -71,6 +71,27 @@ CREATE TABLE Productos(
     fecha DATE
 );
 
+CREATE TABLE boleta (
+    id_boleta VARCHAR(8) PRIMARY KEY,
+    id_cliente VARCHAR(255),
+    cliente VARCHAR(255),
+    fecha DATE,
+    hora TIME,
+    cantidad_items INT,
+    importe DECIMAL(5, 2),
+    impuesto DECIMAL(5, 2),
+    importe_final DECIMAL(5, 2)
+);
+
+CREATE TABLE itemsboleta(
+	id_boleta VARCHAR(8),
+    id_item VARCHAR(15),
+    item VARCHAR(50),
+    precio DECIMAL(5, 2),
+    cantidad int,
+    total DECIMAL(5, 2),
+    FOREIGN KEY (id_boleta) REFERENCES boleta(id_boleta) ON DELETE CASCADE
+);
 
 -- Vistas
 
@@ -81,6 +102,40 @@ FROM personal;
 
 
 -- Fin Vistas
+
+DELIMITER //
+CREATE PROCEDURE sp_insertar_itemboleta(IN p_id_boleta VARCHAR(8), IN p_id_item VARCHAR(15), IN p_item VARCHAR(50), IN p_precio DECIMAL(5, 2), IN p_cantidad INT, IN p_total DECIMAL(5, 2))
+BEGIN
+    INSERT INTO itemsboleta(id_boleta, id_item, item, precio, cantidad, total)
+    VALUES (p_id_boleta, p_id_item, p_item, p_precio, p_cantidad, p_total);
+END //
+DELIMITER ;
+
+
+DELIMITER //
+CREATE PROCEDURE sp_insertar_boleta(IN p_id_boleta VARCHAR(8), IN p_id_cliente VARCHAR(255), IN p_cliente VARCHAR(255), IN p_fecha DATE, IN p_hora TIME, IN p_cantidad_items INT, IN p_importe DOUBLE, IN p_impuesto DOUBLE, IN p_importe_final DOUBLE)
+BEGIN
+    INSERT INTO boleta(id_boleta, id_cliente, cliente, fecha, hora, cantidad_items, importe, impuesto, importe_final)
+    VALUES (p_id_boleta, p_id_cliente, p_cliente, p_fecha, p_hora, p_cantidad_items, p_importe, p_impuesto, p_importe_final);
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_actualizar_boleta(IN p_id_boleta VARCHAR(8), IN p_id_cliente VARCHAR(255), IN p_cliente VARCHAR(255), IN p_fecha DATE, IN p_hora TIME, IN p_cantidad_items INT, IN p_importe DOUBLE, IN p_impuesto DOUBLE, IN p_importe_final DOUBLE)
+BEGIN
+    UPDATE boleta
+    SET id_cliente = p_id_cliente,
+        cliente = p_cliente,
+        fecha = p_fecha,
+        hora = p_hora,
+        cantidad_items = p_cantidad_items,
+        importe = p_importe,
+        impuesto = p_impuesto,
+        importe_final = p_importe_final
+    WHERE id_boleta = p_id_boleta;
+END //
+DELIMITER ;
+
 
 DELIMITER //
 CREATE PROCEDURE sp_listar_productos()
