@@ -171,6 +171,29 @@ public class ProcesoListado {
         }
         return numCitas;
     }
+    public static int sumarIngresos() {
+        Conexion objConn = new Conexion();
+        Connection cn = objConn.ObtenerConexion();
+        CallableStatement cs_listaCitas;
+
+        int numCitas = 0;
+
+        try {
+            String query = "{CALL sp_sumar_ingresos_mes()}";
+            cs_listaCitas = cn.prepareCall(query);
+            boolean resultado = cs_listaCitas.execute();
+            if (resultado) {
+                ResultSet rs = cs_listaCitas.getResultSet();
+                if (rs.next()) {
+                    numCitas = rs.getInt(1);
+                }
+                rs.close();
+            }
+            cs_listaCitas.close();
+        } catch (SQLException e) {
+        }
+        return numCitas;
+    }
 
     //Obtener clientes para el CBox
     public static ArrayList<PersonaCliente> obtenerClientes() {
