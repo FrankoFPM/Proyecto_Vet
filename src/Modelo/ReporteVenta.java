@@ -9,6 +9,9 @@ public class ReporteVenta extends Reporte {
     private double importe;
     static final double IGV=0.18;
 
+    public ReporteVenta() {
+    }
+
     public ReporteVenta(int cantidaditems, double importe, String codigo, String codigo_entidad, String entidad, Date fecha, Time hora) {
         super(codigo, codigo_entidad, entidad, fecha, hora);
         this.cantidaditems = cantidaditems;
