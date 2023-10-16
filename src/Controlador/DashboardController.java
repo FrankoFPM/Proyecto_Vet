@@ -75,7 +75,6 @@ public class DashboardController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == vista.btnHome) {
-            System.out.println("Home");
             showHome();
         } else if (e.getSource() == vista.btnCliente) {
             cliente = new Cliente_UI();
