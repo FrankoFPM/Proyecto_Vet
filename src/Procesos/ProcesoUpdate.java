@@ -7,6 +7,7 @@ import Modelo.PersonaCliente;
 import Modelo.PersonaEmpleado;
 import Modelo.ProductoInventario;
 import Modelo.ReporteClinico;
+import Modelo.ReporteVenta;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -158,6 +159,32 @@ public class ProcesoUpdate {
             cs_update.close();
             if (resultado > 0) {
                 JOptionPane.showMessageDialog(null, "Producto modificado", "Success", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al modificar (˘･_･˘)", "Error", JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void actualizarBoleta(ReporteVenta boleta) {
+        Conexion objConn = new Conexion();
+        Connection cn = objConn.ObtenerConexion();
+        CallableStatement cs_update;
+        try {
+            cs_update = cn.prepareCall("{CALL sp_actualizar_boleta(?,?,?,?,?,?,?,?,?)}");
+            cs_update.setString(1, boleta.getCodigo());
+            cs_update.setString(2, boleta.getCodigo_entidad());
+            cs_update.setString(3, boleta.getEntidad());
+            cs_update.setDate(4, boleta.getFecha());
+            cs_update.setTime(5, boleta.getHora());
+            cs_update.setInt(6, boleta.getCantidaditems());
+            cs_update.setDouble(7, boleta.getImporte());
+            cs_update.setDouble(8, boleta.impuesto());
+            cs_update.setDouble(9, boleta.importeFinal());
+            int resultado = cs_update.executeUpdate();
+            cs_update.close();
+            if (resultado > 0) {
+                JOptionPane.showMessageDialog(null, "Boleta modificado", "Success", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(null, "Error al modificar (˘･_･˘)", "Error", JOptionPane.WARNING_MESSAGE);
             }

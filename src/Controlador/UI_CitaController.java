@@ -240,9 +240,6 @@ public class UI_CitaController extends PanelController implements ActionListener
             String cliente = datos[1];
             String paciente = datos[3];
             String veterinario = datos[4];
-            System.out.println(cliente);
-            System.out.println(paciente);
-            System.out.println(veterinario);
 
             for (int i = 1; i < CitaUI.cbCliente.getItemCount(); i++) {
                 String codigoItem = CitaUI.cbCliente.getItemAt(i).getCodigo();

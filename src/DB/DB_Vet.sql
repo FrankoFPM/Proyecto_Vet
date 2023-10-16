@@ -1,7 +1,6 @@
 drop database if exists vet;
 create database vet;
 use vet;
-
 create table cargo(
 	id_cargo int primary key auto_increment not null,
     descripcion varchar(15)
@@ -65,7 +64,7 @@ CREATE TABLE Productos(
     id_producto VARCHAR(8) NOT NULL PRIMARY KEY,
     nombre VARCHAR(50),
     marca VARCHAR(50),
-    precio DECIMAL(5, 2),
+    precio DECIMAL(6, 2),
     cantidad INT,
     categoria VARCHAR(50),
     fecha DATE
@@ -78,20 +77,21 @@ CREATE TABLE boleta (
     fecha DATE,
     hora TIME,
     cantidad_items INT,
-    importe DECIMAL(5, 2),
-    impuesto DECIMAL(5, 2),
-    importe_final DECIMAL(5, 2)
+    importe DECIMAL(6, 2),
+    impuesto DECIMAL(6, 2),
+    importe_final DECIMAL(6, 2)
 );
 
 CREATE TABLE itemsboleta(
 	id_boleta VARCHAR(8),
     id_item VARCHAR(15),
     item VARCHAR(50),
-    precio DECIMAL(5, 2),
+    precio DECIMAL(6, 2),
     cantidad int,
-    total DECIMAL(5, 2),
+    total DECIMAL(6, 2),
     FOREIGN KEY (id_boleta) REFERENCES boleta(id_boleta) ON DELETE CASCADE
 );
+
 
 -- Vistas
 
@@ -99,12 +99,26 @@ CREATE TABLE itemsboleta(
 CREATE VIEW v_personal AS
 SELECT id_personal, nombre, apellido, correo, dni, cargo, nick
 FROM personal;
+-- Vista items boleta
+CREATE VIEW v_itemsBoleta AS
+SELECT id_item, item, precio, cantidad, total, id_boleta
+FROM itemsboleta;
 
 
 -- Fin Vistas
 
 DELIMITER //
-CREATE PROCEDURE sp_insertar_itemboleta(IN p_id_boleta VARCHAR(8), IN p_id_item VARCHAR(15), IN p_item VARCHAR(50), IN p_precio DECIMAL(5, 2), IN p_cantidad INT, IN p_total DECIMAL(5, 2))
+CREATE PROCEDURE sp_sumar_ingresos_mes()
+BEGIN
+    SELECT SUM(importe_final) AS "total"
+    FROM boleta
+    WHERE fecha >= CURDATE() - INTERVAL 1 MONTH;
+END //
+DELIMITER ;
+
+
+DELIMITER //
+CREATE PROCEDURE sp_insertar_itemboleta(IN p_id_boleta VARCHAR(8), IN p_id_item VARCHAR(15), IN p_item VARCHAR(50), IN p_precio DECIMAL(6, 2), IN p_cantidad INT, IN p_total DECIMAL(6, 2))
 BEGIN
     INSERT INTO itemsboleta(id_boleta, id_item, item, precio, cantidad, total)
     VALUES (p_id_boleta, p_id_item, p_item, p_precio, p_cantidad, p_total);
@@ -119,6 +133,9 @@ BEGIN
     VALUES (p_id_boleta, p_id_cliente, p_cliente, p_fecha, p_hora, p_cantidad_items, p_importe, p_impuesto, p_importe_final);
 END //
 DELIMITER ;
+
+-- CALL sp_insertar_boleta('BOL-0001', 'CLI1', 'Cliente 1', '2023-10-14', '18:25:21', 5, 100.0, 18.0, 118.0);
+-- select * from itemsboleta;
 
 DELIMITER //
 CREATE PROCEDURE sp_actualizar_boleta(IN p_id_boleta VARCHAR(8), IN p_id_cliente VARCHAR(255), IN p_cliente VARCHAR(255), IN p_fecha DATE, IN p_hora TIME, IN p_cantidad_items INT, IN p_importe DOUBLE, IN p_impuesto DOUBLE, IN p_importe_final DOUBLE)
@@ -158,7 +175,7 @@ DELIMITER ;
 call sp_listar_servicios();
 
 DELIMITER //
-CREATE PROCEDURE sp_actualizar_producto(IN p_id_producto VARCHAR(8), IN p_nombre VARCHAR(50), IN p_marca VARCHAR(50), IN p_precio DECIMAL(5, 2), IN p_cantidad INT, IN p_categoria VARCHAR(50), IN p_fecha DATE)
+CREATE PROCEDURE sp_actualizar_producto(IN p_id_producto VARCHAR(8), IN p_nombre VARCHAR(50), IN p_marca VARCHAR(50), IN p_precio DECIMAL(6, 2), IN p_cantidad INT, IN p_categoria VARCHAR(50), IN p_fecha DATE)
 BEGIN
     UPDATE Productos 
     SET nombre = p_nombre,
@@ -173,7 +190,7 @@ DELIMITER ;
 
 
 DELIMITER //
-CREATE PROCEDURE sp_insertar_producto(IN p_id_producto VARCHAR(8), IN p_nombre VARCHAR(50), IN p_marca VARCHAR(50), IN p_precio DECIMAL(5, 2), IN p_cantidad INT, IN p_categoria VARCHAR(50), IN p_fecha DATE)
+CREATE PROCEDURE sp_insertar_producto(IN p_id_producto VARCHAR(8), IN p_nombre VARCHAR(50), IN p_marca VARCHAR(50), IN p_precio DECIMAL(6, 2), IN p_cantidad INT, IN p_categoria VARCHAR(50), IN p_fecha DATE)
 BEGIN
     INSERT INTO Productos(id_producto, nombre, marca, precio, cantidad, categoria, fecha) 
     VALUES (p_id_producto, p_nombre, p_marca, p_precio, p_cantidad, p_categoria, p_fecha);

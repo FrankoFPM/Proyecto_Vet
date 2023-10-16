@@ -8,6 +8,7 @@ import Modelo.PersonaEmpleado;
 import Modelo.ProductoInventario;
 import Modelo.ProductoItem;
 import Modelo.ReporteClinico;
+import Modelo.ReporteVenta;
 import Vista.RPVenta_UI;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -194,6 +195,32 @@ public class ProcesoInsert {
             e.printStackTrace();
         }
     }
+    public static void insertarBoleta(ReporteVenta boleta) {
+        Conexion objConn = new Conexion();
+        Connection cn = objConn.ObtenerConexion();
+        CallableStatement cs_insert;
+        try {
+            cs_insert = cn.prepareCall("{CALL sp_insertar_boleta(?,?,?,?,?,?,?,?,?)}");
+            cs_insert.setString(1, boleta.getCodigo());
+            cs_insert.setString(2, boleta.getCodigo_entidad());
+            cs_insert.setString(3, boleta.getEntidad());
+            cs_insert.setDate(4, boleta.getFecha());
+            cs_insert.setTime(5, boleta.getHora());
+            cs_insert.setInt(6, boleta.getCantidaditems());
+            cs_insert.setDouble(7, boleta.getImporte());
+            cs_insert.setDouble(8, boleta.impuesto());
+            cs_insert.setDouble(9, boleta.importeFinal());
+            int resultado = cs_insert.executeUpdate();
+            cs_insert.close();
+            if (resultado > 0) {
+                JOptionPane.showMessageDialog(null, "Productos registrados", "Success", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al registrar (˘･_･˘)", "Error", JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static ProductoInventario obtenerItem(RPVenta_UI ui) {
         ProductoInventario item = new ProductoInventario();
@@ -206,7 +233,7 @@ public class ProcesoInsert {
             item.setCodigo(ui.cbServicio.getItemAt(ui.cbServicio.getSelectedIndex()).getCodigo());
             item.setNombre(ui.cbServicio.getItemAt(ui.cbServicio.getSelectedIndex()).getInfo());;
             item.setCantidad(1);
-            item.setPrecio(Double.valueOf((Integer) ui.spPrecioServ.getValue()));
+            item.setPrecio(((Double) ui.spPrecioServ.getValue()).doubleValue());
         }
         return item;
     }

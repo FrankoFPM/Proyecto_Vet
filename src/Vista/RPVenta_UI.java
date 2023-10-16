@@ -43,6 +43,7 @@ public class RPVenta_UI extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         lblTotalFinal = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        btnCancelar = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 247, 223));
 
@@ -127,7 +128,7 @@ public class RPVenta_UI extends javax.swing.JPanel {
                 .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addComponent(btnRegistrar, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -174,6 +175,7 @@ public class RPVenta_UI extends javax.swing.JPanel {
         cbProducto.setEditable(true);
         cbProducto.setPreferredSize(new java.awt.Dimension(225, 32));
 
+        spCantidad.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
         spCantidad.setPreferredSize(new java.awt.Dimension(100, 32));
 
         btnAgregar.setText("Agregar");
@@ -185,28 +187,35 @@ public class RPVenta_UI extends javax.swing.JPanel {
         cbServicio.setEditable(true);
         cbServicio.setPreferredSize(new java.awt.Dimension(225, 32));
 
+        spPrecioServ.setModel(new javax.swing.SpinnerNumberModel(0.0d, 0.0d, null, 0.5d));
         spPrecioServ.setPreferredSize(new java.awt.Dimension(225, 32));
 
-        jLabel1.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
         jLabel1.setText("Importe total");
+        jLabel1.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
 
-        lblTotal.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
         lblTotal.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblTotal.setText("00.00");
+        lblTotal.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
 
-        lblImpuesto.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
         lblImpuesto.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblImpuesto.setText("00.00");
+        lblImpuesto.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
 
-        jLabel4.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
         jLabel4.setText("| Impuestos (IGV 18%)");
+        jLabel4.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
 
-        lblTotalFinal.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
         lblTotalFinal.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblTotalFinal.setText("00.00");
+        lblTotalFinal.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
 
-        jLabel7.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
         jLabel7.setText("| Importe final");
+        jLabel7.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+
+        btnCancelar.setText("Cancelar operacion");
+        btnCancelar.setBackground(new java.awt.Color(255, 0, 0));
+        btnCancelar.setFont(new java.awt.Font("Roboto Condensed", 1, 16)); // NOI18N
+        btnCancelar.setForeground(new java.awt.Color(255, 255, 255));
+        btnCancelar.setPreferredSize(new java.awt.Dimension(141, 33));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -221,7 +230,9 @@ public class RPVenta_UI extends javax.swing.JPanel {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(84, 84, 84)
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -243,13 +254,13 @@ public class RPVenta_UI extends javax.swing.JPanel {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(lblNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(cbCliente, 0, 256, Short.MAX_VALUE)
+                                    .addComponent(cbCliente, 0, 257, Short.MAX_VALUE)
                                     .addComponent(cbServicio, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(50, 50, 50)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(cbProducto, 0, 256, Short.MAX_VALUE)
+                                    .addComponent(cbProducto, 0, 257, Short.MAX_VALUE)
                                     .addComponent(spPrecioServ, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(50, 50, 50)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -319,18 +330,17 @@ public class RPVenta_UI extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
+                .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(lblTotal)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel4)
-                        .addComponent(lblImpuesto)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
-                            .addComponent(lblTotalFinal))))
-                .addGap(21, 21, 21))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblImpuesto, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblTotalFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addGap(10, 10, 10))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -338,6 +348,7 @@ public class RPVenta_UI extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btnAgregar;
     public javax.swing.JButton btnBuscar;
+    public javax.swing.JButton btnCancelar;
     public javax.swing.JButton btnEliminar;
     public javax.swing.JButton btnModificar;
     public javax.swing.JButton btnRegistrar;
