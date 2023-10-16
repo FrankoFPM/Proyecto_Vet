@@ -28,6 +28,7 @@ public class UI_HomeController extends PanelController implements MouseListener 
 
         homeUI.lblUsuarios.setText(String.valueOf(ProcesoListado.contarClientes()));
         homeUI.lblCitas.setText(String.valueOf(ProcesoListado.contarCitasProgramadas()));
+        homeUI.lblIngresos.setText("S/."+String.valueOf(ProcesoListado.sumarIngresos()));
     }
 
     @Override
