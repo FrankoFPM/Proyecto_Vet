@@ -17,6 +17,7 @@ public class Main {
             UIManager.put("Button.arc", 15);
             UIManager.put("Button.borderColor", "#B5E0FF");
             UIManager.put("TextComponent.arc", 15);
+            UIManager.put("Component.arc", 15);
             UIManager.put("Separator.stripeWidth", 3);
             UIManager.put("PasswordField.showRevealButton", true);
             //Vista
