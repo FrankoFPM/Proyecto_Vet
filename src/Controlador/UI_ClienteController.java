@@ -1,11 +1,9 @@
 package Controlador;
 
 import static Controlador.DashboardController.vista;
+import DAO.DAOCliente;
 import Modelo.PersonaCliente;
-import Procesos.ProcesoInsert;
 import Procesos.ProcesoListado;
-import Procesos.ProcesoRD;
-import Procesos.ProcesoUpdate;
 import Procesos.ProcesoValidacion;
 import Vista.Cliente_UI;
 import Vista.Dashboard_UI;
@@ -17,26 +15,27 @@ import javax.swing.JTextField;
 
 public class UI_ClienteController extends PanelController implements ActionListener {
 
+    private DAOCliente clienteDAO;
     Cliente_UI ClienteUI;
 
-    String titutos[] = {"COD", "Nombre", "Apellidos", "Telefono",
-        "Correo", "DNI", "Direccion"};
+    String titutos[] = { "COD", "Nombre", "Apellidos", "Telefono",
+            "Correo", "DNI", "Direccion" };
 
-    String msgCliente[] = {"Nombres", "Apellidos", "Telefono",
-        "Correo", "DNI", "Direccion"};
+    String msgCliente[] = { "Nombres", "Apellidos", "Telefono",
+            "Correo", "DNI", "Direccion" };
     JTextField txtCliente[];
 
     public UI_ClienteController(Cliente_UI panel, Dashboard_UI app) {
         super(panel, app);
         this.ClienteUI = panel;
-        txtCliente = new JTextField[]{ClienteUI.txtNombres, ClienteUI.txtApellidos,
-            ClienteUI.txtTelefono, ClienteUI.txtCorreo, ClienteUI.txtDni, ClienteUI.txtDireccion
+        txtCliente = new JTextField[] { ClienteUI.txtNombres, ClienteUI.txtApellidos,
+                ClienteUI.txtTelefono, ClienteUI.txtCorreo, ClienteUI.txtDni, ClienteUI.txtDireccion
         };
         ProcesoValidacion.placeholderJtxt(txtCliente, msgCliente);
         ProcesoListado.tituloTabla(ClienteUI.tbClientes, titutos);
         ProcesoListado.llenarTabla(ClienteUI.tbClientes, ProcesoListado.listarDatos("cliente"));
 
-        //super.showWindow(panel);
+        // super.showWindow(panel);
         addListeners();
 
         String cod = ProcesoListado.generarCodigo("cliente", "id_cliente", "CLI-", 4);
@@ -56,7 +55,8 @@ public class UI_ClienteController extends PanelController implements ActionListe
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == ClienteUI.btnEliminar) {
-            ProcesoRD.eliminarRegistros("cliente", "id_cliente", ClienteUI.lblCodigo.getText());
+            clienteDAO = new DAOCliente();
+            clienteDAO.eliminarCliente(ClienteUI.lblCodigo.getText());
             ClienteUI.btnBuscar.setText("Buscar");
             ClienteUI.btnEliminar.setEnabled(false);
             ClienteUI.btnModificar.setEnabled(false);
@@ -69,9 +69,22 @@ public class UI_ClienteController extends PanelController implements ActionListe
                 cliente.setApellido(txtCliente[1].getText());
                 cliente.setTelefono(txtCliente[2].getText());
                 cliente.setCorreo(txtCliente[3].getText());
-                cliente.setDni(Integer.parseInt(txtCliente[4].getText()));
+                String dniText = txtCliente[4].getText();
+                if (!dniText.matches("\\d+")) {
+                    JOptionPane.showMessageDialog(null, "El DNI solo debe contener números");
+                    return;
+                }
+                cliente.setDni(Integer.parseInt(dniText));
                 cliente.setDireccion(txtCliente[5].getText());
-                ProcesoInsert.insertarCliente(cliente);
+
+                if (!ProcesoValidacion.validarEmail(cliente.getCorreo()) ||
+                        !ProcesoValidacion.validarTelefono(cliente.getTelefono()) ||
+                        !ProcesoValidacion.validarDni(cliente.getDni())) {
+                    return;
+                }
+
+                clienteDAO = new DAOCliente();
+                clienteDAO.insertarCliente(cliente);
                 reloadWindow();
             }
         } else if (e.getSource() == ClienteUI.btnBuscar) {
@@ -79,7 +92,8 @@ public class UI_ClienteController extends PanelController implements ActionListe
                 String dato = JOptionPane.showInputDialog(null, "Ingrese el DNI del cliente");
                 if (dato != null) {
                     if (!dato.isEmpty()) {
-                        List<String[]> datos = ProcesoRD.buscarRegistros("cliente", "dni", dato);
+                        clienteDAO = new DAOCliente();
+                        List<String[]> datos = clienteDAO.buscarCliente(dato);
                         if (!datos.isEmpty()) {
                             String[] primerRegistro = datos.get(0);
                             ClienteUI.lblCodigo.setText(primerRegistro[0]);
@@ -110,9 +124,21 @@ public class UI_ClienteController extends PanelController implements ActionListe
                 cliente.setApellido(txtCliente[1].getText());
                 cliente.setTelefono(txtCliente[2].getText());
                 cliente.setCorreo(txtCliente[3].getText());
-                cliente.setDni(Integer.parseInt(txtCliente[4].getText()));
+                String dniText = txtCliente[4].getText();
+                if (!dniText.matches("\\d+")) {
+                    JOptionPane.showMessageDialog(null, "El DNI solo debe contener números", "Error",
+                            JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+                cliente.setDni(Integer.parseInt(dniText));
                 cliente.setDireccion(txtCliente[5].getText());
-                ProcesoUpdate.actualizarCliente(cliente);
+                if (!ProcesoValidacion.validarEmail(cliente.getCorreo()) ||
+                        !ProcesoValidacion.validarTelefono(cliente.getTelefono()) ||
+                        !ProcesoValidacion.validarDni(cliente.getDni())) {
+                    return;
+                }
+                clienteDAO = new DAOCliente();
+                clienteDAO.actualizarCliente(cliente);
                 reloadWindow();
             }
         }
