@@ -175,7 +175,7 @@ public class CargarCombos extends ConexionDB {
      * @param enteredText El texto ingresado por el usuario.
      * @param comboBox    El JComboBox a filtrar.
      */
-    public static void filterComboBox(String enteredText, JComboBox<PersonaCliente> comboBox) {
+    public void filterComboBox(String enteredText, JComboBox<PersonaCliente> comboBox) {
         if (!comboBox.isPopupVisible()) {
             comboBox.showPopup();
         }
@@ -205,7 +205,7 @@ public class CargarCombos extends ConexionDB {
         textField.setText(enteredText);
     }
 
-    public static void filterComboBoxPacientes(String enteredText, JComboBox<Paciente> comboBox, String codigo) {
+    public void filterComboBoxPacientes(String enteredText, JComboBox<Paciente> comboBox, String codigo) {
         if (!comboBox.isPopupVisible()) {
             comboBox.showPopup();
         }
@@ -235,7 +235,7 @@ public class CargarCombos extends ConexionDB {
         textField.setText(enteredText);
     }
 
-    public static void filterComboBoxAllPacientes(String enteredText, JComboBox<Paciente> comboBox) {
+    public void filterComboBoxAllPacientes(String enteredText, JComboBox<Paciente> comboBox) {
         if (!comboBox.isPopupVisible()) {
             comboBox.showPopup();
         }
@@ -265,7 +265,7 @@ public class CargarCombos extends ConexionDB {
         textField.setText(enteredText);
     }
 
-    public static void filterComboBoxVeterinarios(String enteredText, JComboBox<PersonaEmpleado> comboBox) {
+    public void filterComboBoxVeterinarios(String enteredText, JComboBox<PersonaEmpleado> comboBox) {
         if (!comboBox.isPopupVisible()) {
             comboBox.showPopup();
         }
@@ -295,7 +295,7 @@ public class CargarCombos extends ConexionDB {
         textField.setText(enteredText);
     }
 
-    public static void filterComboBoxProductos(String enteredText, JComboBox<ProductoInventario> comboBox) {
+    public void filterComboBoxProductos(String enteredText, JComboBox<ProductoInventario> comboBox) {
         if (!comboBox.isPopupVisible()) {
             comboBox.showPopup();
         }
@@ -336,5 +336,32 @@ public class CargarCombos extends ConexionDB {
         String normalized = Normalizer.normalize(str, Normalizer.Form.NFD);
         normalized = normalized.replaceAll("[^\\p{ASCII}]", ""); // quitar caracteres no ASCII
         return normalized.toLowerCase(); // convertir a minúsculas
+    }
+
+    public ArrayList<Paciente> obtenerTodoPacientes() {
+
+        ArrayList<Paciente> listadoPacientes = new ArrayList<>();
+        Paciente paciente;
+        CallableStatement cs_listadoPacientes;
+        ResultSet rs;
+
+        try {
+            cs_listadoPacientes = conectar.prepareCall("{call sp_listar_todo_pacientes}");
+            rs = cs_listadoPacientes.executeQuery();
+            paciente = new Paciente();
+            paciente.setCodigo("0");
+            paciente.setNombre("[Selecciona una opción...]");
+            listadoPacientes.add(paciente);
+            while (rs.next()) {
+                paciente = new Paciente();
+                paciente.setCodigo(rs.getString(1));
+                paciente.setNombre(rs.getString(2));
+                listadoPacientes.add(paciente);
+            }
+
+        } catch (SQLException e) {
+            e.toString();
+        }
+        return listadoPacientes;
     }
 }
