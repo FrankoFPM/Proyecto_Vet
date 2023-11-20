@@ -68,7 +68,8 @@ public class UI_PacienteController extends PanelController
         textFieldCombo.addKeyListener(new KeyAdapter() {
             public void keyReleased(KeyEvent ke) {
                 SwingUtilities.invokeLater(() -> {
-                    CargarCombos.filterComboBox(textFieldCombo.getText(), PacienteUI.cbCliente);
+                    cargarCombos = new CargarCombos();
+                    cargarCombos.filterComboBox(textFieldCombo.getText(), PacienteUI.cbCliente);
                     // ProcesoListado.filterComboBox(textFieldCombo.getText(),
                     // PacienteUI.cbCliente);
                 });
