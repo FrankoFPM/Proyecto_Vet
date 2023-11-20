@@ -1,5 +1,8 @@
 package DAO;
 
+import java.sql.CallableStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.Normalizer;
 import java.util.ArrayList;
 
@@ -13,7 +16,155 @@ import Modelo.PersonaEmpleado;
 import Modelo.ProductoInventario;
 import Procesos.ProcesoListado;
 
-public class CargarCombos {
+public class CargarCombos extends ConexionDB {
+
+    public ArrayList<PersonaCliente> obtenerClientes() {
+
+        ArrayList<PersonaCliente> listadoClientes = new ArrayList<>();
+        PersonaCliente cliente;
+        CallableStatement cs_listadoClientes;
+        ResultSet rs;
+
+        try {
+            cs_listadoClientes = conectar.prepareCall("{call sp_listar_clientes}");
+            rs = cs_listadoClientes.executeQuery();
+            cliente = new PersonaCliente();
+            cliente.setCodigo("0");
+            cliente.setNombre("[Selecciona una opción...]");
+            listadoClientes.add(cliente);
+            while (rs.next()) {
+                cliente = new PersonaCliente();
+                cliente.setCodigo(rs.getString(1));
+                cliente.setNombre(rs.getString(2));
+                listadoClientes.add(cliente);
+            }
+
+        } catch (SQLException e) {
+            e.toString();
+        }
+        return listadoClientes;
+    }
+
+    public ArrayList<Paciente> obtenerPacientes(String codigo) {
+
+        ArrayList<Paciente> listadoPacientes = new ArrayList<>();
+        Paciente paciente;
+        CallableStatement cs_listadoPacientes;
+        ResultSet rs;
+
+        try {
+            cs_listadoPacientes = conectar.prepareCall("{call sp_listar_pacientes(?)}");
+            cs_listadoPacientes.setString(1, codigo);
+            rs = cs_listadoPacientes.executeQuery();
+            paciente = new Paciente();
+            paciente.setCodigo("0");
+            paciente.setNombre("[Selecciona una opción...]");
+            listadoPacientes.add(paciente);
+            while (rs.next()) {
+                paciente = new Paciente();
+                paciente.setCodigo(rs.getString(1));
+                paciente.setNombre(rs.getString(2));
+                listadoPacientes.add(paciente);
+            }
+
+        } catch (SQLException e) {
+            e.toString();
+        }
+        return listadoPacientes;
+    }
+
+    public ArrayList<PersonaEmpleado> obtenerVeterinarios() {
+
+        ArrayList<PersonaEmpleado> listadoEmpleados = new ArrayList<>();
+        PersonaEmpleado empelado;
+        CallableStatement cs_listadoEmpleados;
+        ResultSet rs;
+
+        try {
+            cs_listadoEmpleados = conectar.prepareCall("{call sp_listar_veterinarios}");
+            rs = cs_listadoEmpleados.executeQuery();
+            empelado = new PersonaEmpleado();
+            empelado.setCodigo("0");
+            empelado.setNombre("[Selecciona una opción...]");
+            listadoEmpleados.add(empelado);
+            while (rs.next()) {
+                empelado = new PersonaEmpleado();
+                empelado.setCodigo(rs.getString(1));
+                empelado.setNombre(rs.getString(2));
+                listadoEmpleados.add(empelado);
+            }
+
+        } catch (SQLException e) {
+            e.toString();
+        }
+        return listadoEmpleados;
+    }
+
+    public ArrayList<ProductoInventario> obtenerProducto() {
+
+        ArrayList<ProductoInventario> listadoProductos = new ArrayList<>();
+        ProductoInventario producto;
+        CallableStatement cs_listadoProductos;
+        ResultSet rs;
+
+        try {
+            cs_listadoProductos = conectar.prepareCall("{call sp_listar_productos}");
+            rs = cs_listadoProductos.executeQuery();
+            producto = new ProductoInventario();
+            producto.setCodigo("0");
+            producto.setNombre("[Selecciona una opción...]");
+            producto.setMarca("none");
+            producto.setPrecio(0);
+            producto.setInfo("[Selecciona una opción...]");
+            listadoProductos.add(producto);
+            while (rs.next()) {
+                producto = new ProductoInventario();
+                producto.setCodigo(rs.getString(1));
+                producto.setNombre(rs.getString(2));
+                producto.setMarca(rs.getString(3));
+                producto.setPrecio(rs.getDouble(4));
+                producto.setInfo(rs.getString(5));
+                listadoProductos.add(producto);
+            }
+
+        } catch (SQLException e) {
+            e.toString();
+        }
+        return listadoProductos;
+    }
+
+    public ArrayList<ProductoInventario> obtenerServicios() {
+
+        ArrayList<ProductoInventario> listadoProductos = new ArrayList<>();
+        ProductoInventario producto;
+        CallableStatement cs_listadoServicios;
+        ResultSet rs;
+
+        try {
+            cs_listadoServicios = conectar.prepareCall("{call sp_listar_servicios}");
+            rs = cs_listadoServicios.executeQuery();
+            producto = new ProductoInventario();
+            producto.setCodigo("0");
+            producto.setNombre("[Selecciona una opción...]");
+            producto.setMarca("none");
+            producto.setPrecio(0);
+            producto.setInfo("[Selecciona una opción...]");
+            listadoProductos.add(producto);
+            while (rs.next()) {
+                producto = new ProductoInventario();
+                producto.setCodigo(rs.getString(1));
+                producto.setNombre(rs.getString(2));
+                producto.setMarca(rs.getString(3));
+                producto.setPrecio(rs.getDouble(4));
+                producto.setInfo(rs.getString(2));
+                listadoProductos.add(producto);
+            }
+
+        } catch (SQLException e) {
+            e.toString();
+        }
+        return listadoProductos;
+    }
 
     /**
      * Filtra los elementos de un JComboBox en función del texto ingresado.
