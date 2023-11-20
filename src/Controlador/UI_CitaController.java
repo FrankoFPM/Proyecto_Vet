@@ -5,10 +5,8 @@ import Modelo.Cita;
 import Modelo.Paciente;
 import Modelo.PersonaCliente;
 import Modelo.PersonaEmpleado;
-import Procesos.ProcesoInsert;
 import Procesos.ProcesoListado;
 import Procesos.ProcesoRD;
-import Procesos.ProcesoUpdate;
 import Vista.Cita_UI;
 import Vista.Dashboard_UI;
 import java.awt.event.ActionEvent;
@@ -26,6 +24,10 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+
+import DAO.CargarCombos;
+import DAO.DAOCita;
+
 import java.time.LocalDate;
 import java.sql.Date;
 import java.sql.Time;
@@ -33,13 +35,16 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import javax.swing.ListSelectionModel;
 
-public class UI_CitaController extends PanelController implements ActionListener, ListSelectionListener, FocusListener, ItemListener {
+public class UI_CitaController extends PanelController
+        implements ActionListener, ListSelectionListener, FocusListener, ItemListener {
 
     Cita_UI CitaUI;
-
+    DAOCita daoCita;
+    CargarCombos cargarCombos;
     boolean buscar = false;
 
-    public static String[] titulosCitas = {"COD", "Cod Cliente", "Cliente", "Paciente", "Veterinario", "Fecha", "Hora", "Estado"};
+    public static String[] titulosCitas = { "COD", "Cod Cliente", "Cliente", "Paciente", "Veterinario", "Fecha", "Hora",
+            "Estado" };
     JTextField textFieldComboCliente;
     JTextField textFieldComboPaciente;
 
@@ -48,7 +53,8 @@ public class UI_CitaController extends PanelController implements ActionListener
         this.CitaUI = panel;
 
         ProcesoListado.tituloTabla(CitaUI.tbcitas, titulosCitas);
-        ProcesoListado.llenarTabla(CitaUI.tbcitas, ProcesoListado.listarDatos("cita"));
+        daoCita = new DAOCita();
+        ProcesoListado.llenarTabla(CitaUI.tbcitas, daoCita.listarCitas());
 
         String cod = ProcesoListado.generarCodigo("cita", "id_cita", "CTA-", 4);
         CitaUI.lblCodigo.setText(cod);
@@ -70,14 +76,23 @@ public class UI_CitaController extends PanelController implements ActionListener
         textFieldComboCliente.addKeyListener(new KeyAdapter() {
             public void keyReleased(KeyEvent ke) {
                 SwingUtilities.invokeLater(() -> {
-                    ProcesoListado.filterComboBox(textFieldComboCliente.getText(), CitaUI.cbCliente);
+                    // ProcesoListado.filterComboBox(textFieldComboCliente.getText(),
+                    // CitaUI.cbCliente);
+                    cargarCombos = new CargarCombos();
+                    cargarCombos.filterComboBox(textFieldComboCliente.getText(), CitaUI.cbCliente);
+
                 });
             }
         });
         textFieldComboPaciente.addKeyListener(new KeyAdapter() {
             public void keyReleased(KeyEvent ke) {
                 SwingUtilities.invokeLater(() -> {
-                    ProcesoListado.filterComboBoxPacientes(textFieldComboPaciente.getText(), CitaUI.cbPaciente, CodigoCliente());
+                    cargarCombos = new CargarCombos();
+                    // ProcesoListado.filterComboBoxPacientes(textFieldComboPaciente.getText(),
+                    // CitaUI.cbPaciente,
+                    // CodigoCliente());
+                    cargarCombos.filterComboBoxPacientes(textFieldComboPaciente.getText(), CitaUI.cbPaciente,
+                            CodigoCliente());
                 });
             }
         });
@@ -85,8 +100,9 @@ public class UI_CitaController extends PanelController implements ActionListener
 
     private void llenarCboClientes() {
         CitaUI.cbCliente.removeAllItems();
-
-        ArrayList<PersonaCliente> listaClientes = ProcesoListado.obtenerClientes();
+        cargarCombos = new CargarCombos();
+        // ArrayList<PersonaCliente> listaClientes = ProcesoListado.obtenerClientes();
+        ArrayList<PersonaCliente> listaClientes = cargarCombos.obtenerClientes();
         for (int i = 0; i < listaClientes.size(); i++) {
             CitaUI.cbCliente.addItem(new PersonaCliente(listaClientes.get(i).getCodigo(),
                     listaClientes.get(i).getNombre()));
@@ -95,8 +111,9 @@ public class UI_CitaController extends PanelController implements ActionListener
 
     private void llenarCboPacientes(String codigo) {
         CitaUI.cbPaciente.removeAllItems();
-
-        ArrayList<Paciente> listaPacientes = ProcesoListado.obtenerPacientes(codigo);
+        cargarCombos = new CargarCombos();
+        // ArrayList<Paciente> listaPacientes = ProcesoListado.obtenerPacientes(codigo);
+        ArrayList<Paciente> listaPacientes = cargarCombos.obtenerPacientes(codigo);
         for (int i = 0; i < listaPacientes.size(); i++) {
             CitaUI.cbPaciente.addItem(new Paciente(listaPacientes.get(i).getCodigo(),
                     listaPacientes.get(i).getNombre()));
@@ -105,8 +122,10 @@ public class UI_CitaController extends PanelController implements ActionListener
 
     private void llenarCboVeterinarios() {
         CitaUI.cbPaciente.removeAllItems();
-
-        ArrayList<PersonaEmpleado> listaVeterinarios = ProcesoListado.obtenerVeterinarios();
+        cargarCombos = new CargarCombos();
+        // ArrayList<PersonaEmpleado> listaVeterinarios =
+        // ProcesoListado.obtenerVeterinarios();
+        ArrayList<PersonaEmpleado> listaVeterinarios = cargarCombos.obtenerVeterinarios();
         for (int i = 0; i < listaVeterinarios.size(); i++) {
             CitaUI.cbVeterinario.addItem(new PersonaEmpleado(listaVeterinarios.get(i).getCodigo(),
                     listaVeterinarios.get(i).getNombre()));
@@ -148,7 +167,8 @@ public class UI_CitaController extends PanelController implements ActionListener
                 reserva.setCodigoCliente(CitaUI.cbCliente.getItemAt(CitaUI.cbCliente.getSelectedIndex()).getCodigo());
                 reserva.setCliente(CitaUI.cbCliente.getItemAt(CitaUI.cbCliente.getSelectedIndex()).getNombre());
                 reserva.setPaciente(CitaUI.cbPaciente.getItemAt(CitaUI.cbPaciente.getSelectedIndex()).getNombre());
-                reserva.setVeterinario(CitaUI.cbVeterinario.getItemAt(CitaUI.cbVeterinario.getSelectedIndex()).getNombre());
+                reserva.setVeterinario(
+                        CitaUI.cbVeterinario.getItemAt(CitaUI.cbVeterinario.getSelectedIndex()).getNombre());
                 LocalDate localDate = CitaUI.datePicker.getDate();
                 Date date = Date.valueOf(localDate);
                 reserva.setFecha(date);
@@ -157,7 +177,9 @@ public class UI_CitaController extends PanelController implements ActionListener
                 reserva.setHora(time);
                 reserva.setEstado(CitaUI.cbEstado.getSelectedItem().toString());
 
-                ProcesoInsert.insertarCita(reserva);
+                // ProcesoInsert.insertarCita(reserva);
+                daoCita = new DAOCita();
+                daoCita.insertarCita(reserva);
 
                 reloadWindow();
             }
@@ -166,7 +188,8 @@ public class UI_CitaController extends PanelController implements ActionListener
                 String dato = JOptionPane.showInputDialog(null, "Ingrese el DNI del cliente");
                 if (dato != null) {
                     if (!dato.isEmpty()) {
-                        List<String[]> datos = ProcesoRD.buscarCitas(dato);
+                        daoCita = new DAOCita();
+                        List<String[]> datos = daoCita.buscarCitas(dato);
                         if (!datos.isEmpty()) {
                             ProcesoListado.llenarTabla(CitaUI.tbcitas, datos);
                             CitaUI.btnBuscar.setText("Cancelar");
@@ -192,7 +215,8 @@ public class UI_CitaController extends PanelController implements ActionListener
                 reserva.setCodigoCliente(CitaUI.cbCliente.getItemAt(CitaUI.cbCliente.getSelectedIndex()).getCodigo());
                 reserva.setCliente(CitaUI.cbCliente.getItemAt(CitaUI.cbCliente.getSelectedIndex()).getNombre());
                 reserva.setPaciente(CitaUI.cbPaciente.getItemAt(CitaUI.cbPaciente.getSelectedIndex()).getNombre());
-                reserva.setVeterinario(CitaUI.cbVeterinario.getItemAt(CitaUI.cbVeterinario.getSelectedIndex()).getNombre());
+                reserva.setVeterinario(
+                        CitaUI.cbVeterinario.getItemAt(CitaUI.cbVeterinario.getSelectedIndex()).getNombre());
                 LocalDate localDate = CitaUI.datePicker.getDate();
                 Date date = Date.valueOf(localDate);
                 reserva.setFecha(date);
@@ -201,12 +225,16 @@ public class UI_CitaController extends PanelController implements ActionListener
                 reserva.setHora(time);
                 reserva.setEstado(CitaUI.cbEstado.getSelectedItem().toString());
 
-                ProcesoUpdate.actualizarCita(reserva);
+                // ProcesoUpdate.actualizarCita(reserva);
+                daoCita = new DAOCita();
+                daoCita.actualizarCita(reserva);
 
                 reloadWindow();
             }
         } else if (e.getSource() == CitaUI.btnEliminar) {
-            ProcesoRD.eliminarRegistros("cita", "id_cita", CitaUI.lblCodigo.getText());
+            // ProcesoRD.eliminarRegistros("cita", "id_cita", CitaUI.lblCodigo.getText());
+            daoCita = new DAOCita();
+            daoCita.eliminarCita(CitaUI.lblCodigo.getText());
             CitaUI.btnBuscar.setText("Buscar");
             CitaUI.btnEliminar.setEnabled(false);
             CitaUI.btnModificar.setEnabled(false);
@@ -223,7 +251,7 @@ public class UI_CitaController extends PanelController implements ActionListener
         // Obtiene el modelo de selección de la lista del evento
         ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
-        //if (e.getSource()==CitaUI.tbPacientes.getSelectionModel()) 
+        // if (e.getSource()==CitaUI.tbPacientes.getSelectionModel())
         // Verifica si hay alguna fila seleccionada
         if (!lsm.isSelectionEmpty() && buscar) {
             // Obtiene el índice de la fila seleccionada
@@ -248,7 +276,7 @@ public class UI_CitaController extends PanelController implements ActionListener
                     break;
                 }
             }
-            //llenarCboPacientes(CodigoCliente());
+            // llenarCboPacientes(CodigoCliente());
             for (int i = 1; i < CitaUI.cbPaciente.getItemCount(); i++) {
                 String codigoItem = CitaUI.cbPaciente.getItemAt(i).getNombre();
                 if (codigoItem.equals(paciente)) {
@@ -264,7 +292,8 @@ public class UI_CitaController extends PanelController implements ActionListener
                 }
             }
             String strFecha = datos[5];
-            DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // Ajusta este formato a cómo se ve tu fecha en la cadena de texto
+            DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // Ajusta este formato a cómo se ve
+                                                                                   // tu fecha en la cadena de texto
             LocalDate fecha = LocalDate.parse(strFecha, formato);
             CitaUI.datePicker.setDate(fecha);
 
@@ -295,10 +324,12 @@ public class UI_CitaController extends PanelController implements ActionListener
 
     @Override
     public void focusLost(FocusEvent e) {
+        cargarCombos = new CargarCombos();
         if (e.getSource() == textFieldComboCliente) {
             String enteredText = textFieldComboCliente.getText();
             boolean isPresent = false;
-            for (PersonaCliente cliente : ProcesoListado.obtenerClientes()) {
+            // for (PersonaCliente cliente : ProcesoListado.obtenerClientes()) {
+            for (PersonaCliente cliente : cargarCombos.obtenerClientes()) {
                 if (cliente.toString().equals(enteredText)) {
                     isPresent = true;
                     break;
@@ -311,7 +342,8 @@ public class UI_CitaController extends PanelController implements ActionListener
         } else if (e.getSource() == textFieldComboPaciente) {
             String enteredText = textFieldComboPaciente.getText();
             boolean isPresent = false;
-            for (Paciente paciente : ProcesoListado.obtenerPacientes(CodigoCliente())) {
+            // for (Paciente paciente : ProcesoListado.obtenerPacientes(CodigoCliente())) {
+            for (Paciente paciente : cargarCombos.obtenerPacientes(CodigoCliente())) {
                 if (paciente.toString().equals(enteredText)) {
                     isPresent = true;
                     break;
