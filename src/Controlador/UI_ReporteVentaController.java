@@ -41,7 +41,6 @@ public class UI_ReporteVentaController extends PanelController
 
     RPVenta_UI VentaUI;
     DAOReporteVenta daoVenta;
-    DAOInventario daoInventario;
     CargarCombos cargarCombos;
 
     JTextField textFieldComboCliente;
@@ -227,10 +226,10 @@ public class UI_ReporteVentaController extends PanelController
             VentaUI.btnAgregar.setText("Agregar");
             if (VentaUI.cbCliente.getSelectedIndex() != 0) {
                 if (VentaUI.cbProducto.getSelectedIndex() != 0 || VentaUI.cbServicio.getSelectedIndex() != 0) {
-                    daoInventario = new DAOInventario();
+                    daoVenta = new DAOReporteVenta();
                     // ProcesoListado.insertarEnTabla(VentaUI.tbProductos,
                     // ProcesoInsert.obtenerItem(VentaUI));
-                    ProcesoListado.insertarEnTabla(VentaUI.tbProductos, daoInventario.obtenerItem(VentaUI));
+                    ProcesoListado.insertarEnTabla(VentaUI.tbProductos, daoVenta.obtenerItem(VentaUI));
                     calcularPagos();
                 } else {
                     JOptionPane.showMessageDialog(null, "Seleccione un producto o servicio de la lista ╰（‵□′）╯");
