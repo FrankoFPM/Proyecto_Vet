@@ -15,9 +15,9 @@ import javax.swing.JOptionPane;
 
 public class ProcesoUpdate {
     /*
-    Conexion objConn = new Conexion();
-        Connection cn = objConn.ObtenerConexion();
-        CallableStatement cs_genCodigo;
+     * Conexion objConn = new Conexion();
+     * Connection cn = objConn.ObtenerConexion();
+     * CallableStatement cs_genCodigo;
      */
 
     public static void actualizarCliente(PersonaCliente cliente) {
@@ -67,6 +67,7 @@ public class ProcesoUpdate {
         } catch (SQLException e) {
         }
     }
+
     public static void actualizarPersonal(PersonaEmpleado empleado) {
         Conexion objConn = new Conexion();
         Connection cn = objConn.ObtenerConexion();
@@ -91,6 +92,7 @@ public class ProcesoUpdate {
         } catch (SQLException e) {
         }
     }
+
     public static void actualizarCita(Cita reserva) {
         Conexion objConn = new Conexion();
         Connection cn = objConn.ObtenerConexion();
@@ -116,6 +118,7 @@ public class ProcesoUpdate {
             e.printStackTrace();
         }
     }
+
     public static void actualizarReporteClinico(ReporteClinico rpClinico) {
         Conexion objConn = new Conexion();
         Connection cn = objConn.ObtenerConexion();
@@ -134,7 +137,8 @@ public class ProcesoUpdate {
             int resultado = cs_update.executeUpdate();
             cs_update.close();
             if (resultado > 0) {
-                JOptionPane.showMessageDialog(null, "Reporte clinico modificado", "Success", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Reporte clinico modificado", "Success",
+                        JOptionPane.INFORMATION_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(null, "Error al modificar (˘･_･˘)", "Error", JOptionPane.WARNING_MESSAGE);
             }
@@ -142,6 +146,7 @@ public class ProcesoUpdate {
             e.printStackTrace();
         }
     }
+
     public static void actualizarProducto(ProductoInventario producto) {
         Conexion objConn = new Conexion();
         Connection cn = objConn.ObtenerConexion();
@@ -166,6 +171,7 @@ public class ProcesoUpdate {
             e.printStackTrace();
         }
     }
+
     public static void actualizarBoleta(ReporteVenta boleta) {
         Conexion objConn = new Conexion();
         Connection cn = objConn.ObtenerConexion();
