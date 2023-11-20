@@ -33,7 +33,8 @@ public class UI_ClienteController extends PanelController implements ActionListe
         };
         ProcesoValidacion.placeholderJtxt(txtCliente, msgCliente);
         ProcesoListado.tituloTabla(ClienteUI.tbClientes, titutos);
-        ProcesoListado.llenarTabla(ClienteUI.tbClientes, ProcesoListado.listarDatos("cliente"));
+        clienteDAO = new DAOCliente();
+        ProcesoListado.llenarTabla(ClienteUI.tbClientes, clienteDAO.listarClientes());
 
         // super.showWindow(panel);
         addListeners();
