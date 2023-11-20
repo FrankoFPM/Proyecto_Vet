@@ -18,9 +18,9 @@ import javax.swing.JOptionPane;
 public class ProcesoInsert {
 
     /*
-    Conexion objConn = new Conexion();
-        Connection cn = objConn.ObtenerConexion();
-        CallableStatement cs_genCodigo;
+     * Conexion objConn = new Conexion();
+     * Connection cn = objConn.ObtenerConexion();
+     * CallableStatement cs_genCodigo;
      */
     public static void insertarCliente(PersonaCliente cliente) {
         Conexion objConn = new Conexion();
@@ -40,7 +40,8 @@ public class ProcesoInsert {
             if (resultado > 0) {
                 JOptionPane.showMessageDialog(null, "Cliente Registrado", "Success", JOptionPane.INFORMATION_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(null, "Error al insertar cliente (˘･_･˘)", "Error", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Error al insertar cliente (˘･_･˘)", "Error",
+                        JOptionPane.WARNING_MESSAGE);
             }
         } catch (SQLException e) {
         }
@@ -64,7 +65,8 @@ public class ProcesoInsert {
             if (resultado > 0) {
                 JOptionPane.showMessageDialog(null, "Paciente Registrado", "Success", JOptionPane.INFORMATION_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(null, "Error al insertar paciente (˘･_･˘)", "Error", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Error al insertar paciente (˘･_･˘)", "Error",
+                        JOptionPane.WARNING_MESSAGE);
             }
         } catch (SQLException e) {
         }
@@ -89,7 +91,8 @@ public class ProcesoInsert {
             if (resultado > 0) {
                 JOptionPane.showMessageDialog(null, "Personal Registrado", "Success", JOptionPane.INFORMATION_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(null, "Error al insertar personal (˘･_･˘)", "Error", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Error al insertar personal (˘･_･˘)", "Error",
+                        JOptionPane.WARNING_MESSAGE);
             }
         } catch (SQLException e) {
         }
@@ -139,7 +142,8 @@ public class ProcesoInsert {
             int resultado = cs_insert.executeUpdate();
             cs_insert.close();
             if (resultado > 0) {
-                JOptionPane.showMessageDialog(null, "Reporte clinico guardado", "Success", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Reporte clinico guardado", "Success",
+                        JOptionPane.INFORMATION_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(null, "Error al guardar (˘･_･˘)", "Error", JOptionPane.WARNING_MESSAGE);
             }
@@ -172,6 +176,7 @@ public class ProcesoInsert {
             e.printStackTrace();
         }
     }
+
     public static void insertarItemBoleta(ProductoItem item) {
         Conexion objConn = new Conexion();
         Connection cn = objConn.ObtenerConexion();
@@ -187,7 +192,8 @@ public class ProcesoInsert {
             int resultado = cs_insert.executeUpdate();
             cs_insert.close();
             if (resultado > 0) {
-                JOptionPane.showMessageDialog(null, "Productos registrados", "Success", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Productos registrados", "Success",
+                        JOptionPane.INFORMATION_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(null, "Error al registrar (˘･_･˘)", "Error", JOptionPane.WARNING_MESSAGE);
             }
@@ -195,6 +201,7 @@ public class ProcesoInsert {
             e.printStackTrace();
         }
     }
+
     public static void insertarBoleta(ReporteVenta boleta) {
         Conexion objConn = new Conexion();
         Connection cn = objConn.ObtenerConexion();
@@ -213,7 +220,8 @@ public class ProcesoInsert {
             int resultado = cs_insert.executeUpdate();
             cs_insert.close();
             if (resultado > 0) {
-                JOptionPane.showMessageDialog(null, "Productos registrados", "Success", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Productos registrados", "Success",
+                        JOptionPane.INFORMATION_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(null, "Error al registrar (˘･_･˘)", "Error", JOptionPane.WARNING_MESSAGE);
             }
@@ -226,12 +234,14 @@ public class ProcesoInsert {
         ProductoInventario item = new ProductoInventario();
         if (ui.cbProducto.getSelectedIndex() != 0) {
             item.setCodigo(ui.cbProducto.getItemAt(ui.cbProducto.getSelectedIndex()).getCodigo());
-            item.setNombre(ui.cbProducto.getItemAt(ui.cbProducto.getSelectedIndex()).getInfo());;
+            item.setNombre(ui.cbProducto.getItemAt(ui.cbProducto.getSelectedIndex()).getInfo());
+            ;
             item.setCantidad((int) ui.spCantidad.getValue());
-            item.setPrecio((double) ui.cbProducto.getItemAt(    ui.cbProducto.getSelectedIndex()).getPrecio());
+            item.setPrecio((double) ui.cbProducto.getItemAt(ui.cbProducto.getSelectedIndex()).getPrecio());
         } else if (ui.cbServicio.getSelectedIndex() != 0) {
             item.setCodigo(ui.cbServicio.getItemAt(ui.cbServicio.getSelectedIndex()).getCodigo());
-            item.setNombre(ui.cbServicio.getItemAt(ui.cbServicio.getSelectedIndex()).getInfo());;
+            item.setNombre(ui.cbServicio.getItemAt(ui.cbServicio.getSelectedIndex()).getInfo());
+            ;
             item.setCantidad(1);
             item.setPrecio(((Double) ui.spPrecioServ.getValue()).doubleValue());
         }
