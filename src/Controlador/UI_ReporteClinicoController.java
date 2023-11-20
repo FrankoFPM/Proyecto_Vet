@@ -3,10 +3,7 @@ package Controlador;
 import static Controlador.DashboardController.vista;
 import Modelo.Paciente;
 import Modelo.ReporteClinico;
-import Procesos.ProcesoInsert;
 import Procesos.ProcesoListado;
-import Procesos.ProcesoRD;
-import Procesos.ProcesoUpdate;
 import Vista.Dashboard_UI;
 import Vista.RPClinico_UI;
 import java.awt.event.ActionEvent;
@@ -29,20 +26,30 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-public class UI_ReporteClinicoController extends PanelController implements ActionListener, ListSelectionListener, FocusListener {
+import DAO.CargarCombos;
+import DAO.DAOReporteClinico;
+
+public class UI_ReporteClinicoController extends PanelController
+        implements ActionListener, ListSelectionListener, FocusListener {
 
     RPClinico_UI reporteUI;
+    DAOReporteClinico daoReporteClinico;
+    CargarCombos cargarCombos;
 
     boolean buscar = false;
     JTextField textFieldComboPaciente;
-    public String[] titulosRP = {"COD", "Cod Paciente", "Paciente", "Causa", "Pronostico", "Sintomas", "Tratamiento", "Fecha", "Hora"};
+    public String[] titulosRP = { "COD", "Cod Paciente", "Paciente", "Causa", "Pronostico", "Sintomas", "Tratamiento",
+            "Fecha", "Hora" };
 
     public UI_ReporteClinicoController(RPClinico_UI panel, Dashboard_UI app) {
         super(panel, app);
         this.reporteUI = panel;
 
         ProcesoListado.tituloTabla(reporteUI.tbRepotes, titulosRP);
-        ProcesoListado.llenarTabla(reporteUI.tbRepotes, ProcesoListado.listarDatos("ReporteClinico"));
+        daoReporteClinico = new DAOReporteClinico();
+        // ProcesoListado.llenarTabla(reporteUI.tbRepotes,
+        // ProcesoListado.listarDatos("ReporteClinico"));
+        ProcesoListado.llenarTabla(reporteUI.tbRepotes, daoReporteClinico.listarReporteClinico());
 
         llenarCboPacientes();
         textFieldComboPaciente = (JTextField) reporteUI.cbPaciente.getEditor().getEditorComponent();
@@ -61,7 +68,10 @@ public class UI_ReporteClinicoController extends PanelController implements Acti
         textFieldComboPaciente.addKeyListener(new KeyAdapter() {
             public void keyReleased(KeyEvent ke) {
                 SwingUtilities.invokeLater(() -> {
-                    ProcesoListado.filterComboBoxAllPacientes(textFieldComboPaciente.getText(), reporteUI.cbPaciente);
+                    cargarCombos = new CargarCombos();
+                    // ProcesoListado.filterComboBoxAllPacientes(textFieldComboPaciente.getText(),
+                    // reporteUI.cbPaciente);
+                    cargarCombos.filterComboBoxAllPacientes(textFieldComboPaciente.getText(), reporteUI.cbPaciente);
                 });
             }
         });
@@ -69,8 +79,9 @@ public class UI_ReporteClinicoController extends PanelController implements Acti
 
     private void llenarCboPacientes() {
         reporteUI.cbPaciente.removeAllItems();
-
-        ArrayList<Paciente> listaPacientes = ProcesoListado.obtenerTodoPacientes();
+        cargarCombos = new CargarCombos();
+        // ArrayList<Paciente> listaPacientes = ProcesoListado.obtenerTodoPacientes();
+        ArrayList<Paciente> listaPacientes = cargarCombos.obtenerTodoPacientes();
         for (int i = 0; i < listaPacientes.size(); i++) {
             reporteUI.cbPaciente.addItem(new Paciente(listaPacientes.get(i).getCodigo(),
                     listaPacientes.get(i).getNombre()));
@@ -101,8 +112,10 @@ public class UI_ReporteClinicoController extends PanelController implements Acti
             if (reporteUI.timePicker.getTime() != null) {
                 ReporteClinico rpClinico = new ReporteClinico();
                 rpClinico.setCodigo(reporteUI.lblCodigo.getText());
-                rpClinico.setCodigo_entidad(reporteUI.cbPaciente.getItemAt(reporteUI.cbPaciente.getSelectedIndex()).getCodigo());
-                rpClinico.setEntidad(reporteUI.cbPaciente.getItemAt(reporteUI.cbPaciente.getSelectedIndex()).getNombre());
+                rpClinico.setCodigo_entidad(
+                        reporteUI.cbPaciente.getItemAt(reporteUI.cbPaciente.getSelectedIndex()).getCodigo());
+                rpClinico.setEntidad(
+                        reporteUI.cbPaciente.getItemAt(reporteUI.cbPaciente.getSelectedIndex()).getNombre());
                 rpClinico.setCausa(reporteUI.txtCausa.getText());
                 rpClinico.setPronostico(reporteUI.cbPronostico.getSelectedItem().toString());
                 rpClinico.setSintomas(reporteUI.txtSintomas.getText());
@@ -114,7 +127,9 @@ public class UI_ReporteClinicoController extends PanelController implements Acti
                 Time time = Time.valueOf(localTime);
                 rpClinico.setHora(time);
 
-                ProcesoInsert.insertarReporteClinico(rpClinico);
+                // ProcesoInsert.insertarReporteClinico(rpClinico);
+                daoReporteClinico = new DAOReporteClinico();
+                daoReporteClinico.insertarReporteClinico(rpClinico);
 
                 reloadWindow();
             }
@@ -123,7 +138,10 @@ public class UI_ReporteClinicoController extends PanelController implements Acti
                 String dato = JOptionPane.showInputDialog(null, "Ingrese el Codigo del reporte");
                 if (dato != null) {
                     if (!dato.isEmpty()) {
-                        List<String[]> datos = ProcesoRD.buscarRegistros("ReporteClinico", "id_rpclinico", dato);
+                        // List<String[]> datos = ProcesoRD.buscarRegistros("ReporteClinico",
+                        // "id_rpclinico", dato);
+                        daoReporteClinico = new DAOReporteClinico();
+                        List<String[]> datos = daoReporteClinico.buscarReporteClinico(dato);
                         if (!datos.isEmpty()) {
                             ProcesoListado.llenarTabla(reporteUI.tbRepotes, datos);
                             reporteUI.btnBuscar.setText("Cancelar");
@@ -146,8 +164,10 @@ public class UI_ReporteClinicoController extends PanelController implements Acti
             if (reporteUI.timePicker.getTime() != null) {
                 ReporteClinico rpClinico = new ReporteClinico();
                 rpClinico.setCodigo(reporteUI.lblCodigo.getText());
-                rpClinico.setCodigo_entidad(reporteUI.cbPaciente.getItemAt(reporteUI.cbPaciente.getSelectedIndex()).getCodigo());
-                rpClinico.setEntidad(reporteUI.cbPaciente.getItemAt(reporteUI.cbPaciente.getSelectedIndex()).getNombre());
+                rpClinico.setCodigo_entidad(
+                        reporteUI.cbPaciente.getItemAt(reporteUI.cbPaciente.getSelectedIndex()).getCodigo());
+                rpClinico.setEntidad(
+                        reporteUI.cbPaciente.getItemAt(reporteUI.cbPaciente.getSelectedIndex()).getNombre());
                 rpClinico.setCausa(reporteUI.txtCausa.getText());
                 rpClinico.setPronostico(reporteUI.cbPronostico.getSelectedItem().toString());
                 rpClinico.setSintomas(reporteUI.txtSintomas.getText());
@@ -159,12 +179,16 @@ public class UI_ReporteClinicoController extends PanelController implements Acti
                 Time time = Time.valueOf(localTime);
                 rpClinico.setHora(time);
 
-                ProcesoUpdate.actualizarReporteClinico(rpClinico);
-
+                // ProcesoUpdate.actualizarReporteClinico(rpClinico);
+                daoReporteClinico = new DAOReporteClinico();
+                daoReporteClinico.actualizarReporteClinico(rpClinico);
                 reloadWindow();
             }
         } else if (e.getSource() == reporteUI.btnEliminar) {
-            ProcesoRD.eliminarRegistros("ReporteClinico", "id_rpclinico", reporteUI.lblCodigo.getText());
+            // ProcesoRD.eliminarRegistros("ReporteClinico", "id_rpclinico",
+            // reporteUI.lblCodigo.getText());
+            daoReporteClinico = new DAOReporteClinico();
+            daoReporteClinico.eliminarReporteClinico(reporteUI.lblCodigo.getText());
             reporteUI.btnBuscar.setText("Buscar");
             reporteUI.btnEliminar.setEnabled(false);
             reporteUI.btnModificar.setEnabled(false);
@@ -188,7 +212,9 @@ public class UI_ReporteClinicoController extends PanelController implements Acti
         if (e.getSource() == textFieldComboPaciente) {
             String enteredText = textFieldComboPaciente.getText();
             boolean isPresent = false;
-            for (Paciente paciente : ProcesoListado.obtenerTodoPacientes()) {
+            cargarCombos = new CargarCombos();
+            // (Paciente paciente : ProcesoListado.obtenerTod
+            for (Paciente paciente : cargarCombos.obtenerTodoPacientes()) {
                 if (paciente.toString().equals(enteredText)) {
                     isPresent = true;
                     break;
@@ -210,7 +236,7 @@ public class UI_ReporteClinicoController extends PanelController implements Acti
         // Obtiene el modelo de selección de la lista del evento
         ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
-        //if (e.getSource()==reporteUI.tbPacientes.getSelectionModel()) 
+        // if (e.getSource()==reporteUI.tbPacientes.getSelectionModel())
         // Verifica si hay alguna fila seleccionada
         if (!lsm.isSelectionEmpty() && buscar) {
             // Obtiene el índice de la fila seleccionada
@@ -240,7 +266,8 @@ public class UI_ReporteClinicoController extends PanelController implements Acti
             reporteUI.txtTratamiento.setText(datos[6]);
 
             String strFecha = datos[7];
-            DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // Ajusta este formato a cómo se ve tu fecha en la cadena de texto
+            DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // Ajusta este formato a cómo se ve
+                                                                                   // tu fecha en la cadena de texto
             LocalDate fecha = LocalDate.parse(strFecha, formato);
             reporteUI.datePicker.setDate(fecha);
 
