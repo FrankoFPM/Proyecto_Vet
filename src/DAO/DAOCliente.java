@@ -75,8 +75,8 @@ public class DAOCliente extends ConexionDB {
     /**
      * Método que lista los clientes.
      */
-    public void listarCliente() {
-        ProcesoListado.listarDatos("cliente");
+    public List<String[]> listarClientes() {
+        return ProcesoListado.listarDatos("cliente");
     }
 
     /**
