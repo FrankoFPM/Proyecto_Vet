@@ -171,6 +171,7 @@ public class ProcesoListado {
         }
         return numCitas;
     }
+
     public static int sumarIngresos() {
         Conexion objConn = new Conexion();
         Connection cn = objConn.ObtenerConexion();
@@ -195,7 +196,7 @@ public class ProcesoListado {
         return numCitas;
     }
 
-    //Obtener clientes para el CBox
+    // Obtener clientes para el CBox
     public static ArrayList<PersonaCliente> obtenerClientes() {
 
         Conexion objConn = new Conexion();
@@ -364,6 +365,12 @@ public class ProcesoListado {
         tabla.setModel(modelo);
     }
 
+    /**
+     * Llena una tabla con los datos proporcionados.
+     * 
+     * @param tabla La tabla a llenar.
+     * @param datos Los datos a insertar en la tabla tipo List.
+     */
     public static void llenarTabla(JTable tabla, List<String[]> datos) {
         DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
         modelo.setRowCount(0);
@@ -375,7 +382,7 @@ public class ProcesoListado {
 
     public static void insertarEnTabla(JTable tabla, ProductoInventario item) {
         DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
-        //modelo.setRowCount(0);
+        // modelo.setRowCount(0);
 
         String[] fila = new String[5];
         fila[0] = item.getCodigo();
@@ -383,11 +390,11 @@ public class ProcesoListado {
         fila[2] = String.valueOf(item.getPrecio());
         fila[3] = String.valueOf(item.getCantidad());
         fila[4] = String.valueOf(item.total());
-        
+
         modelo.addRow(fila);
     }
 
-    //Filtrar comboClientes
+    // !Filtrar comboClientes
     public static void filterComboBox(String enteredText, JComboBox<PersonaCliente> comboBox) {
         if (!comboBox.isPopupVisible()) {
             comboBox.showPopup();
@@ -544,6 +551,7 @@ public class ProcesoListado {
         return normalized.toLowerCase(); // convertir a minúsculas
     }
 
+    // ! end
     public static ArrayList<Paciente> obtenerTodoPacientes() {
 
         Conexion objConn = new Conexion();
