@@ -35,6 +35,16 @@ public class ProcesoValidacion {
         return true;
     }
 
+    // Método para validar combobox
+    public static boolean validarCombobox(JComboBox combo, String nombre) {
+        if (combo.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(null, "Seleccione una opcion de la lista " + nombre + " ╰（‵□′）╯", "Error",
+                    JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+        return true;
+    }
+
     // Método para validar el DNI
     public static boolean validarDni(int dni) {
         if (String.valueOf(dni).length() != 8) {
