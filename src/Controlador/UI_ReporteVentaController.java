@@ -5,10 +5,7 @@ import Modelo.PersonaCliente;
 import Modelo.ProductoInventario;
 import Modelo.ProductoItem;
 import Modelo.ReporteVenta;
-import Procesos.ProcesoInsert;
 import Procesos.ProcesoListado;
-import Procesos.ProcesoRD;
-import Procesos.ProcesoUpdate;
 import Vista.Dashboard_UI;
 import Vista.RPVenta_UI;
 import java.awt.event.ActionEvent;
@@ -35,22 +32,30 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
-public class UI_ReporteVentaController extends PanelController implements ActionListener, ListSelectionListener, FocusListener, ItemListener {
+import DAO.CargarCombos;
+import DAO.DAOInventario;
+import DAO.DAOReporteVenta;
+
+public class UI_ReporteVentaController extends PanelController
+        implements ActionListener, ListSelectionListener, FocusListener, ItemListener {
 
     RPVenta_UI VentaUI;
+    DAOReporteVenta daoVenta;
+    CargarCombos cargarCombos;
 
     JTextField textFieldComboCliente;
     JTextField textFieldComboProducto;
     JTextField textFieldComboServicio;
     DefaultTableModel modeloProducto;
 
-    String titutos[] = {"COD", "Producto/Servicio", "Precio", "Cantidad", "Total"};
-    String titutos2[] = {"COD", "Codigo Cliente", "Cliente", "Fecha", "Hora", "Nro de Articulos", "Total", "Impuestos", "Importe Final"};
+    String titutos[] = { "COD", "Producto/Servicio", "Precio", "Cantidad", "Total" };
+    String titutos2[] = { "COD", "Codigo Cliente", "Cliente", "Fecha", "Hora", "Nro de Articulos", "Total", "Impuestos",
+            "Importe Final" };
 
     JComboBox combos[];
 
     String msgCombo[] = {
-        "Cliente", "Producto", "Servicio"
+            "Cliente", "Producto", "Servicio"
     };
 
     boolean buscar = false;
@@ -65,12 +70,15 @@ public class UI_ReporteVentaController extends PanelController implements Action
         VentaUI.btnModificar.setEnabled(false);
         VentaUI.btnEliminar.setEnabled(false);
 
-        combos = new JComboBox[]{
-            VentaUI.cbCliente, VentaUI.cbProducto, VentaUI.cbServicio
+        combos = new JComboBox[] {
+                VentaUI.cbCliente, VentaUI.cbProducto, VentaUI.cbServicio
         };
 
         ProcesoListado.tituloTabla(VentaUI.tbProductos, titutos2);
-        ProcesoListado.llenarTabla(VentaUI.tbProductos, ProcesoListado.listarDatos("boleta"));
+        daoVenta = new DAOReporteVenta();
+        // ProcesoListado.llenarTabla(VentaUI.tbProductos,
+        // ProcesoListado.listarDatos("boleta"));
+        ProcesoListado.llenarTabla(VentaUI.tbProductos, daoVenta.listarBoletas());
         modeloProducto = (DefaultTableModel) VentaUI.tbProductos.getModel();
 
         textFieldComboCliente = (JTextField) VentaUI.cbCliente.getEditor().getEditorComponent();
@@ -94,24 +102,31 @@ public class UI_ReporteVentaController extends PanelController implements Action
     }
 
     private void keyListener() {
+        cargarCombos = new CargarCombos();
         textFieldComboCliente.addKeyListener(new KeyAdapter() {
             public void keyReleased(KeyEvent ke) {
                 SwingUtilities.invokeLater(() -> {
-                    ProcesoListado.filterComboBox(textFieldComboCliente.getText(), VentaUI.cbCliente);
+                    // ProcesoListado.filterComboBox(textFieldComboCliente.getText(),
+                    // VentaUI.cbCliente);
+                    cargarCombos.filterComboBox(textFieldComboCliente.getText(), VentaUI.cbCliente);
                 });
             }
         });
         textFieldComboProducto.addKeyListener(new KeyAdapter() {
             public void keyReleased(KeyEvent ke) {
                 SwingUtilities.invokeLater(() -> {
-                    ProcesoListado.filterComboBoxProductos(textFieldComboProducto.getText(), VentaUI.cbProducto);
+                    // ProcesoListado.filterComboBoxProductos(textFieldComboProducto.getText(),
+                    // VentaUI.cbProducto);
+                    cargarCombos.filterComboBoxProductos(textFieldComboProducto.getText(), VentaUI.cbProducto);
                 });
             }
         });
         textFieldComboServicio.addKeyListener(new KeyAdapter() {
             public void keyReleased(KeyEvent ke) {
                 SwingUtilities.invokeLater(() -> {
-                    ProcesoListado.filterComboBoxProductos(textFieldComboServicio.getText(), VentaUI.cbServicio);
+                    // ProcesoListado.filterComboBoxProductos(textFieldComboServicio.getText(),
+                    // VentaUI.cbServicio);
+                    cargarCombos.filterComboBoxProductos(textFieldComboServicio.getText(), VentaUI.cbServicio);
                 });
             }
         });
@@ -119,8 +134,9 @@ public class UI_ReporteVentaController extends PanelController implements Action
 
     private void llenarCboClientes() {
         VentaUI.cbCliente.removeAllItems();
-
-        ArrayList<PersonaCliente> listaClientes = ProcesoListado.obtenerClientes();
+        cargarCombos = new CargarCombos();
+        // ArrayList<PersonaCliente> listaClientes = ProcesoListado.obtenerClientes();
+        ArrayList<PersonaCliente> listaClientes = cargarCombos.obtenerClientes();
         for (int i = 0; i < listaClientes.size(); i++) {
             VentaUI.cbCliente.addItem(new PersonaCliente(listaClientes.get(i).getCodigo(),
                     listaClientes.get(i).getNombre()));
@@ -129,8 +145,10 @@ public class UI_ReporteVentaController extends PanelController implements Action
 
     private void llenarCboProducto() {
         VentaUI.cbProducto.removeAllItems();
-
-        ArrayList<ProductoInventario> listaProductos = ProcesoListado.obtenerProducto();
+        cargarCombos = new CargarCombos();
+        // ArrayList<ProductoInventario> listaProductos =
+        // ProcesoListado.obtenerProducto();
+        ArrayList<ProductoInventario> listaProductos = cargarCombos.obtenerProducto();
         for (int i = 0; i < listaProductos.size(); i++) {
             VentaUI.cbProducto.addItem(new ProductoInventario(listaProductos.get(i).getCodigo(),
                     listaProductos.get(i).getInfo(), listaProductos.get(i).getPrecio()));
@@ -140,13 +158,14 @@ public class UI_ReporteVentaController extends PanelController implements Action
 
     private void llenarCboServicio() {
         VentaUI.cbServicio.removeAllItems();
-
-        ArrayList<ProductoInventario> listaProductos = ProcesoListado.obtenerServicios();
+        cargarCombos = new CargarCombos();
+        // ArrayList<ProductoInventario> listaProductos =
+        // ProcesoListado.obtenerServicios();
+        ArrayList<ProductoInventario> listaProductos = cargarCombos.obtenerServicios();
         for (int i = 0; i < listaProductos.size(); i++) {
             VentaUI.cbServicio.addItem(new ProductoInventario(listaProductos.get(i).getCodigo(),
                     listaProductos.get(i).getInfo(),
-                    listaProductos.get(i).getPrecio())
-            );
+                    listaProductos.get(i).getPrecio()));
         }
     }
 
@@ -160,7 +179,8 @@ public class UI_ReporteVentaController extends PanelController implements Action
     public double sumaColumna() {
         double total = 0;
         for (int i = 0; i < VentaUI.tbProductos.getRowCount(); i++) {
-            total += Double.parseDouble(VentaUI.tbProductos.getValueAt(i, VentaUI.tbProductos.getColumnCount() - 1).toString());
+            total += Double.parseDouble(
+                    VentaUI.tbProductos.getValueAt(i, VentaUI.tbProductos.getColumnCount() - 1).toString());
         }
         return total;
     }
@@ -206,13 +226,17 @@ public class UI_ReporteVentaController extends PanelController implements Action
             VentaUI.btnAgregar.setText("Agregar");
             if (VentaUI.cbCliente.getSelectedIndex() != 0) {
                 if (VentaUI.cbProducto.getSelectedIndex() != 0 || VentaUI.cbServicio.getSelectedIndex() != 0) {
-                    ProcesoListado.insertarEnTabla(VentaUI.tbProductos, ProcesoInsert.obtenerItem(VentaUI));
+                    daoVenta = new DAOReporteVenta();
+                    // ProcesoListado.insertarEnTabla(VentaUI.tbProductos,
+                    // ProcesoInsert.obtenerItem(VentaUI));
+                    ProcesoListado.insertarEnTabla(VentaUI.tbProductos, daoVenta.obtenerItem(VentaUI));
                     calcularPagos();
                 } else {
-                    JOptionPane.showMessageDialog(null, "Seleccione un producto oservicio de la lista ╰（‵□′）╯");
+                    JOptionPane.showMessageDialog(null, "Seleccione un producto o servicio de la lista ╰（‵□′）╯");
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Seleccione una opcion de la lista de Clientes para comenzar ╰（‵□′）╯");
+                JOptionPane.showMessageDialog(null,
+                        "Seleccione una opcion de la lista de Clientes para comenzar ╰（‵□′）╯");
             }
         } else if (e.getSource() == VentaUI.btnRegistrar) {
             if (VentaUI.btnRegistrar.getText().equals("Nuevo")) {
@@ -236,7 +260,9 @@ public class UI_ReporteVentaController extends PanelController implements Action
                 boleta.setCantidaditems(VentaUI.tbProductos.getRowCount());
                 boleta.setImporte(sumaColumna());
 
-                ProcesoInsert.insertarBoleta(boleta);
+                // ProcesoInsert.insertarBoleta(boleta);
+                daoVenta = new DAOReporteVenta();
+                daoVenta.insertarBoleta(boleta);
 
                 for (int i = 0; i < VentaUI.tbProductos.getRowCount(); i++) {
                     ProductoItem item = new ProductoItem();
@@ -245,7 +271,8 @@ public class UI_ReporteVentaController extends PanelController implements Action
                     item.setNombre(VentaUI.tbProductos.getValueAt(i, 1).toString());
                     item.setPrecio(Double.parseDouble(VentaUI.tbProductos.getValueAt(i, 2).toString()));
                     item.setCantidad(Integer.parseInt(VentaUI.tbProductos.getValueAt(i, 3).toString()));
-                    ProcesoInsert.insertarItemBoleta(item);
+                    // ProcesoInsert.insertarItemBoleta(item);
+                    daoVenta.insertarItemBoleta(item);
                 }
                 reloadWindow();
 
@@ -255,19 +282,24 @@ public class UI_ReporteVentaController extends PanelController implements Action
                 String dato = JOptionPane.showInputDialog(null, "Ingrese el Codigo de la boleta");
                 if (dato != null) {
                     if (!dato.isEmpty()) {
-                        List<String[]> datos = ProcesoRD.buscarRegistros("v_itemsBoleta", "id_boleta", dato);
-                        List<String[]> datoCliente = ProcesoRD.buscarRegistros("boleta", "id_boleta", dato);
+                        daoVenta = new DAOReporteVenta();
+                        // List<String[]> datos = ProcesoRD.buscarRegistros("v_itemsBoleta",
+                        // "id_boleta", dato);
+                        List<String[]> datos = daoVenta.listarItemsBoleta(dato);
+                        // List<String[]> datoCliente = ProcesoRD.buscarRegistros("boleta", "id_boleta",
+                        // dato);
+                        List<String[]> datoCliente = daoVenta.listarBoletas(dato);
                         if (!datos.isEmpty()) {
                             ProcesoListado.tituloTabla(VentaUI.tbProductos, titutos);
                             ProcesoListado.llenarTabla(VentaUI.tbProductos, datos);
                             VentaUI.btnBuscar.setText("Cancelar");
                             buscar = true;
                             calcularPagos();
-                            //VentaUI.btnCancelar.setVisible(true);
+                            // VentaUI.btnCancelar.setVisible(true);
                             VentaUI.btnModificar.setEnabled(true);
                             VentaUI.btnEliminar.setEnabled(true);
                             VentaUI.btnRegistrar.setEnabled(false);
-                            //cliente
+                            // cliente
                             VentaUI.cbCliente.setEnabled(true);
                             toggleState(true);
 
@@ -323,8 +355,11 @@ public class UI_ReporteVentaController extends PanelController implements Action
                 boleta.setCantidaditems(VentaUI.tbProductos.getRowCount());
                 boleta.setImporte(sumaColumna());
 
-                ProcesoUpdate.actualizarBoleta(boleta);
-                ProcesoRD.eliminarRegistros("itemsboleta", "id_boleta", codigo);
+                // ProcesoUpdate.actualizarBoleta(boleta);
+                daoVenta = new DAOReporteVenta();
+                daoVenta.actualizarBoleta(boleta);
+                // ProcesoRD.eliminarRegistros("itemsboleta", "id_boleta", codigo);
+                daoVenta.eliminarItemsBoleta(codigo);
 
                 for (int i = 0; i < VentaUI.tbProductos.getRowCount(); i++) {
                     ProductoItem item = new ProductoItem();
@@ -333,13 +368,17 @@ public class UI_ReporteVentaController extends PanelController implements Action
                     item.setNombre(VentaUI.tbProductos.getValueAt(i, 1).toString());
                     item.setPrecio(Double.parseDouble(VentaUI.tbProductos.getValueAt(i, 2).toString()));
                     item.setCantidad(Integer.parseInt(VentaUI.tbProductos.getValueAt(i, 3).toString()));
-                    ProcesoInsert.insertarItemBoleta(item);
+                    // ProcesoInsert.insertarItemBoleta(item);
+                    daoVenta.insertarItemBoleta(item);
                 }
                 reloadWindow();
             }
 
         } else if (e.getSource() == VentaUI.btnEliminar) {
-            ProcesoRD.eliminarRegistros("boleta", "id_boleta", VentaUI.lblCodigo.getText());
+            // ProcesoRD.eliminarRegistros("boleta", "id_boleta",
+            // VentaUI.lblCodigo.getText());
+            daoVenta = new DAOReporteVenta();
+            daoVenta.eliminarBoleta(VentaUI.lblCodigo.getText());
             VentaUI.btnBuscar.setText("Buscar");
             VentaUI.btnEliminar.setEnabled(false);
             VentaUI.btnModificar.setEnabled(false);
@@ -359,7 +398,7 @@ public class UI_ReporteVentaController extends PanelController implements Action
         ListSelectionModel lsm = (ListSelectionModel) e.getSource();
         DefaultTableModel modelo = (DefaultTableModel) VentaUI.tbProductos.getModel();
 
-        //if (e.getSource()==VentaUI.tbProductos.getSelectionModel()) 
+        // if (e.getSource()==VentaUI.tbProductos.getSelectionModel())
         // Verifica si hay alguna fila seleccionada
         if (!lsm.isSelectionEmpty() && buscar) {
             // Obtiene el índice de la fila seleccionada
@@ -428,10 +467,12 @@ public class UI_ReporteVentaController extends PanelController implements Action
 
     @Override
     public void focusLost(FocusEvent e) {
+        cargarCombos = new CargarCombos();
         if (e.getSource() == textFieldComboCliente) {
             String enteredText = textFieldComboCliente.getText();
             boolean isPresent = false;
-            for (PersonaCliente cliente : ProcesoListado.obtenerClientes()) {
+            // for (PersonaCliente cliente : ProcesoListado.obtenerClientes()) {
+            for (PersonaCliente cliente : cargarCombos.obtenerClientes()) {
                 if (cliente.toString().equals(enteredText)) {
                     isPresent = true;
                     break;
@@ -444,7 +485,8 @@ public class UI_ReporteVentaController extends PanelController implements Action
         } else if (e.getSource() == textFieldComboProducto) {
             String enteredText = textFieldComboProducto.getText();
             boolean isPresent = false;
-            for (ProductoInventario productos : ProcesoListado.obtenerProducto()) {
+            // for (ProductoInventario productos : ProcesoListado.obtenerProducto()) {
+            for (ProductoInventario productos : cargarCombos.obtenerProducto()) {
                 if (productos.toString().equals(enteredText)) {
                     isPresent = true;
                     break;
@@ -457,7 +499,8 @@ public class UI_ReporteVentaController extends PanelController implements Action
         } else if (e.getSource() == textFieldComboServicio) {
             String enteredText = textFieldComboServicio.getText();
             boolean isPresent = false;
-            for (ProductoInventario servicios : ProcesoListado.obtenerServicios()) {
+            // for (ProductoInventario servicios : ProcesoListado.obtenerServicios()) {
+            for (ProductoInventario servicios : cargarCombos.obtenerServicios()) {
                 if (servicios.toString().equals(enteredText)) {
                     isPresent = true;
                     break;

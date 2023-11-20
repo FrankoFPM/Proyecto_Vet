@@ -3,10 +3,7 @@ package Controlador;
 import static Controlador.DashboardController.vista;
 import Modelo.Paciente;
 import Modelo.PersonaCliente;
-import Procesos.ProcesoInsert;
 import Procesos.ProcesoListado;
-import Procesos.ProcesoRD;
-import Procesos.ProcesoUpdate;
 import Procesos.ProcesoValidacion;
 import Vista.Dashboard_UI;
 import Vista.Paciente_UI;
@@ -25,28 +22,36 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-public class UI_PacienteController extends PanelController implements ActionListener, ListSelectionListener, FocusListener {
+import DAO.CargarCombos;
+import DAO.DAOPaciente;
+
+public class UI_PacienteController extends PanelController
+        implements ActionListener, ListSelectionListener, FocusListener {
 
     boolean buscar = false;
     Paciente_UI PacienteUI;
+    DAOPaciente daoPaciente;
+    CargarCombos cargarCombos;
 
-    String titutos[] = {"COD", "Nombre", "Especie", "Raza", "sexo",
-        "Color", "Dueño"};
+    String titutos[] = { "COD", "Nombre", "Especie", "Raza", "sexo",
+            "Color", "Dueño" };
 
-    String[] msgPaciente = {"Nombre", "Especie", "Raza",
-        "Color"};
+    String[] msgPaciente = { "Nombre", "Especie", "Raza",
+            "Color" };
     JTextField[] txtPaciente;
     JTextField textFieldCombo;
 
     public UI_PacienteController(Paciente_UI panel, Dashboard_UI app) {
         super(panel, app);
         this.PacienteUI = panel;
-        txtPaciente = new JTextField[]{PacienteUI.txtNombre, PacienteUI.txtEspecie, PacienteUI.txtRaza, PacienteUI.txtColor};
+        txtPaciente = new JTextField[] { PacienteUI.txtNombre, PacienteUI.txtEspecie, PacienteUI.txtRaza,
+                PacienteUI.txtColor };
         ProcesoValidacion.placeholderJtxt(txtPaciente, msgPaciente);
         ProcesoListado.tituloTabla(PacienteUI.tbPacientes, titutos);
-        ProcesoListado.llenarTabla(PacienteUI.tbPacientes, ProcesoListado.listarDatos("paciente"));
+        daoPaciente = new DAOPaciente();
+        ProcesoListado.llenarTabla(PacienteUI.tbPacientes, daoPaciente.listarPacientes());
 
-        //super.showWindow(panel);
+        // super.showWindow(panel);
         String cod = ProcesoListado.generarCodigo("paciente", "id_paciente", "PAC-", 4);
         PacienteUI.lblCodigo.setText(cod);
 
@@ -63,7 +68,10 @@ public class UI_PacienteController extends PanelController implements ActionList
         textFieldCombo.addKeyListener(new KeyAdapter() {
             public void keyReleased(KeyEvent ke) {
                 SwingUtilities.invokeLater(() -> {
-                    ProcesoListado.filterComboBox(textFieldCombo.getText(), PacienteUI.cbCliente);
+                    cargarCombos = new CargarCombos();
+                    cargarCombos.filterComboBox(textFieldCombo.getText(), PacienteUI.cbCliente);
+                    // ProcesoListado.filterComboBox(textFieldCombo.getText(),
+                    // PacienteUI.cbCliente);
                 });
             }
         });
@@ -71,8 +79,10 @@ public class UI_PacienteController extends PanelController implements ActionList
 
     private void llenarCboClientes() {
         PacienteUI.cbCliente.removeAllItems();
+        // ArrayList<PersonaCliente> listaClientes = ProcesoListado.obtenerClientes();
+        cargarCombos = new CargarCombos();
+        ArrayList<PersonaCliente> listaClientes = cargarCombos.obtenerClientes();
 
-        ArrayList<PersonaCliente> listaClientes = ProcesoListado.obtenerClientes();
         for (int i = 0; i < listaClientes.size(); i++) {
             PacienteUI.cbCliente.addItem(new PersonaCliente(listaClientes.get(i).getCodigo(),
                     listaClientes.get(i).getNombre()));
@@ -92,7 +102,13 @@ public class UI_PacienteController extends PanelController implements ActionList
                 mascota.setColor(txtPaciente[3].getText());
                 mascota.setDueño(PacienteUI.cbCliente.getItemAt(PacienteUI.cbCliente.getSelectedIndex()).getCodigo());
 
-                ProcesoInsert.insertarPaciente(mascota);
+                if (!ProcesoValidacion.validarCombobox(PacienteUI.cbCliente, "Dueño")
+                        || !ProcesoValidacion.validarCombobox(PacienteUI.cboSexo, "Sexo")) {
+                    return;
+                }
+
+                daoPaciente = new DAOPaciente();
+                daoPaciente.insertarPaciente(mascota);
 
                 reloadWindow();
             }
@@ -101,10 +117,13 @@ public class UI_PacienteController extends PanelController implements ActionList
                 String dato = JOptionPane.showInputDialog(null, "Ingrese el DNI del cliente");
                 if (dato != null) {
                     if (!dato.isEmpty()) {
-                        List<String[]> datos = ProcesoRD.buscarRegistros("paciente", "id_cliente", dato);
+                        daoPaciente = new DAOPaciente();
+                        // List<String[]> datos = ProcesoRD.buscarRegistros("paciente", "id_cliente",
+                        // dato);
+                        List<String[]> datos = daoPaciente.buscarPaciente(dato);
                         if (!datos.isEmpty()) {
                             ProcesoListado.llenarTabla(PacienteUI.tbPacientes, datos);
-                            //PacienteUI.btnEliminar.setEnabled(true);
+                            // PacienteUI.btnEliminar.setEnabled(true);
                             PacienteUI.btnActualizar.setEnabled(true);
                             PacienteUI.btnBuscar.setText("Cancelar");
                             buscar = true;
@@ -132,13 +151,21 @@ public class UI_PacienteController extends PanelController implements ActionList
                 mascota.setSexo(PacienteUI.cboSexo.getSelectedItem().toString());
                 mascota.setColor(txtPaciente[3].getText());
                 mascota.setDueño(PacienteUI.cbCliente.getItemAt(PacienteUI.cbCliente.getSelectedIndex()).getCodigo());
+                if (!ProcesoValidacion.validarCombobox(PacienteUI.cbCliente, "Dueño")
+                        || !ProcesoValidacion.validarCombobox(PacienteUI.cboSexo, "Sexo")) {
+                    return;
+                }
 
-                ProcesoUpdate.actualizarPaciente(mascota);
+                daoPaciente = new DAOPaciente();
+                daoPaciente.actualizarPaciente(mascota);
 
                 reloadWindow();
             }
         } else if (e.getSource() == PacienteUI.btnEliminar) {
-            ProcesoRD.eliminarRegistros("paciente", "id_paciente", PacienteUI.lblCodigo.getText());
+            // ProcesoRD.eliminarRegistros("paciente", "id_paciente",
+            // PacienteUI.lblCodigo.getText());
+            daoPaciente = new DAOPaciente();
+            daoPaciente.eliminarPaciente(PacienteUI.lblCodigo.getText());
             PacienteUI.btnBuscar.setText("Buscar");
             PacienteUI.btnEliminar.setEnabled(false);
             PacienteUI.btnActualizar.setEnabled(false);
@@ -159,27 +186,37 @@ public class UI_PacienteController extends PanelController implements ActionList
 
     }
 
+    /**
+     * Este método se llama cuando el valor de la selección en la lista cambia.
+     *
+     * @param e El evento de cambio de selección.
+     */
     @Override
     public void valueChanged(ListSelectionEvent e) {
+        // Si el valor aún se está ajustando, salimos del método.
         if (e.getValueIsAdjusting()) {
             return;
         }
 
-        // Obtiene el modelo de selección de la lista del evento
+        // Obtenemos el modelo de selección de la lista del evento.
         ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
-        //if (e.getSource()==PacienteUI.tbPacientes.getSelectionModel()) 
-        // Verifica si hay alguna fila seleccionada
+        // Verificamos si hay alguna fila seleccionada y si la búsqueda está activa.
         if (!lsm.isSelectionEmpty() && buscar) {
-            // Obtiene el índice de la fila seleccionada
+            // Obtenemos el índice de la fila seleccionada.
             int filaSeleccionada = lsm.getMinSelectionIndex();
 
+            // Creamos un array para almacenar los datos de la fila seleccionada.
             String[] datos = new String[PacienteUI.tbPacientes.getColumnCount()];
             for (int i = 0; i < PacienteUI.tbPacientes.getColumnCount(); i++) {
                 datos[i] = (String) PacienteUI.tbPacientes.getValueAt(filaSeleccionada, i);
             }
 
+            // Habilitamos el botón de eliminar.
             PacienteUI.btnEliminar.setEnabled(true);
+
+            // Actualizamos los campos de la interfaz de usuario con los datos de la fila
+            // seleccionada.
             PacienteUI.lblCodigo.setText(datos[0]);
             PacienteUI.txtNombre.setText(datos[1]);
             PacienteUI.txtEspecie.setText(datos[2]);
@@ -187,6 +224,7 @@ public class UI_PacienteController extends PanelController implements ActionList
             PacienteUI.cboSexo.setSelectedItem(datos[4]);
             PacienteUI.txtColor.setText(datos[5]);
 
+            // Buscamos el código del cliente en el combo box y lo seleccionamos.
             String codigoBD = datos[6];
             for (int i = 1; i < PacienteUI.cbCliente.getItemCount(); i++) {
                 String codigoItem = PacienteUI.cbCliente.getItemAt(i).getCodigo();
@@ -195,6 +233,7 @@ public class UI_PacienteController extends PanelController implements ActionList
                     break;
                 }
             }
+
         }
     }
 
@@ -212,7 +251,9 @@ public class UI_PacienteController extends PanelController implements ActionList
         if (e.getSource() == textFieldCombo) {
             String enteredText = textFieldCombo.getText();
             boolean isPresent = false;
-            for (PersonaCliente cliente : ProcesoListado.obtenerClientes()) {
+            cargarCombos = new CargarCombos();
+
+            for (PersonaCliente cliente : cargarCombos.obtenerClientes()) {
                 if (cliente.toString().equals(enteredText)) {
                     isPresent = true;
                     break;

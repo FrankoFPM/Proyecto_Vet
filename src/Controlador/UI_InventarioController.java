@@ -2,10 +2,7 @@ package Controlador;
 
 import static Controlador.DashboardController.vista;
 import Modelo.ProductoInventario;
-import Procesos.ProcesoInsert;
 import Procesos.ProcesoListado;
-import Procesos.ProcesoRD;
-import Procesos.ProcesoUpdate;
 import Procesos.ProcesoValidacion;
 import Vista.Dashboard_UI;
 import Vista.Inventario_UI;
@@ -18,24 +15,31 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import DAO.DAOInventario;
+import DAO.DAOProducto;
+
 public class UI_InventarioController extends PanelController implements ActionListener {
 
     Inventario_UI InventarioUI;
+    DAOProducto daoProducto;
 
-    String titutos[] = {"COD", "Nombre", "Marca", "Precio",
-        "Cantidad", "Categoria", "Fecha"};
+    String titutos[] = { "COD", "Nombre", "Marca", "Precio",
+            "Cantidad", "Categoria", "Fecha" };
 
-    String[] msgInventario = {"Nombre", "Marca"};
+    String[] msgInventario = { "Nombre", "Marca" };
     JTextField[] txtinventario;
 
     public UI_InventarioController(Inventario_UI panel, Dashboard_UI app) {
         super(panel, app);
         this.InventarioUI = panel;
 
-        txtinventario = new JTextField[]{InventarioUI.txtNombres, InventarioUI.txtMarca};
+        txtinventario = new JTextField[] { InventarioUI.txtNombres, InventarioUI.txtMarca };
         ProcesoValidacion.placeholderJtxt(txtinventario, msgInventario);
         ProcesoListado.tituloTabla(InventarioUI.tbProductos, titutos);
-        ProcesoListado.llenarTabla(InventarioUI.tbProductos, ProcesoListado.listarDatos("productos"));
+        daoProducto = new DAOProducto();
+        // ProcesoListado.llenarTabla(InventarioUI.tbProductos,
+        // ProcesoListado.listarDatos("productos"));
+        ProcesoListado.llenarTabla(InventarioUI.tbProductos, daoProducto.listarProductos());
 
         String cod = ProcesoListado.generarCodigo("Productos", "id_producto", "PRO-", 4);
         InventarioUI.lblCodigo.setText(cod);
@@ -63,7 +67,10 @@ public class UI_InventarioController extends PanelController implements ActionLi
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == InventarioUI.btnEliminar) {
-            ProcesoRD.eliminarRegistros("Productos", "id_producto", InventarioUI.lblCodigo.getText());
+            daoProducto = new DAOProducto();
+            // ProcesoRD.eliminarRegistros("Productos", "id_producto",
+            // InventarioUI.lblCodigo.getText());
+            daoProducto.eliminarProducto(InventarioUI.lblCodigo.getText());
             InventarioUI.btnBuscar.setText("Buscar");
             InventarioUI.btnEliminar.setEnabled(false);
             InventarioUI.btnModificar.setEnabled(false);
@@ -81,7 +88,9 @@ public class UI_InventarioController extends PanelController implements ActionLi
                 Date date = Date.valueOf(localDate);
                 producto.setFecha(date);
 
-                ProcesoInsert.insertarProducto(producto);
+                // ProcesoInsert.insertarProducto(producto);
+                daoProducto = new DAOProducto();
+                daoProducto.insertarProducto(producto);
                 reloadWindow();
             }
         } else if (e.getSource() == InventarioUI.btnBuscar) {
@@ -89,7 +98,10 @@ public class UI_InventarioController extends PanelController implements ActionLi
                 String dato = JOptionPane.showInputDialog(null, "Ingrese el Codigo del producto");
                 if (dato != null) {
                     if (!dato.isEmpty()) {
-                        List<String[]> datos = ProcesoRD.buscarRegistros("Productos", "id_producto", dato);
+                        // List<String[]> datos = ProcesoRD.buscarRegistros("Productos", "id_producto",
+                        // dato);
+                        daoProducto = new DAOProducto();
+                        List<String[]> datos = daoProducto.buscarProducto(dato);
                         if (!datos.isEmpty()) {
                             String[] primerRegistro = datos.get(0);
                             InventarioUI.lblCodigo.setText(primerRegistro[0]);
@@ -133,7 +145,9 @@ public class UI_InventarioController extends PanelController implements ActionLi
                 LocalDate localDate = InventarioUI.datePicker.getDate();
                 Date date = Date.valueOf(localDate);
                 producto.setFecha(date);
-                ProcesoUpdate.actualizarProducto(producto);
+                // ProcesoUpdate.actualizarProducto(producto);
+                daoProducto = new DAOProducto();
+                daoProducto.actualizarProducto(producto);
                 reloadWindow();
             }
         }
