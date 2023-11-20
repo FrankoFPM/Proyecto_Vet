@@ -2,10 +2,7 @@ package Controlador;
 
 import static Controlador.DashboardController.vista;
 import Modelo.PersonaEmpleado;
-import Procesos.ProcesoInsert;
 import Procesos.ProcesoListado;
-import Procesos.ProcesoRD;
-import Procesos.ProcesoUpdate;
 import Procesos.ProcesoValidacion;
 import Vista.Dashboard_UI;
 import Vista.Personal_UI;
@@ -17,24 +14,31 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import DAO.DAOPersonal;
+
 public class UI_PersonalController extends PanelController implements ActionListener, FocusListener {
 
     Personal_UI PersonalUI;
+    DAOPersonal daoPersonal;
 
-    String titutos[] = {"COD", "Nombre", "Apellidos", "Correo", "DNI",
-        "Cargo", "Usuario"};
+    String titutos[] = { "COD", "Nombre", "Apellidos", "Correo", "DNI",
+            "Cargo", "Usuario" };
 
-    String[] msgPersonal = {"Nombre", "Apellidos", "Contraseña", "Correo", "DNI"};
+    String[] msgPersonal = { "Nombre", "Apellidos", "Contraseña", "Correo", "DNI" };
     JTextField[] txtPersonal;
 
     public UI_PersonalController(Personal_UI panel, Dashboard_UI app) {
         super(panel, app);
         this.PersonalUI = panel;
-        txtPersonal = new JTextField[]{PersonalUI.txtNombres, PersonalUI.txtApellidos, PersonalUI.txtPassword, PersonalUI.txtCorreo, PersonalUI.txtDni};
+        txtPersonal = new JTextField[] { PersonalUI.txtNombres, PersonalUI.txtApellidos, PersonalUI.txtPassword,
+                PersonalUI.txtCorreo, PersonalUI.txtDni };
 
         ProcesoValidacion.placeholderJtxt(txtPersonal, msgPersonal);
         ProcesoListado.tituloTabla(PersonalUI.tbPersonal, titutos);
-        ProcesoListado.llenarTabla(PersonalUI.tbPersonal, ProcesoListado.listarDatos("v_personal"));
+        daoPersonal = new DAOPersonal();
+        // ProcesoListado.llenarTabla(PersonalUI.tbPersonal,
+        // ProcesoListado.listarDatos("v_personal"));
+        ProcesoListado.llenarTabla(PersonalUI.tbPersonal, daoPersonal.listarPersonal());
 
         String cod = ProcesoListado.generarCodigoUnico("personal", "id_registro", "EMP-", 4);
         PersonalUI.lblCodigo.setText(cod);
@@ -79,7 +83,9 @@ public class UI_PersonalController extends PanelController implements ActionList
                 empleado.setCargo(PersonalUI.cboCargo.getSelectedItem().toString());
                 empleado.setNickname(PersonalUI.txtNick.getText());
 
-                ProcesoInsert.insertarPersonal(empleado);
+                // ProcesoInsert.insertarPersonal(empleado);
+                daoPersonal = new DAOPersonal();
+                daoPersonal.insertarPersonal(empleado);
 
                 reloadWindow();
             }
@@ -88,7 +94,8 @@ public class UI_PersonalController extends PanelController implements ActionList
                 String dato = JOptionPane.showInputDialog(null, "Ingrese el DNI del empleado");
                 if (dato != null) {
                     if (!dato.isEmpty()) {
-                        List<String[]> datos = ProcesoRD.buscarRegistros("personal", "dni", dato);
+                        // List<String[]> datos = ProcesoRD.buscarRegistros("personal", "dni", dato);
+                        List<String[]> datos = daoPersonal.buscarPersonal(dato);
                         if (!datos.isEmpty()) {
                             String[] primerRegistro = datos.get(0);
                             PersonalUI.lblCodigo.setText(primerRegistro[1]);
@@ -125,11 +132,16 @@ public class UI_PersonalController extends PanelController implements ActionList
                 empleado.setDni(Integer.parseInt(txtPersonal[4].getText()));
                 empleado.setCargo(PersonalUI.cboCargo.getSelectedItem().toString());
                 empleado.setNickname(PersonalUI.txtNick.getText());
-                ProcesoUpdate.actualizarPersonal(empleado);
+                daoPersonal = new DAOPersonal();
+                // ProcesoUpdate.actualizarPersonal(empleado);
+                daoPersonal.actualizarPersonal(empleado);
                 reloadWindow();
             }
         } else if (e.getSource() == PersonalUI.btnEliminar) {
-            ProcesoRD.eliminarRegistros("personal", "id_personal", PersonalUI.lblCodigo.getText());
+            // ProcesoRD.eliminarRegistros("personal", "id_personal",
+            // PersonalUI.lblCodigo.getText());
+            daoPersonal = new DAOPersonal();
+            daoPersonal.eliminarPersonal(PersonalUI.lblCodigo.getText());
             PersonalUI.btnBuscar.setText("Buscar");
             PersonalUI.btnEliminar.setEnabled(false);
             PersonalUI.btnModificar.setEnabled(false);
