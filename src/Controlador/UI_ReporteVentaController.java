@@ -33,7 +33,6 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import DAO.CargarCombos;
-import DAO.DAOInventario;
 import DAO.DAOReporteVenta;
 
 public class UI_ReporteVentaController extends PanelController
