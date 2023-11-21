@@ -2,8 +2,8 @@ package Controlador;
 
 import static Controlador.DashboardController.vista;
 import Modelo.PersonaEmpleado;
-import Procesos.ProcesoListado;
-import Procesos.ProcesoValidacion;
+import DAO.MetodosList;
+import DataUtils.ProcesoValidacion;
 import Vista.Dashboard_UI;
 import Vista.Personal_UI;
 import java.awt.event.ActionEvent;
@@ -34,13 +34,13 @@ public class UI_PersonalController extends PanelController implements ActionList
                 PersonalUI.txtCorreo, PersonalUI.txtDni };
 
         ProcesoValidacion.placeholderJtxt(txtPersonal, msgPersonal);
-        ProcesoListado.tituloTabla(PersonalUI.tbPersonal, titutos);
+        MetodosList.tituloTabla(PersonalUI.tbPersonal, titutos);
         daoPersonal = new DAOPersonal();
-        // ProcesoListado.llenarTabla(PersonalUI.tbPersonal,
-        // ProcesoListado.listarDatos("v_personal"));
-        ProcesoListado.llenarTabla(PersonalUI.tbPersonal, daoPersonal.listarPersonal());
+        // MetodosList.llenarTabla(PersonalUI.tbPersonal,
+        // MetodosList.listarDatos("v_personal"));
+        MetodosList.llenarTabla(PersonalUI.tbPersonal, daoPersonal.listarPersonal());
 
-        String cod = ProcesoListado.generarCodigoUnico("personal", "id_registro", "EMP-", 4);
+        String cod = MetodosList.generarCodigoUnico("personal", "id_registro", "EMP-", 4);
         PersonalUI.lblCodigo.setText(cod);
         addListeners();
 

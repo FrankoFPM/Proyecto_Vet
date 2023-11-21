@@ -1,4 +1,4 @@
-package Procesos;
+package DataUtils;
 
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;

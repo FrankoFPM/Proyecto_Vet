@@ -3,8 +3,8 @@ package Controlador;
 import static Controlador.DashboardController.vista;
 import Modelo.Paciente;
 import Modelo.PersonaCliente;
-import Procesos.ProcesoListado;
-import Procesos.ProcesoValidacion;
+import DAO.MetodosList;
+import DataUtils.ProcesoValidacion;
 import Vista.Dashboard_UI;
 import Vista.Paciente_UI;
 import java.awt.event.ActionEvent;
@@ -47,12 +47,12 @@ public class UI_PacienteController extends PanelController
         txtPaciente = new JTextField[] { PacienteUI.txtNombre, PacienteUI.txtEspecie, PacienteUI.txtRaza,
                 PacienteUI.txtColor };
         ProcesoValidacion.placeholderJtxt(txtPaciente, msgPaciente);
-        ProcesoListado.tituloTabla(PacienteUI.tbPacientes, titutos);
+        MetodosList.tituloTabla(PacienteUI.tbPacientes, titutos);
         daoPaciente = new DAOPaciente();
-        ProcesoListado.llenarTabla(PacienteUI.tbPacientes, daoPaciente.listarPacientes());
+        MetodosList.llenarTabla(PacienteUI.tbPacientes, daoPaciente.listarPacientes());
 
         // super.showWindow(panel);
-        String cod = ProcesoListado.generarCodigo("paciente", "id_paciente", "PAC-", 4);
+        String cod = MetodosList.generarCodigo("paciente", "id_paciente", "PAC-", 4);
         PacienteUI.lblCodigo.setText(cod);
 
         PacienteUI.btnActualizar.setEnabled(false);
@@ -70,7 +70,7 @@ public class UI_PacienteController extends PanelController
                 SwingUtilities.invokeLater(() -> {
                     cargarCombos = new CargarCombos();
                     cargarCombos.filterComboBox(textFieldCombo.getText(), PacienteUI.cbCliente);
-                    // ProcesoListado.filterComboBox(textFieldCombo.getText(),
+                    // MetodosList.filterComboBox(textFieldCombo.getText(),
                     // PacienteUI.cbCliente);
                 });
             }
@@ -79,7 +79,7 @@ public class UI_PacienteController extends PanelController
 
     private void llenarCboClientes() {
         PacienteUI.cbCliente.removeAllItems();
-        // ArrayList<PersonaCliente> listaClientes = ProcesoListado.obtenerClientes();
+        // ArrayList<PersonaCliente> listaClientes = MetodosList.obtenerClientes();
         cargarCombos = new CargarCombos();
         ArrayList<PersonaCliente> listaClientes = cargarCombos.obtenerClientes();
 
@@ -122,7 +122,7 @@ public class UI_PacienteController extends PanelController
                         // dato);
                         List<String[]> datos = daoPaciente.buscarPaciente(dato);
                         if (!datos.isEmpty()) {
-                            ProcesoListado.llenarTabla(PacienteUI.tbPacientes, datos);
+                            MetodosList.llenarTabla(PacienteUI.tbPacientes, datos);
                             // PacienteUI.btnEliminar.setEnabled(true);
                             PacienteUI.btnActualizar.setEnabled(true);
                             PacienteUI.btnBuscar.setText("Cancelar");

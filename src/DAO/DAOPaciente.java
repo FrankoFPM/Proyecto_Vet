@@ -7,8 +7,6 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import Modelo.Paciente;
-import Procesos.ProcesoListado;
-import Procesos.ProcesoRD;
 
 /**
  * Esta clase representa un objeto DAO (Data Access Object) para la entidad
@@ -19,12 +17,12 @@ public class DAOPaciente extends ConexionDB {
 
     // metodo listar pacientes
     public List<String[]> listarPacientes() {
-        return ProcesoListado.listarDatos("paciente");
+        return MetodosList.listarDatos("paciente");
     }
 
     // metodo buscar paciente
     public List<String[]> buscarPaciente(String dato) {
-        return ProcesoRD.buscarRegistros("paciente", "id_cliente", dato);
+        return MetodosReadDelete.buscarRegistros("paciente", "id_cliente", dato);
     }
 
     public void insertarPaciente(Paciente paciente) {
@@ -74,6 +72,6 @@ public class DAOPaciente extends ConexionDB {
 
     // metodo eliminar paciente
     public void eliminarPaciente(String codigo) {
-        ProcesoRD.eliminarRegistros("paciente", "id_paciente", codigo);
+        MetodosReadDelete.eliminarRegistros("paciente", "id_paciente", codigo);
     }
 }

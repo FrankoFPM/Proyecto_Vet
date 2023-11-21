@@ -1,4 +1,4 @@
-package Procesos;
+package DAO;
 
 import DB.Conexion;
 import java.awt.HeadlessException;
@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 /**
  * This class is for read and delete
  */
-public class ProcesoRD {
+public class MetodosReadDelete {
 
     /*
     Conexion objConn = new Conexion();

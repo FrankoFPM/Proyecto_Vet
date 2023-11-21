@@ -6,8 +6,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 import javax.swing.JOptionPane;
-import Procesos.ProcesoListado;
-import Procesos.ProcesoRD;
 
 /**
  * Esta clase representa un objeto DAOCliente que se encarga de realizar
@@ -69,14 +67,14 @@ public class DAOCliente extends ConexionDB {
 
     // metodo eliminar cliente
     public void eliminarCliente(String codigo) {
-        ProcesoRD.eliminarRegistros("cliente", "id_cliente", codigo);
+        MetodosReadDelete.eliminarRegistros("cliente", "id_cliente", codigo);
     }
 
     /**
      * Método que lista los clientes.
      */
     public List<String[]> listarClientes() {
-        return ProcesoListado.listarDatos("cliente");
+        return MetodosList.listarDatos("cliente");
     }
 
     /**
@@ -87,6 +85,6 @@ public class DAOCliente extends ConexionDB {
      *         encontrados.
      */
     public List<String[]> buscarCliente(String codigo) {
-        return ProcesoRD.buscarRegistros("cliente", "dni", codigo);
+        return MetodosReadDelete.buscarRegistros("cliente", "dni", codigo);
     }
 }

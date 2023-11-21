@@ -7,8 +7,6 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 import Modelo.PersonaEmpleado;
-import Procesos.ProcesoListado;
-import Procesos.ProcesoRD;
 
 public class DAOPersonal extends ConexionDB {
     public void insertarPersonal(PersonaEmpleado empleado) {
@@ -60,17 +58,17 @@ public class DAOPersonal extends ConexionDB {
 
     // metodo void eliminar personal
     public void eliminarPersonal(String codigo) {
-        ProcesoRD.eliminarRegistros("personal", "id_personal", codigo);
+        MetodosReadDelete.eliminarRegistros("personal", "id_personal", codigo);
     }
 
     // metodo buscar personal
     public List<String[]> buscarPersonal(String dato) {
-        return ProcesoRD.buscarRegistros("personal", "dni", dato);
+        return MetodosReadDelete.buscarRegistros("personal", "dni", dato);
     }
 
     // metodo listar personal return List<String[]>
     public List<String[]> listarPersonal() {
-        return ProcesoListado.listarDatos("v_personal");
+        return MetodosList.listarDatos("v_personal");
     }
 
 }

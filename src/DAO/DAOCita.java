@@ -11,8 +11,6 @@ import javax.swing.JOptionPane;
 
 import DB.Conexion;
 import Modelo.Cita;
-import Procesos.ProcesoListado;
-import Procesos.ProcesoRD;
 import java.awt.HeadlessException;
 
 public class DAOCita extends ConexionDB {
@@ -66,7 +64,7 @@ public class DAOCita extends ConexionDB {
 
     // metodo listar
     public List<String[]> listarCitas() {
-        return ProcesoListado.listarDatos("cita");
+        return MetodosList.listarDatos("cita");
     }
 
     // metodo buscar retorna List<String[]>
@@ -107,6 +105,6 @@ public class DAOCita extends ConexionDB {
 
     // metodo eliminar
     public void eliminarCita(String codigo) {
-        ProcesoRD.eliminarRegistros("cita", "id_cita", codigo);
+        MetodosReadDelete.eliminarRegistros("cita", "id_cita", codigo);
     }
 }

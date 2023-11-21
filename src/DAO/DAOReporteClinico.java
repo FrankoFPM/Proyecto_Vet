@@ -9,8 +9,6 @@ import javax.swing.JOptionPane;
 
 import DB.Conexion;
 import Modelo.ReporteClinico;
-import Procesos.ProcesoListado;
-import Procesos.ProcesoRD;
 
 public class DAOReporteClinico extends ConexionDB {
     public void insertarReporteClinico(ReporteClinico rpClinico) {
@@ -69,16 +67,16 @@ public class DAOReporteClinico extends ConexionDB {
 
     // metodo eliminar reporte clinico void
     public void eliminarReporteClinico(String codigo) {
-        ProcesoRD.eliminarRegistros("ReporteClinico", "id_rpclinico", codigo);
+        MetodosReadDelete.eliminarRegistros("ReporteClinico", "id_rpclinico", codigo);
     }
 
     // metodo listar reporte clinico retonra un List<String[]>
     public List<String[]> listarReporteClinico() {
-        return ProcesoListado.listarDatos("ReporteClinico");
+        return MetodosList.listarDatos("ReporteClinico");
     }
 
     // metodo buscar reporte clinico retorna List<String[]>
     public List<String[]> buscarReporteClinico(String codigo) {
-        return ProcesoRD.buscarRegistros("ReporteClinico", "id_rpclinico", codigo);
+        return MetodosReadDelete.buscarRegistros("ReporteClinico", "id_rpclinico", codigo);
     }
 }

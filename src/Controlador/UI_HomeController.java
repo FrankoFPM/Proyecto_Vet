@@ -1,7 +1,7 @@
 package Controlador;
 
 import static Controlador.UI_CitaController.titulosCitas;
-import Procesos.ProcesoListado;
+import DAO.MetodosList;
 import Vista.Cliente_UI;
 import Vista.Dashboard_UI;
 import Vista.Home_UI;
@@ -23,12 +23,12 @@ public class UI_HomeController extends PanelController implements MouseListener 
         super.showWindow(panel);
         addListeners();
         
-        ProcesoListado.tituloTabla(homeUI.tbCitasProximas, titulosCitas);
-        ProcesoListado.llenarTabla(homeUI.tbCitasProximas, ProcesoListado.listarCitasProximas());
+        MetodosList.tituloTabla(homeUI.tbCitasProximas, titulosCitas);
+        MetodosList.llenarTabla(homeUI.tbCitasProximas, MetodosList.listarCitasProximas());
 
-        homeUI.lblUsuarios.setText(String.valueOf(ProcesoListado.contarClientes()));
-        homeUI.lblCitas.setText(String.valueOf(ProcesoListado.contarCitasProgramadas()));
-        homeUI.lblIngresos.setText("S/."+String.valueOf(ProcesoListado.sumarIngresos()));
+        homeUI.lblUsuarios.setText(String.valueOf(MetodosList.contarClientes()));
+        homeUI.lblCitas.setText(String.valueOf(MetodosList.contarCitasProgramadas()));
+        homeUI.lblIngresos.setText("S/."+String.valueOf(MetodosList.sumarIngresos()));
     }
 
     @Override
