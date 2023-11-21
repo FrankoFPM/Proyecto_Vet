@@ -79,9 +79,19 @@ public class UI_PersonalController extends PanelController implements ActionList
                 empleado.setApellido(txtPersonal[1].getText());
                 empleado.setContraseña(txtPersonal[2].getText());
                 empleado.setCorreo(txtPersonal[3].getText());
-                empleado.setDni(Integer.parseInt(txtPersonal[4].getText()));
+                String dniText = txtPersonal[4].getText();
+                if (!dniText.matches("\\d+")) {
+                    JOptionPane.showMessageDialog(null, "El DNI solo debe contener números");
+                    return;
+                }
+                empleado.setDni(Integer.parseInt(dniText));
                 empleado.setCargo(PersonalUI.cboCargo.getSelectedItem().toString());
                 empleado.setNickname(PersonalUI.txtNick.getText());
+
+                if (!ProcesoValidacion.validarEmail(empleado.getCorreo()) ||
+                        !ProcesoValidacion.validarDni(empleado.getDni())) {
+                    return;
+                }
 
                 // ProcesoInsert.insertarPersonal(empleado);
                 daoPersonal = new DAOPersonal();
@@ -129,9 +139,19 @@ public class UI_PersonalController extends PanelController implements ActionList
                 empleado.setApellido(txtPersonal[1].getText());
                 empleado.setContraseña(txtPersonal[2].getText());
                 empleado.setCorreo(txtPersonal[3].getText());
-                empleado.setDni(Integer.parseInt(txtPersonal[4].getText()));
+                String dniText = txtPersonal[4].getText();
+                if (!dniText.matches("\\d+")) {
+                    JOptionPane.showMessageDialog(null, "El DNI solo debe contener números");
+                    return;
+                }
+                empleado.setDni(Integer.parseInt(dniText));
                 empleado.setCargo(PersonalUI.cboCargo.getSelectedItem().toString());
                 empleado.setNickname(PersonalUI.txtNick.getText());
+
+                if (!ProcesoValidacion.validarEmail(empleado.getCorreo()) ||
+                        !ProcesoValidacion.validarDni(empleado.getDni())) {
+                    return;
+                }
                 daoPersonal = new DAOPersonal();
                 // ProcesoUpdate.actualizarPersonal(empleado);
                 daoPersonal.actualizarPersonal(empleado);

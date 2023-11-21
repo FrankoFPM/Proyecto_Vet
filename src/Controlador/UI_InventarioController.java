@@ -15,7 +15,6 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import DAO.DAOInventario;
 import DAO.DAOProducto;
 
 public class UI_InventarioController extends PanelController implements ActionListener {
