@@ -82,31 +82,32 @@ CREATE TABLE boleta (
     importe_final DECIMAL(6, 2)
 );
 
-CREATE TABLE itemsboleta(
-	id_boleta VARCHAR(8),
+-- Creación de la tabla itemsboleta
+CREATE TABLE itemsboleta (
+    id_boleta VARCHAR(8),
     id_item VARCHAR(15),
     item VARCHAR(50),
     precio DECIMAL(6, 2),
-    cantidad int,
+    cantidad INT,
     total DECIMAL(6, 2),
     FOREIGN KEY (id_boleta) REFERENCES boleta(id_boleta) ON DELETE CASCADE
 );
 
-
--- Vistas
+-- Creación de vistas
 
 -- Vista personal
 CREATE VIEW v_personal AS
 SELECT id_personal, nombre, apellido, correo, dni, cargo, nick
 FROM personal;
+
 -- Vista items boleta
 CREATE VIEW v_itemsBoleta AS
 SELECT id_item, item, precio, cantidad, total, id_boleta
 FROM itemsboleta;
 
+-- Procedimientos almacenados
 
--- Fin Vistas
-
+-- Procedimiento para sumar los ingresos del último mes
 DELIMITER //
 CREATE PROCEDURE sp_sumar_ingresos_mes()
 BEGIN
@@ -116,7 +117,7 @@ BEGIN
 END //
 DELIMITER ;
 
-
+-- Procedimiento para insertar un item en la boleta
 DELIMITER //
 CREATE PROCEDURE sp_insertar_itemboleta(IN p_id_boleta VARCHAR(8), IN p_id_item VARCHAR(15), IN p_item VARCHAR(50), IN p_precio DECIMAL(6, 2), IN p_cantidad INT, IN p_total DECIMAL(6, 2))
 BEGIN
@@ -126,22 +127,62 @@ END //
 DELIMITER ;
 
 
+-- Procedimiento para insertar una nueva boleta
 DELIMITER //
-CREATE PROCEDURE sp_insertar_boleta(IN p_id_boleta VARCHAR(8), IN p_id_cliente VARCHAR(255), IN p_cliente VARCHAR(255), IN p_fecha DATE, IN p_hora TIME, IN p_cantidad_items INT, IN p_importe DOUBLE, IN p_impuesto DOUBLE, IN p_importe_final DOUBLE)
+CREATE PROCEDURE sp_insertar_boleta(
+    IN p_id_boleta VARCHAR(8), 
+    IN p_id_cliente VARCHAR(255), 
+    IN p_cliente VARCHAR(255), 
+    IN p_fecha DATE, 
+    IN p_hora TIME, 
+    IN p_cantidad_items INT, 
+    IN p_importe DOUBLE, 
+    IN p_impuesto DOUBLE, 
+    IN p_importe_final DOUBLE
+)
 BEGIN
-    INSERT INTO boleta(id_boleta, id_cliente, cliente, fecha, hora, cantidad_items, importe, impuesto, importe_final)
-    VALUES (p_id_boleta, p_id_cliente, p_cliente, p_fecha, p_hora, p_cantidad_items, p_importe, p_impuesto, p_importe_final);
+    INSERT INTO boleta(
+        id_boleta, 
+        id_cliente, 
+        cliente, 
+        fecha, 
+        hora, 
+        cantidad_items, 
+        importe, 
+        impuesto, 
+        importe_final
+    )
+    VALUES (
+        p_id_boleta, 
+        p_id_cliente, 
+        p_cliente, 
+        p_fecha, 
+        p_hora, 
+        p_cantidad_items, 
+        p_importe, 
+        p_impuesto, 
+        p_importe_final
+    );
 END //
 DELIMITER ;
 
--- CALL sp_insertar_boleta('BOL-0001', 'CLI1', 'Cliente 1', '2023-10-14', '18:25:21', 5, 100.0, 18.0, 118.0);
--- select * from itemsboleta;
-
+-- Procedimiento para actualizar una boleta existente
 DELIMITER //
-CREATE PROCEDURE sp_actualizar_boleta(IN p_id_boleta VARCHAR(8), IN p_id_cliente VARCHAR(255), IN p_cliente VARCHAR(255), IN p_fecha DATE, IN p_hora TIME, IN p_cantidad_items INT, IN p_importe DOUBLE, IN p_impuesto DOUBLE, IN p_importe_final DOUBLE)
+CREATE PROCEDURE sp_actualizar_boleta(
+    IN p_id_boleta VARCHAR(8), 
+    IN p_id_cliente VARCHAR(255), 
+    IN p_cliente VARCHAR(255), 
+    IN p_fecha DATE, 
+    IN p_hora TIME, 
+    IN p_cantidad_items INT, 
+    IN p_importe DOUBLE, 
+    IN p_impuesto DOUBLE, 
+    IN p_importe_final DOUBLE
+)
 BEGIN
     UPDATE boleta
-    SET id_cliente = p_id_cliente,
+    SET 
+        id_cliente = p_id_cliente,
         cliente = p_cliente,
         fecha = p_fecha,
         hora = p_hora,
@@ -153,32 +194,50 @@ BEGIN
 END //
 DELIMITER ;
 
-
+-- Procedimiento para listar todos los productos
 DELIMITER //
 CREATE PROCEDURE sp_listar_productos()
 BEGIN
-    SELECT id_producto, nombre, marca, precio, CONCAT(nombre, ' - Marca: ', marca) AS info
+    SELECT 
+        id_producto, 
+        nombre, 
+        marca, 
+        precio, 
+        CONCAT(nombre, ' - Marca: ', marca) AS info
     FROM Productos
     WHERE categoria <> 'Servicio';
 END //
 DELIMITER ;
 
-
+-- Procedimiento para listar todos los servicios
 DELIMITER //
 CREATE PROCEDURE sp_listar_servicios()
 BEGIN
-    SELECT id_producto, nombre, marca, precio
+    SELECT 
+        id_producto, 
+        nombre, 
+        marca, 
+        precio
     FROM Productos
     WHERE categoria = 'Servicio';
 END //
 DELIMITER ;
-call sp_listar_servicios();
 
+-- Procedimiento para actualizar un producto
 DELIMITER //
-CREATE PROCEDURE sp_actualizar_producto(IN p_id_producto VARCHAR(8), IN p_nombre VARCHAR(50), IN p_marca VARCHAR(50), IN p_precio DECIMAL(6, 2), IN p_cantidad INT, IN p_categoria VARCHAR(50), IN p_fecha DATE)
+CREATE PROCEDURE sp_actualizar_producto(
+    IN p_id_producto VARCHAR(8), 
+    IN p_nombre VARCHAR(50), 
+    IN p_marca VARCHAR(50), 
+    IN p_precio DECIMAL(6, 2), 
+    IN p_cantidad INT, 
+    IN p_categoria VARCHAR(50), 
+    IN p_fecha DATE
+)
 BEGIN
     UPDATE Productos 
-    SET nombre = p_nombre,
+    SET 
+        nombre = p_nombre,
         marca = p_marca,
         precio = p_precio,
         cantidad = p_cantidad,
@@ -188,30 +247,95 @@ BEGIN
 END //
 DELIMITER ;
 
-
+-- Procedimiento para insertar un nuevo producto
 DELIMITER //
-CREATE PROCEDURE sp_insertar_producto(IN p_id_producto VARCHAR(8), IN p_nombre VARCHAR(50), IN p_marca VARCHAR(50), IN p_precio DECIMAL(6, 2), IN p_cantidad INT, IN p_categoria VARCHAR(50), IN p_fecha DATE)
+CREATE PROCEDURE sp_insertar_producto(
+    IN p_id_producto VARCHAR(8), 
+    IN p_nombre VARCHAR(50), 
+    IN p_marca VARCHAR(50), 
+    IN p_precio DECIMAL(6, 2), 
+    IN p_cantidad INT, 
+    IN p_categoria VARCHAR(50), 
+    IN p_fecha DATE
+)
 BEGIN
-    INSERT INTO Productos(id_producto, nombre, marca, precio, cantidad, categoria, fecha) 
-    VALUES (p_id_producto, p_nombre, p_marca, p_precio, p_cantidad, p_categoria, p_fecha);
+    INSERT INTO Productos(
+        id_producto, 
+        nombre, 
+        marca, 
+        precio, 
+        cantidad, 
+        categoria, 
+        fecha
+    ) 
+    VALUES (
+        p_id_producto, 
+        p_nombre, 
+        p_marca, 
+        p_precio, 
+        p_cantidad, 
+        p_categoria, 
+        p_fecha
+    );
 END //
 DELIMITER ;
 
-
-
+-- Procedimiento para insertar un nuevo reporte clínico
 DELIMITER //
-CREATE PROCEDURE sp_insertar_reporteclinico(IN p_id_rpclinico VARCHAR(8), IN p_codigo_entidad VARCHAR(9), IN p_entidad VARCHAR(50), IN p_causa VARCHAR(150), IN p_pronostico VARCHAR(40), IN p_sintomas TEXT, IN p_tratamiento TEXT, IN p_fecha DATE, IN p_hora TIME)
+CREATE PROCEDURE sp_insertar_reporteclinico(
+    IN p_id_rpclinico VARCHAR(8), 
+    IN p_codigo_entidad VARCHAR(9), 
+    IN p_entidad VARCHAR(50), 
+    IN p_causa VARCHAR(150), 
+    IN p_pronostico VARCHAR(40), 
+    IN p_sintomas TEXT, 
+    IN p_tratamiento TEXT, 
+    IN p_fecha DATE, 
+    IN p_hora TIME
+)
 BEGIN
-    INSERT INTO ReporteClinico (id_rpclinico, codigo_entidad, entidad, causa, pronostico, sintomas, tratamiento, fecha, hora)
-    VALUES (p_id_rpclinico, p_codigo_entidad, p_entidad, p_causa, p_pronostico, p_sintomas, p_tratamiento, p_fecha, p_hora);
+    INSERT INTO ReporteClinico (
+        id_rpclinico, 
+        codigo_entidad, 
+        entidad, 
+        causa, 
+        pronostico, 
+        sintomas, 
+        tratamiento, 
+        fecha, 
+        hora
+    )
+    VALUES (
+        p_id_rpclinico, 
+        p_codigo_entidad, 
+        p_entidad, 
+        p_causa, 
+        p_pronostico, 
+        p_sintomas, 
+        p_tratamiento, 
+        p_fecha, 
+        p_hora
+    );
 END //
 DELIMITER ;
 
+-- Procedimiento para actualizar un reporte clínico
 DELIMITER //
-CREATE PROCEDURE sp_actualizar_reporteclinico(IN p_id_rpclinico VARCHAR(8), IN p_codigo_entidad VARCHAR(9), IN p_entidad VARCHAR(50), IN p_causa VARCHAR(150), IN p_pronostico VARCHAR(40), IN p_sintomas TEXT, IN p_tratamiento TEXT, IN p_fecha DATE, IN p_hora TIME)
+CREATE PROCEDURE sp_actualizar_reporteclinico(
+    IN p_id_rpclinico VARCHAR(8), 
+    IN p_codigo_entidad VARCHAR(9), 
+    IN p_entidad VARCHAR(50), 
+    IN p_causa VARCHAR(150), 
+    IN p_pronostico VARCHAR(40), 
+    IN p_sintomas TEXT, 
+    IN p_tratamiento TEXT, 
+    IN p_fecha DATE, 
+    IN p_hora TIME
+)
 BEGIN
     UPDATE ReporteClinico 
-    SET codigo_entidad = p_codigo_entidad,
+    SET 
+        codigo_entidad = p_codigo_entidad,
         entidad = p_entidad,
         causa = p_causa,
         pronostico = p_pronostico,
@@ -224,6 +348,7 @@ END //
 DELIMITER ;
 
 
+-- Procedimiento para seleccionar citas programadas
 DELIMITER //
 CREATE PROCEDURE sp_seleccionar_citas_programadas()
 BEGIN
@@ -231,7 +356,7 @@ BEGIN
 END //
 DELIMITER ;
 
-
+-- Procedimiento para buscar citas
 DELIMITER //
 CREATE PROCEDURE buscar_citas(IN dni varchar(11))
 BEGIN
@@ -242,9 +367,10 @@ BEGIN
 END //
 DELIMITER ;
 
+-- Llamada al procedimiento buscar_citas
 call buscar_citas('12345678');
 
-
+-- Procedimiento para validar credenciales
 DELIMITER //
 CREATE PROCEDURE ValidarCredenciales(
     IN p_nombre_usuario VARCHAR(15),
@@ -265,30 +391,9 @@ BEGIN
 END;
 //
 DELIMITER ;
-/*
+
+-- Procedimiento para listar datos
 DELIMITER //
-CREATE PROCEDURE sp_codigoCliente(OUT codigo_generado CHAR(8))
-BEGIN
-    DECLARE serie CHAR(4);
-    DECLARE max_codigo_existente INT;
-
-    SELECT MAX(CAST(SUBSTRING(id_cliente, 5) AS SIGNED)) INTO max_codigo_existente FROM cliente;
-
-    IF max_codigo_existente IS NULL THEN
-        SET codigo_generado = 'CLI-0001';
-    ELSE
-        SET serie = 'CLI-';
-        SET codigo_generado = CONCAT(serie, LPAD(max_codigo_existente + 1, 4, '0'));
-    END IF;
-END //
-DELIMITER ;
-
-CALL sp_codigoCliente(@xcodigoCliente);
-SELECT @xcodigoCliente;
-*/
-
-DELIMITER //
-
 CREATE PROCEDURE sp_listarDatos(IN tabla VARCHAR(20))
 BEGIN
     SET @sql = CONCAT('SELECT * FROM ', tabla);
@@ -297,7 +402,11 @@ BEGIN
     DEALLOCATE PREPARE stmt;
 END //
 DELIMITER ;
+
+-- Llamada al procedimiento sp_listarDatos
 call sp_listarDatos("cliente");
+
+-- Procedimiento para generar código autogenerado
 DELIMITER //
 CREATE PROCEDURE sp_codigo_autogenerado(
     IN tabla CHAR(64),
@@ -322,7 +431,8 @@ BEGIN
     END IF;
 END //
 DELIMITER ;
--- Codigo autogenerado modificado
+
+-- Procedimiento para generar código autogenerado modificado
 DELIMITER //
 CREATE PROCEDURE sp_codigo_autogenerado_modificado(
     IN tabla CHAR(64),
@@ -349,9 +459,7 @@ END //
 DELIMITER ;
 
 
--- fin del mod
-
-
+-- Procedimiento para insertar un nuevo cliente
 DELIMITER //
 CREATE PROCEDURE sp_insertar_cliente(
     IN id_cliente VARCHAR(8),
@@ -368,51 +476,54 @@ BEGIN
 END //
 DELIMITER ;
 
+-- Procedimiento para insertar un nuevo paciente
 DELIMITER //
 CREATE PROCEDURE sp_insertar_paciente(
-	IN p_id_paciente VARCHAR(8), 
+    IN p_id_paciente VARCHAR(8), 
     IN p_nombre VARCHAR(15), 
     IN p_especie VARCHAR(15), 
     IN p_raza VARCHAR(15), 
     IN p_sexo VARCHAR(15), 
     IN p_color VARCHAR(50), 
-    IN p_id_cliente VARCHAR(8))
+    IN p_id_cliente VARCHAR(8)
+)
 BEGIN
     INSERT INTO paciente(id_paciente, nombre, especie, raza, sexo, color, id_cliente) 
     VALUES (p_id_paciente, p_nombre, p_especie, p_raza, p_sexo, p_color, p_id_cliente);
 END //
 DELIMITER ;
 
--- delete from cliente where id_cliente = "CLI-0001";
-
+-- Procedimiento para eliminar un registro
 DELIMITER //
- CREATE PROCEDURE sp_eliminar(
-	IN tabla varchar(15),
+CREATE PROCEDURE sp_eliminar(
+    IN tabla varchar(15),
     IN columna varchar(15),
     IN id_dato varchar(15)
 ) 
 BEGIN 
-SET @sql = CONCAT('DELETE FROM ', tabla, ' WHERE ', columna, ' = "',id_dato,'"');
-	PREPARE stmt FROM @sql;
-	EXECUTE stmt;
-	DEALLOCATE PREPARE stmt;
+    SET @sql = CONCAT('DELETE FROM ', tabla, ' WHERE ', columna, ' = "',id_dato,'"');
+    PREPARE stmt FROM @sql;
+    EXECUTE stmt;
+    DEALLOCATE PREPARE stmt;
 END //
 DELIMITER ;
 
+-- Procedimiento para buscar un registro
 DELIMITER //
- CREATE PROCEDURE sp_buscar(
-	IN tabla varchar(15),
+CREATE PROCEDURE sp_buscar(
+    IN tabla varchar(15),
     IN columna varchar(15),
     IN id_dato varchar(15)
 ) 
 BEGIN 
-SET @sql = CONCAT('SELECT * FROM ', tabla, ' WHERE ', columna, ' = "',id_dato,'"');
-	PREPARE stmt FROM @sql;
-	EXECUTE stmt;
-	DEALLOCATE PREPARE stmt;
+    SET @sql = CONCAT('SELECT * FROM ', tabla, ' WHERE ', columna, ' = "',id_dato,'"');
+    PREPARE stmt FROM @sql;
+    EXECUTE stmt;
+    DEALLOCATE PREPARE stmt;
 END //
 DELIMITER ;
 
+-- Procedimiento para actualizar un cliente
 DELIMITER //
 CREATE PROCEDURE sp_actualizar_cliente(
     IN p_id_cliente VARCHAR(8),
@@ -434,10 +545,10 @@ BEGIN
         direccion = p_direccion
     WHERE
         id_cliente = p_id_cliente;
-END//
-
+END //
 DELIMITER ;
 
+-- Procedimiento para actualizar un paciente
 DELIMITER //
 CREATE PROCEDURE sp_actualizar_paciente (
     IN p_id_paciente VARCHAR(8),
@@ -450,45 +561,58 @@ CREATE PROCEDURE sp_actualizar_paciente (
 )
 BEGIN
     UPDATE paciente
-    SET nombre = p_nombre,
+    SET 
+        nombre = p_nombre,
         especie = p_especie,
         raza = p_raza,
         sexo = p_sexo,
         color = p_color,
         id_cliente = p_id_cliente
-    WHERE id_paciente = p_id_paciente;
+    WHERE 
+        id_paciente = p_id_paciente;
 END //
 DELIMITER ;
 
 
+-- Procedimiento para contar clientes
 DELIMITER //
 CREATE PROCEDURE sp_contar_clientes()
 BEGIN
-select count(*) from cliente;
+    SELECT COUNT(*) 
+    FROM cliente;
 END //
 DELIMITER ;
 
+-- Procedimiento para contar citas programadas
 DELIMITER //
 CREATE PROCEDURE sp_contar_citas_programadas()
 BEGIN
-select count(*) from cita where  estado = 'Programada';
+    SELECT COUNT(*) 
+    FROM cita 
+    WHERE estado = 'Programada';
 END //
 DELIMITER ;
 
+-- Procedimiento para listar clientes
 DELIMITER //
 CREATE PROCEDURE sp_listar_clientes()
 BEGIN
-select id_cliente, concat(nombre," ", apellido, " - ",dni) as "info" from cliente;
+    SELECT id_cliente, CONCAT(nombre, " ", apellido, " - ", dni) AS "info" 
+    FROM cliente;
 END //
 DELIMITER ;
 
+-- Procedimiento para listar pacientes de un cliente específico
 DELIMITER //
-CREATE PROCEDURE sp_listar_pacientes(in p_cliente varchar(15))
+CREATE PROCEDURE sp_listar_pacientes(IN p_cliente VARCHAR(15))
 BEGIN
-select id_paciente, concat(nombre, " - ",especie) as "info" from paciente where id_cliente = p_cliente;
+    SELECT id_paciente, CONCAT(nombre, " - ", especie) AS "info" 
+    FROM paciente 
+    WHERE id_cliente = p_cliente;
 END //
 DELIMITER ;
 
+-- Procedimiento para listar todos los pacientes
 DELIMITER //
 CREATE PROCEDURE sp_listar_todo_pacientes()
 BEGIN
@@ -499,16 +623,20 @@ END //
 DELIMITER ;
 
 
+-- Procedimiento para listar veterinarios
 DELIMITER //
 CREATE PROCEDURE sp_listar_veterinarios()
 BEGIN
-select id_personal, concat(nombre, " ",apellido) as "info" from personal where cargo = "Veterinario";
+    SELECT id_personal, CONCAT(nombre, " ", apellido) AS "info" 
+    FROM personal 
+    WHERE cargo = "Veterinario";
 END //
 DELIMITER ;
-CALL sp_listar_pacientes('CLI-0001');
--- select * from paciente;
--- CALL sp_contar_clientes();
 
+-- Llamada a procedimiento para listar pacientes de un cliente específico
+CALL sp_listar_pacientes('CLI-0001');
+
+-- Procedimiento para insertar personal
 DELIMITER //
 CREATE PROCEDURE sp_insertar_personal(
     IN p_id_personal VARCHAR(8),
@@ -526,6 +654,7 @@ BEGIN
 END //
 DELIMITER ;
 
+-- Procedimiento para actualizar personal
 DELIMITER //
 CREATE PROCEDURE sp_actualizar_personal(
     IN p_id_personal VARCHAR(8),
@@ -539,52 +668,79 @@ CREATE PROCEDURE sp_actualizar_personal(
 )
 BEGIN
     UPDATE personal 
-    SET nombre = p_nombre,
+    SET 
+        nombre = p_nombre,
         apellido = p_apellido,
         pass = p_pass,
         correo = p_correo,
         dni = p_dni,
         cargo = p_cargo,
         nick = p_nick
-    WHERE id_personal = p_id_personal;
+    WHERE 
+        id_personal = p_id_personal;
 END //
 DELIMITER ;
 
+-- Procedimiento para insertar una cita
 DELIMITER //
 CREATE PROCEDURE sp_insertar_cita(
-	IN p_id_cita VARCHAR(8), 
+    IN p_id_cita VARCHAR(8), 
     IN p_id_cliente VARCHAR(8), 
     IN p_cliente VARCHAR(100), 
     IN p_paciente VARCHAR(15), 
     IN p_veterinario VARCHAR(15), 
-    IN p_fecha DATE, IN p_hora TIME,
-    IN p_estado varchar(20))
+    IN p_fecha DATE, 
+    IN p_hora TIME,
+    IN p_estado varchar(20)
+)
 BEGIN
-    INSERT INTO cita(id_cita,id_cliente, cliente, paciente, veterinario, fecha, hora, estado) 
-    VALUES (p_id_cita,p_id_cliente , p_cliente, p_paciente, p_veterinario, p_fecha, p_hora, p_estado);
+    INSERT INTO cita(
+        id_cita,
+        id_cliente, 
+        cliente, 
+        paciente, 
+        veterinario, 
+        fecha, 
+        hora, 
+        estado
+    ) 
+    VALUES (
+        p_id_cita,
+        p_id_cliente, 
+        p_cliente, 
+        p_paciente, 
+        p_veterinario, 
+        p_fecha, 
+        p_hora, 
+        p_estado
+    );
 END //
 DELIMITER ;
 
-
+-- Procedimiento para actualizar una cita
 DELIMITER //
 CREATE PROCEDURE sp_actualizar_cita(
-	IN p_id_cita VARCHAR(8),
+    IN p_id_cita VARCHAR(8),
     IN p_id_cliente VARCHAR(12), 
     IN p_cliente VARCHAR(50), 
     IN p_paciente VARCHAR(50), 
     IN p_veterinario VARCHAR(50), 
-    IN p_fecha DATE, IN p_hora TIME,
-    IN p_estado varchar(20))
+    IN p_fecha DATE, 
+    IN p_hora TIME,
+    IN p_estado varchar(20)
+)
 BEGIN
     UPDATE cita 
-    SET cliente = p_cliente,
-		id_cliente = p_id_cliente,
+    SET 
+        cliente = p_cliente,
+        id_cliente = p_id_cliente,
         paciente = p_paciente,
         veterinario = p_veterinario,
         fecha = p_fecha,
         hora = p_hora,
         estado = p_estado
-    WHERE id_cita = p_id_cita;
+    WHERE 
+        id_cita = p_id_cita;
 END //
 DELIMITER ;
 
@@ -624,18 +780,40 @@ VALUES
 ('CLI-0003', 'Carlos', 'Rodriguez','111-222-3333','carlos@example.com','112233445','789 Calle Tercera');
 
 -- Insertar pacientes
-CALL sp_insertar_paciente('PAC-0001', 'Fido', 'perro', 'chiwan', 'macho', 'negro', 'CLI-0001');
-CALL sp_insertar_paciente('PAC-0002', 'Rex', 'perro', 'labrador', 'macho', 'marrón', 'CLI-0001');
-CALL sp_insertar_paciente('PAC-0003', 'Luna', 'gato', 'siamese', 'hembra', 'blanco y negro', 'CLI-0001');
-CALL sp_insertar_paciente('PAC-0004', 'Bella', 'gato', 'persa', 'hembra', 'gris', 'CLI-0002');
-CALL sp_insertar_paciente('PAC-0005', 'Max', 'perro', 'bulldog francés', 'macho', 'blanco y negro', 'CLI-0002');
-CALL sp_insertar_paciente('PAC-0006', 'Simba', 'gato', 'bengalí', 'macho', 'naranja y negro', 'CLI-0002');
-CALL sp_insertar_paciente('PAC-0007','Coco','loro','guacamayo azul','macho','azul y amarillo','CLI-0003');
-CALL sp_insertar_paciente('PAC-0008','Nemo','pez','payaso','macho','naranja y blanco','CLI-0003');
-CALL sp_insertar_paciente('PAC-0009','Daisy','conejo','angora','hembra','blanco','CLI-0003');
+CALL sp_insertar_paciente('PAC-0001', 'Fido', 'perro', 'chiwan', 'Macho', 'negro', 'CLI-0001');
+CALL sp_insertar_paciente('PAC-0002', 'Rex', 'perro', 'labrador', 'Macho', 'marrón', 'CLI-0001');
+CALL sp_insertar_paciente('PAC-0003', 'Luna', 'gato', 'siamese', 'Hembra', 'blanco y negro', 'CLI-0001');
+CALL sp_insertar_paciente('PAC-0004', 'Bella', 'gato', 'persa', 'Hembra', 'gris', 'CLI-0002');
+CALL sp_insertar_paciente('PAC-0005', 'Max', 'perro', 'bulldog francés', 'Macho', 'blanco y negro', 'CLI-0002');
+CALL sp_insertar_paciente('PAC-0006', 'Simba', 'gato', 'bengalí', 'Macho', 'naranja y negro', 'CLI-0002');
+CALL sp_insertar_paciente('PAC-0007','Coco','loro','guacamayo azul','Macho','azul y amarillo','CLI-0003');
+CALL sp_insertar_paciente('PAC-0008','Nemo','pez','payaso','Macho','naranja y blanco','CLI-0003');
+CALL sp_insertar_paciente('PAC-0009','Daisy','conejo','angora','Hembra','blanco','CLI-0003');
 
 -- Insertar un producto
 INSERT INTO Productos(id_producto, nombre, marca, precio, cantidad, categoria, fecha)
 VALUES ('PRO-0001', 'Consulta', 'propia', 100.00, 10, 'Servicio', '2023-10-13');
 INSERT INTO Productos(id_producto, nombre, marca, precio, cantidad, categoria, fecha)
 VALUES ('PRO-0002', 'Paracetamol', 'China', 200.00, 20, 'Producto', '2023-10-13');
+
+/*
+DELIMITER //
+CREATE PROCEDURE sp_codigoCliente(OUT codigo_generado CHAR(8))
+BEGIN
+    DECLARE serie CHAR(4);
+    DECLARE max_codigo_existente INT;
+
+    SELECT MAX(CAST(SUBSTRING(id_cliente, 5) AS SIGNED)) INTO max_codigo_existente FROM cliente;
+
+    IF max_codigo_existente IS NULL THEN
+        SET codigo_generado = 'CLI-0001';
+    ELSE
+        SET serie = 'CLI-';
+        SET codigo_generado = CONCAT(serie, LPAD(max_codigo_existente + 1, 4, '0'));
+    END IF;
+END //
+DELIMITER ;
+
+CALL sp_codigoCliente(@xcodigoCliente);
+SELECT @xcodigoCliente;
+*/
