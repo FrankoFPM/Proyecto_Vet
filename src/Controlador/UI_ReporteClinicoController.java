@@ -3,7 +3,7 @@ package Controlador;
 import static Controlador.DashboardController.vista;
 import Modelo.Paciente;
 import Modelo.ReporteClinico;
-import Procesos.ProcesoListado;
+import DAO.MetodosList;
 import Vista.Dashboard_UI;
 import Vista.RPClinico_UI;
 import java.awt.event.ActionEvent;
@@ -45,16 +45,16 @@ public class UI_ReporteClinicoController extends PanelController
         super(panel, app);
         this.reporteUI = panel;
 
-        ProcesoListado.tituloTabla(reporteUI.tbRepotes, titulosRP);
+        MetodosList.tituloTabla(reporteUI.tbRepotes, titulosRP);
         daoReporteClinico = new DAOReporteClinico();
-        // ProcesoListado.llenarTabla(reporteUI.tbRepotes,
-        // ProcesoListado.listarDatos("ReporteClinico"));
-        ProcesoListado.llenarTabla(reporteUI.tbRepotes, daoReporteClinico.listarReporteClinico());
+        // MetodosList.llenarTabla(reporteUI.tbRepotes,
+        // MetodosList.listarDatos("ReporteClinico"));
+        MetodosList.llenarTabla(reporteUI.tbRepotes, daoReporteClinico.listarReporteClinico());
 
         llenarCboPacientes();
         textFieldComboPaciente = (JTextField) reporteUI.cbPaciente.getEditor().getEditorComponent();
 
-        String cod = ProcesoListado.generarCodigo("ReporteClinico", "id_rpclinico", "RPC-", 4);
+        String cod = MetodosList.generarCodigo("ReporteClinico", "id_rpclinico", "RPC-", 4);
         reporteUI.lblCodigo.setText(cod);
 
         reporteUI.btnModificar.setEnabled(false);
@@ -69,7 +69,7 @@ public class UI_ReporteClinicoController extends PanelController
             public void keyReleased(KeyEvent ke) {
                 SwingUtilities.invokeLater(() -> {
                     cargarCombos = new CargarCombos();
-                    // ProcesoListado.filterComboBoxAllPacientes(textFieldComboPaciente.getText(),
+                    // MetodosList.filterComboBoxAllPacientes(textFieldComboPaciente.getText(),
                     // reporteUI.cbPaciente);
                     cargarCombos.filterComboBoxAllPacientes(textFieldComboPaciente.getText(), reporteUI.cbPaciente);
                 });
@@ -80,7 +80,7 @@ public class UI_ReporteClinicoController extends PanelController
     private void llenarCboPacientes() {
         reporteUI.cbPaciente.removeAllItems();
         cargarCombos = new CargarCombos();
-        // ArrayList<Paciente> listaPacientes = ProcesoListado.obtenerTodoPacientes();
+        // ArrayList<Paciente> listaPacientes = MetodosList.obtenerTodoPacientes();
         ArrayList<Paciente> listaPacientes = cargarCombos.obtenerTodoPacientes();
         for (int i = 0; i < listaPacientes.size(); i++) {
             reporteUI.cbPaciente.addItem(new Paciente(listaPacientes.get(i).getCodigo(),
@@ -143,7 +143,7 @@ public class UI_ReporteClinicoController extends PanelController
                         daoReporteClinico = new DAOReporteClinico();
                         List<String[]> datos = daoReporteClinico.buscarReporteClinico(dato);
                         if (!datos.isEmpty()) {
-                            ProcesoListado.llenarTabla(reporteUI.tbRepotes, datos);
+                            MetodosList.llenarTabla(reporteUI.tbRepotes, datos);
                             reporteUI.btnBuscar.setText("Cancelar");
                             buscar = true;
                         }
@@ -213,7 +213,7 @@ public class UI_ReporteClinicoController extends PanelController
             String enteredText = textFieldComboPaciente.getText();
             boolean isPresent = false;
             cargarCombos = new CargarCombos();
-            // (Paciente paciente : ProcesoListado.obtenerTod
+            // (Paciente paciente : MetodosList.obtenerTod
             for (Paciente paciente : cargarCombos.obtenerTodoPacientes()) {
                 if (paciente.toString().equals(enteredText)) {
                     isPresent = true;

@@ -7,8 +7,6 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import Modelo.ProductoInventario;
-import Procesos.ProcesoListado;
-import Procesos.ProcesoRD;
 
 public class DAOProducto extends ConexionDB {
     public void insertarProducto(ProductoInventario producto) {
@@ -59,16 +57,16 @@ public class DAOProducto extends ConexionDB {
 
     // metodo eliminar producto
     public void eliminarProducto(String codigo) {
-        ProcesoRD.eliminarRegistros("Productos", "id_producto", codigo);
+        MetodosReadDelete.eliminarRegistros("Productos", "id_producto", codigo);
     }
 
     // metodo buscar producto retorna un List<String[]>
     public List<String[]> buscarProducto(String codigo) {
-        return ProcesoRD.buscarRegistros("Productos", "id_producto", codigo);
+        return MetodosReadDelete.buscarRegistros("Productos", "id_producto", codigo);
     }
 
     // metodo listar productos retorna un List<String[]>
     public List<String[]> listarProductos() {
-        return ProcesoListado.listarDatos("productos");
+        return MetodosList.listarDatos("productos");
     }
 }

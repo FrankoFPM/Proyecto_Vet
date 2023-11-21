@@ -3,8 +3,8 @@ package Controlador;
 import static Controlador.DashboardController.vista;
 import DAO.DAOCliente;
 import Modelo.PersonaCliente;
-import Procesos.ProcesoListado;
-import Procesos.ProcesoValidacion;
+import DAO.MetodosList;
+import DataUtils.ProcesoValidacion;
 import Vista.Cliente_UI;
 import Vista.Dashboard_UI;
 import java.awt.event.ActionEvent;
@@ -32,14 +32,14 @@ public class UI_ClienteController extends PanelController implements ActionListe
                 ClienteUI.txtTelefono, ClienteUI.txtCorreo, ClienteUI.txtDni, ClienteUI.txtDireccion
         };
         ProcesoValidacion.placeholderJtxt(txtCliente, msgCliente);
-        ProcesoListado.tituloTabla(ClienteUI.tbClientes, titutos);
+        MetodosList.tituloTabla(ClienteUI.tbClientes, titutos);
         clienteDAO = new DAOCliente();
-        ProcesoListado.llenarTabla(ClienteUI.tbClientes, clienteDAO.listarClientes());
+        MetodosList.llenarTabla(ClienteUI.tbClientes, clienteDAO.listarClientes());
 
         // super.showWindow(panel);
         addListeners();
 
-        String cod = ProcesoListado.generarCodigo("cliente", "id_cliente", "CLI-", 4);
+        String cod = MetodosList.generarCodigo("cliente", "id_cliente", "CLI-", 4);
         ClienteUI.lblCodigo.setText(cod);
         ClienteUI.btnEliminar.setEnabled(false);
         ClienteUI.btnModificar.setEnabled(false);

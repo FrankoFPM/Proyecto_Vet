@@ -2,8 +2,8 @@ package Controlador;
 
 import static Controlador.DashboardController.vista;
 import Modelo.ProductoInventario;
-import Procesos.ProcesoListado;
-import Procesos.ProcesoValidacion;
+import DAO.MetodosList;
+import DataUtils.ProcesoValidacion;
 import Vista.Dashboard_UI;
 import Vista.Inventario_UI;
 import java.awt.event.ActionEvent;
@@ -34,13 +34,13 @@ public class UI_InventarioController extends PanelController implements ActionLi
 
         txtinventario = new JTextField[] { InventarioUI.txtNombres, InventarioUI.txtMarca };
         ProcesoValidacion.placeholderJtxt(txtinventario, msgInventario);
-        ProcesoListado.tituloTabla(InventarioUI.tbProductos, titutos);
+        MetodosList.tituloTabla(InventarioUI.tbProductos, titutos);
         daoProducto = new DAOProducto();
-        // ProcesoListado.llenarTabla(InventarioUI.tbProductos,
-        // ProcesoListado.listarDatos("productos"));
-        ProcesoListado.llenarTabla(InventarioUI.tbProductos, daoProducto.listarProductos());
+        // MetodosList.llenarTabla(InventarioUI.tbProductos,
+        // MetodosList.listarDatos("productos"));
+        MetodosList.llenarTabla(InventarioUI.tbProductos, daoProducto.listarProductos());
 
-        String cod = ProcesoListado.generarCodigo("Productos", "id_producto", "PRO-", 4);
+        String cod = MetodosList.generarCodigo("Productos", "id_producto", "PRO-", 4);
         InventarioUI.lblCodigo.setText(cod);
         InventarioUI.btnEliminar.setEnabled(false);
         InventarioUI.btnModificar.setEnabled(false);

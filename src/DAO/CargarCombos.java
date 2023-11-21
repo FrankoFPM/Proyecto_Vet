@@ -14,7 +14,6 @@ import Modelo.Paciente;
 import Modelo.PersonaCliente;
 import Modelo.PersonaEmpleado;
 import Modelo.ProductoInventario;
-import Procesos.ProcesoListado;
 
 public class CargarCombos extends ConexionDB {
 
@@ -183,11 +182,11 @@ public class CargarCombos extends ConexionDB {
         ArrayList<PersonaCliente> filterArray = new ArrayList<>();
 
         if (enteredText.isEmpty()) {
-            filterArray = new ArrayList<>(ProcesoListado.obtenerClientes());
+            filterArray = new ArrayList<>(obtenerClientes());
         } else {
             String normalizedEnteredText = normalize(enteredText);
 
-            for (PersonaCliente item : ProcesoListado.obtenerClientes()) {
+            for (PersonaCliente item : obtenerClientes()) {
                 String normalizedItem = normalize(item.toString());
                 if (normalizedItem.contains(normalizedEnteredText)) {
                     filterArray.add(item);
@@ -213,11 +212,11 @@ public class CargarCombos extends ConexionDB {
         ArrayList<Paciente> filterArray = new ArrayList<>();
 
         if (enteredText.isEmpty()) {
-            filterArray = new ArrayList<>(ProcesoListado.obtenerPacientes(codigo));
+            filterArray = new ArrayList<>(obtenerPacientes(codigo));
         } else {
             String normalizedEnteredText = normalize(enteredText);
 
-            for (Paciente item : ProcesoListado.obtenerPacientes(codigo)) {
+            for (Paciente item : obtenerPacientes(codigo)) {
                 String normalizedItem = normalize(item.toString());
                 if (normalizedItem.contains(normalizedEnteredText)) {
                     filterArray.add(item);
@@ -243,11 +242,11 @@ public class CargarCombos extends ConexionDB {
         ArrayList<Paciente> filterArray = new ArrayList<>();
 
         if (enteredText.isEmpty()) {
-            filterArray = new ArrayList<>(ProcesoListado.obtenerTodoPacientes());
+            filterArray = new ArrayList<>(obtenerTodoPacientes());
         } else {
             String normalizedEnteredText = normalize(enteredText);
 
-            for (Paciente item : ProcesoListado.obtenerTodoPacientes()) {
+            for (Paciente item : obtenerTodoPacientes()) {
                 String normalizedItem = normalize(item.toString());
                 if (normalizedItem.contains(normalizedEnteredText)) {
                     filterArray.add(item);
@@ -273,11 +272,11 @@ public class CargarCombos extends ConexionDB {
         ArrayList<PersonaEmpleado> filterArray = new ArrayList<>();
 
         if (enteredText.isEmpty()) {
-            filterArray = new ArrayList<>(ProcesoListado.obtenerVeterinarios());
+            filterArray = new ArrayList<>(obtenerVeterinarios());
         } else {
             String normalizedEnteredText = normalize(enteredText);
 
-            for (PersonaEmpleado item : ProcesoListado.obtenerVeterinarios()) {
+            for (PersonaEmpleado item : obtenerVeterinarios()) {
                 String normalizedItem = normalize(item.toString());
                 if (normalizedItem.contains(normalizedEnteredText)) {
                     filterArray.add(item);
@@ -303,11 +302,11 @@ public class CargarCombos extends ConexionDB {
         ArrayList<ProductoInventario> filterArray = new ArrayList<>();
 
         if (enteredText.isEmpty()) {
-            filterArray = new ArrayList<>(ProcesoListado.obtenerProducto());
+            filterArray = new ArrayList<>(obtenerProducto());
         } else {
             String normalizedEnteredText = normalize(enteredText);
 
-            for (ProductoInventario item : ProcesoListado.obtenerProducto()) {
+            for (ProductoInventario item : obtenerProducto()) {
                 String normalizedItem = normalize(item.toString());
                 if (normalizedItem.contains(normalizedEnteredText)) {
                     filterArray.add(item);

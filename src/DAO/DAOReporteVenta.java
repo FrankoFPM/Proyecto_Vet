@@ -11,8 +11,6 @@ import DB.Conexion;
 import Modelo.ProductoInventario;
 import Modelo.ProductoItem;
 import Modelo.ReporteVenta;
-import Procesos.ProcesoListado;
-import Procesos.ProcesoRD;
 import Vista.RPVenta_UI;
 
 public class DAOReporteVenta extends ConexionDB {
@@ -109,27 +107,27 @@ public class DAOReporteVenta extends ConexionDB {
 
     // metodo para listar boletas retornando un List<String[]>
     public List<String[]> listarBoletas() {
-        return ProcesoListado.listarDatos("boleta");
+        return MetodosList.listarDatos("boleta");
     }
 
     // listar items boleta retornando un List<String[]>
     public List<String[]> listarItemsBoleta(String codigoBoleta) {
-        return ProcesoRD.buscarRegistros("v_itemsBoleta", "id_boleta", codigoBoleta);
+        return MetodosReadDelete.buscarRegistros("v_itemsBoleta", "id_boleta", codigoBoleta);
     }
 
     // listar boletas retornando un List<String[]>
     public List<String[]> listarBoletas(String codigoBoleta) {
-        return ProcesoRD.buscarRegistros("boleta", "id_boleta", codigoBoleta);
+        return MetodosReadDelete.buscarRegistros("boleta", "id_boleta", codigoBoleta);
     }
 
     // eliminar items boleta
     public void eliminarItemsBoleta(String codigoBoleta) {
-        ProcesoRD.eliminarRegistros("itemsboleta", "id_boleta", codigoBoleta);
+        MetodosReadDelete.eliminarRegistros("itemsboleta", "id_boleta", codigoBoleta);
     }
 
     // eliminar boleta
     public void eliminarBoleta(String codigoBoleta) {
-        ProcesoRD.eliminarRegistros("boleta", "id_boleta", codigoBoleta);
+        MetodosReadDelete.eliminarRegistros("boleta", "id_boleta", codigoBoleta);
     }
 
 }
