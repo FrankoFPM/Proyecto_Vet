@@ -15,6 +15,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
+/**
+ * ProcesoInsert.java is deprecated.
+ */
 public class ProcesoInsert {
 
     /*
@@ -22,7 +25,7 @@ public class ProcesoInsert {
      * Connection cn = objConn.ObtenerConexion();
      * CallableStatement cs_genCodigo;
      */
-    public static void insertarCliente(PersonaCliente cliente) {
+    private static void insertarCliente(PersonaCliente cliente) {
         Conexion objConn = new Conexion();
         Connection cn = objConn.ObtenerConexion();
         CallableStatement cs_insert;
@@ -47,7 +50,7 @@ public class ProcesoInsert {
         }
     }
 
-    public static void insertarPaciente(Paciente paciente) {
+    private static void insertarPaciente(Paciente paciente) {
         Conexion objConn = new Conexion();
         Connection cn = objConn.ObtenerConexion();
         CallableStatement cs_insert;
@@ -72,7 +75,7 @@ public class ProcesoInsert {
         }
     }
 
-    public static void insertarPersonal(PersonaEmpleado empleado) {
+    private static void insertarPersonal(PersonaEmpleado empleado) {
         Conexion objConn = new Conexion();
         Connection cn = objConn.ObtenerConexion();
         CallableStatement cs_insert;
@@ -98,7 +101,7 @@ public class ProcesoInsert {
         }
     }
 
-    public static void insertarCita(Cita reserva) {
+    private static void insertarCita(Cita reserva) {
         Conexion objConn = new Conexion();
         Connection cn = objConn.ObtenerConexion();
         CallableStatement cs_insert;
@@ -124,7 +127,7 @@ public class ProcesoInsert {
         }
     }
 
-    public static void insertarReporteClinico(ReporteClinico rpClinico) {
+    private static void insertarReporteClinico(ReporteClinico rpClinico) {
         Conexion objConn = new Conexion();
         Connection cn = objConn.ObtenerConexion();
         CallableStatement cs_insert;
@@ -152,7 +155,7 @@ public class ProcesoInsert {
         }
     }
 
-    public static void insertarProducto(ProductoInventario producto) {
+    private static void insertarProducto(ProductoInventario producto) {
         Conexion objConn = new Conexion();
         Connection cn = objConn.ObtenerConexion();
         CallableStatement cs_insert;
@@ -177,7 +180,7 @@ public class ProcesoInsert {
         }
     }
 
-    public static void insertarItemBoleta(ProductoItem item) {
+    private static void insertarItemBoleta(ProductoItem item) {
         Conexion objConn = new Conexion();
         Connection cn = objConn.ObtenerConexion();
         CallableStatement cs_insert;
@@ -202,7 +205,7 @@ public class ProcesoInsert {
         }
     }
 
-    public static void insertarBoleta(ReporteVenta boleta) {
+    private static void insertarBoleta(ReporteVenta boleta) {
         Conexion objConn = new Conexion();
         Connection cn = objConn.ObtenerConexion();
         CallableStatement cs_insert;
@@ -230,7 +233,7 @@ public class ProcesoInsert {
         }
     }
 
-    public static ProductoInventario obtenerItem(RPVenta_UI ui) {
+    private static ProductoInventario obtenerItem(RPVenta_UI ui) {
         ProductoInventario item = new ProductoInventario();
         if (ui.cbProducto.getSelectedIndex() != 0) {
             item.setCodigo(ui.cbProducto.getItemAt(ui.cbProducto.getSelectedIndex()).getCodigo());

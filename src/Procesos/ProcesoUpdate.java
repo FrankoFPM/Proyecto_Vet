@@ -13,6 +13,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
+/**
+ * ProcesoUpdate.java is deprecated.
+ */
 public class ProcesoUpdate {
     /*
      * Conexion objConn = new Conexion();
@@ -20,7 +23,7 @@ public class ProcesoUpdate {
      * CallableStatement cs_genCodigo;
      */
 
-    public static void actualizarCliente(PersonaCliente cliente) {
+    private static void actualizarCliente(PersonaCliente cliente) {
         Conexion objConn = new Conexion();
         Connection cn = objConn.ObtenerConexion();
         CallableStatement cs_update;
@@ -44,7 +47,7 @@ public class ProcesoUpdate {
         }
     }
 
-    public static void actualizarPaciente(Paciente paciente) {
+    private static void actualizarPaciente(Paciente paciente) {
         Conexion objConn = new Conexion();
         Connection cn = objConn.ObtenerConexion();
         CallableStatement cs_update;
@@ -68,7 +71,7 @@ public class ProcesoUpdate {
         }
     }
 
-    public static void actualizarPersonal(PersonaEmpleado empleado) {
+    private static void actualizarPersonal(PersonaEmpleado empleado) {
         Conexion objConn = new Conexion();
         Connection cn = objConn.ObtenerConexion();
         CallableStatement cs_update;
@@ -93,7 +96,7 @@ public class ProcesoUpdate {
         }
     }
 
-    public static void actualizarCita(Cita reserva) {
+    private static void actualizarCita(Cita reserva) {
         Conexion objConn = new Conexion();
         Connection cn = objConn.ObtenerConexion();
         CallableStatement cs_update;
@@ -119,7 +122,7 @@ public class ProcesoUpdate {
         }
     }
 
-    public static void actualizarReporteClinico(ReporteClinico rpClinico) {
+    private static void actualizarReporteClinico(ReporteClinico rpClinico) {
         Conexion objConn = new Conexion();
         Connection cn = objConn.ObtenerConexion();
         CallableStatement cs_update;
@@ -147,7 +150,7 @@ public class ProcesoUpdate {
         }
     }
 
-    public static void actualizarProducto(ProductoInventario producto) {
+    private static void actualizarProducto(ProductoInventario producto) {
         Conexion objConn = new Conexion();
         Connection cn = objConn.ObtenerConexion();
         CallableStatement cs_update;
@@ -172,7 +175,7 @@ public class ProcesoUpdate {
         }
     }
 
-    public static void actualizarBoleta(ReporteVenta boleta) {
+    private static void actualizarBoleta(ReporteVenta boleta) {
         Conexion objConn = new Conexion();
         Connection cn = objConn.ObtenerConexion();
         CallableStatement cs_update;
