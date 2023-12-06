@@ -803,9 +803,9 @@ VALUES
  -- Insertar clientes
 INSERT INTO cliente(id_cliente, nombre, apellido, telefono, correo, dni, direccion)
 VALUES 
-('CLI-0001', 'Juan', 'Pérez', '123457890', 'juan@example.com', 12345678, '123 Calle Principal'),
-('CLI-0002', 'Maria', 'Gonzalez', '976540321', 'maria@example.com', 98765431, '456 Calle Secundaria'),
-('CLI-0003', 'Carlos', 'Rodriguez','111222333','carlos@example.com','11223345','789 Calle Tercera');
+('CLI-0001', 'Juan', 'Pérez', '123-456-7890', 'juan@example.com', 123456789, '123 Calle Principal'),
+('CLI-0002', 'Maria', 'Gonzalez', '098-765-4321', 'maria@example.com', 987654321, '456 Calle Secundaria'),
+('CLI-0003', 'Carlos', 'Rodriguez','111-222-3333','carlos@example.com','112233445','789 Calle Tercera');
 
 -- Insertar pacientes
 CALL sp_insertar_paciente('PAC-0001', 'Fido', 'perro', 'chiwan', 'macho', 'negro', 'CLI-0001');
