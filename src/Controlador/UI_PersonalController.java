@@ -93,11 +93,14 @@ public class UI_PersonalController extends PanelController implements ActionList
                     return;
                 }
 
-                // ProcesoInsert.insertarPersonal(empleado);
                 daoPersonal = new DAOPersonal();
-                daoPersonal.insertarPersonal(empleado);
-
-                reloadWindow();
+                if (daoPersonal.dniExists(empleado.getDni())) {
+                    JOptionPane.showMessageDialog(null, "Ya existe un empleado con ese DNI");
+                    return;
+                } else {
+                    daoPersonal.insertarPersonal(empleado);
+                    reloadWindow();
+                }
             }
         } else if (e.getSource() == PersonalUI.btnBuscar) {
             if (PersonalUI.btnBuscar.getText().equals("Buscar")) {
@@ -153,9 +156,13 @@ public class UI_PersonalController extends PanelController implements ActionList
                     return;
                 }
                 daoPersonal = new DAOPersonal();
-                // ProcesoUpdate.actualizarPersonal(empleado);
-                daoPersonal.actualizarPersonal(empleado);
-                reloadWindow();
+                if (daoPersonal.dniExists(empleado.getDni())) {
+                    JOptionPane.showMessageDialog(null, "Ya existe un empleado con ese DNI");
+                    return;
+                } else {
+                    daoPersonal.actualizarPersonal(empleado);
+                    reloadWindow();
+                }
             }
         } else if (e.getSource() == PersonalUI.btnEliminar) {
             // ProcesoRD.eliminarRegistros("personal", "id_personal",

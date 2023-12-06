@@ -170,7 +170,7 @@ public class Personal_UI extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-        cboCargo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Seleccionar]", "Veterinario", "Recepcionista", "Almacenista", "Vendedor" }));
+        cboCargo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Seleccionar]", "Veterinario", "Recepcionista", "Almacenista", "Vendedor", "Administrador" }));
 
         txtDni.setPreferredSize(new java.awt.Dimension(225, 32));
 

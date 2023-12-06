@@ -85,8 +85,12 @@ public class UI_ClienteController extends PanelController implements ActionListe
                 }
 
                 clienteDAO = new DAOCliente();
-                clienteDAO.insertarCliente(cliente);
-                reloadWindow();
+                if (clienteDAO.dniExists(cliente.getDni())) {
+                    JOptionPane.showMessageDialog(null, "Ya existe un cliente con ese DNI");
+                } else {
+                    clienteDAO.insertarCliente(cliente);
+                    reloadWindow();
+                }
             }
         } else if (e.getSource() == ClienteUI.btnBuscar) {
             if (ClienteUI.btnBuscar.getText().equals("Buscar")) {
@@ -139,8 +143,12 @@ public class UI_ClienteController extends PanelController implements ActionListe
                     return;
                 }
                 clienteDAO = new DAOCliente();
-                clienteDAO.actualizarCliente(cliente);
-                reloadWindow();
+                if (clienteDAO.dniExists(cliente.getDni())) {
+                    JOptionPane.showMessageDialog(null, "Ya existe un cliente con ese DNI");
+                } else {
+                    clienteDAO.actualizarCliente(cliente);
+                    reloadWindow();
+                }
             }
         }
     }

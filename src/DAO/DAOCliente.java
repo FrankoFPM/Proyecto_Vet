@@ -4,7 +4,7 @@ import Modelo.PersonaCliente;
 import java.sql.CallableStatement;
 import java.sql.SQLException;
 import java.util.List;
-
+import java.sql.Types;
 import javax.swing.JOptionPane;
 
 /**
@@ -86,5 +86,21 @@ public class DAOCliente extends ConexionDB {
      */
     public List<String[]> buscarCliente(String codigo) {
         return MetodosReadDelete.buscarRegistros("cliente", "dni", codigo);
+    }
+
+    public boolean dniExists(int dni) {
+        CallableStatement cs_validar;
+        String query = "{CALL sp_validar_dni(?,?)}"; // Añade un parámetro de salida
+        try {
+            cs_validar = conectar.prepareCall(query);
+            cs_validar.setInt(1, dni);
+            cs_validar.registerOutParameter(2, Types.BOOLEAN); // Registra el parámetro de salida
+            cs_validar.execute();
+            boolean resultado = cs_validar.getBoolean(2); // Obtiene el resultado
+            return resultado;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }
