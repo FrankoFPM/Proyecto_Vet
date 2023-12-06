@@ -28,8 +28,6 @@ public class LoginController implements ActionListener {
         vLogin.setVisible(true);
     }
 
-    
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == vLogin.btnIngresar) {
