@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1b7c860d-1101-4a14-954f-8a81080bc53f">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select * from ReporteClinico where id_rpclinico=$P{id};]]>
+	</queryString>
+	<field name="id_rpclinico" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="codigo_entidad" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="entidad" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="causa" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="pronostico" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="sintomas" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tratamiento" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fecha" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="hora" class="java.sql.Time">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="44" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="33" backcolor="#99CCFF" uuid="1033c8f7-0d61-4708-9d39-9849ba5cb804"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REPORTE CLINICO]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="54" splitType="Stretch">
+			<staticText>
+				<reportElement x="312" y="0" width="109" height="54" uuid="dd82ce7c-b445-4c02-aba1-e6d69e4bfb9d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[CODIGO DE PACIENTE]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="421" y="0" width="134" height="54" uuid="eb9bea29-d175-42d6-8ea4-9e1e21cc850c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{codigo_entidad}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="34" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="34" uuid="980c5bcb-a01b-46b3-b32e-e1d28d5d77c1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[PACIENTE]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="100" y="0" width="168" height="34" uuid="ae3cde79-8368-4073-ba5d-95cca65f34c6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{entidad}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="312" y="0" width="100" height="34" uuid="59d38aa0-687f-4c25-9faf-cdfebbb9e3e1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[FECHA]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="412" y="0" width="143" height="34" uuid="bee86774-8b6b-4bbf-a86c-d785b78429d9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="165" splitType="Stretch">
+			<rectangle radius="10">
+				<reportElement x="0" y="0" width="209" height="36" backcolor="#FFCC99" uuid="9cf66d14-7af9-485b-a2ee-56afd269a7e7"/>
+			</rectangle>
+			<rectangle radius="10">
+				<reportElement x="236" y="0" width="135" height="36" backcolor="#FFCC99" uuid="3b25c39a-1e4c-47ef-a448-e4f24747a85e"/>
+			</rectangle>
+			<rectangle radius="10">
+				<reportElement x="408" y="0" width="147" height="36" backcolor="#FFCC99" uuid="0f6bbaa7-a102-416c-934e-bd5c0d7b0e3c"/>
+			</rectangle>
+			<textField>
+				<reportElement x="236" y="36" width="135" height="73" uuid="a506a4bd-8dd8-4057-aa8d-8d23f4b74952"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{causa}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="236" y="0" width="100" height="36" uuid="eed69b85-c3f1-46b1-ba21-240f573cb5f0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[causa]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="36" width="209" height="73" uuid="fb5d1ece-37cf-4f92-803f-74bfb1ecf4ba"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sintomas}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="408" y="36" width="147" height="73" uuid="c2e007bd-0222-4a97-b132-a565908958b9"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tratamiento}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="120" height="36" uuid="2c8515e9-1ae3-433b-990e-8956c8106a95"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[sintomas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="408" y="0" width="100" height="36" uuid="0ce8228e-ef43-4d0b-8f79-844944bd1613"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[tratamiento]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="164" width="555" height="1" uuid="c94d4e8b-a59c-4c24-899b-2b446e7e49c9"/>
+			</line>
+			<line>
+				<reportElement x="220" y="0" width="1" height="152" uuid="7d592484-6a8c-4e04-b50c-1ad883b6072f"/>
+			</line>
+			<line>
+				<reportElement x="387" y="0" width="1" height="152" uuid="02b8df65-7f62-4965-80e0-4aa3ce66a361"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="5" width="100" height="20" uuid="23c9714f-a3ff-4f76-8298-39a2cd473bbc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[pronostico]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="100" y="5" width="190" height="20" uuid="c82702da-1933-449e-9756-7c726f836611"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pronostico}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="0" width="555" height="1" uuid="77fb07bf-6214-4505-956c-4760a60b8e0f"/>
+			</line>
+			<textField>
+				<reportElement x="455" y="1" width="100" height="53" uuid="5280f6c5-e31e-474c-8397-d1cb74f1b0ca"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

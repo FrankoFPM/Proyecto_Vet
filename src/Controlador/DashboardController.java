@@ -21,7 +21,7 @@ public class DashboardController implements ActionListener {
 
     public static Dashboard_UI vista;
     String user;
-    String role;
+    static String role;
     // panels
     Home_UI home = null;
     Cliente_UI cliente = null;
