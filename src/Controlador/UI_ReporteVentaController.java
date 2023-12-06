@@ -34,6 +34,7 @@ import javax.swing.table.DefaultTableModel;
 
 import DAO.CargarCombos;
 import DAO.DAOReporteVenta;
+import Reportes.Reportes;
 
 public class UI_ReporteVentaController extends PanelController
         implements ActionListener, ListSelectionListener, FocusListener, ItemListener {
@@ -273,6 +274,8 @@ public class UI_ReporteVentaController extends PanelController
                     // ProcesoInsert.insertarItemBoleta(item);
                     daoVenta.insertarItemBoleta(item);
                 }
+                Reportes rp = new Reportes();
+                rp.reporteVenta(boleta.getCodigo());
                 reloadWindow();
 
             }
@@ -370,6 +373,9 @@ public class UI_ReporteVentaController extends PanelController
                     // ProcesoInsert.insertarItemBoleta(item);
                     daoVenta.insertarItemBoleta(item);
                 }
+                Reportes rp = new Reportes();
+                rp.reporteVenta(codigo);
+                System.out.println(codigo);
                 reloadWindow();
             }
 

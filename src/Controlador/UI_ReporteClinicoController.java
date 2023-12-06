@@ -12,6 +12,12 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URLEncoder;
 import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
@@ -26,8 +32,15 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import com.google.gson.Gson;
+
 import DAO.CargarCombos;
 import DAO.DAOReporteClinico;
+import Reportes.Reportes;
+import java.awt.Desktop;
+import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class UI_ReporteClinicoController extends PanelController
         implements ActionListener, ListSelectionListener, FocusListener {
@@ -126,11 +139,14 @@ public class UI_ReporteClinicoController extends PanelController
                 LocalTime localTime = reporteUI.timePicker.getTime();
                 Time time = Time.valueOf(localTime);
                 rpClinico.setHora(time);
+                
 
                 // ProcesoInsert.insertarReporteClinico(rpClinico);
                 daoReporteClinico = new DAOReporteClinico();
                 daoReporteClinico.insertarReporteClinico(rpClinico);
 
+                Reportes rp = new Reportes();
+                rp.reporteClinico(rpClinico.getCodigo());
                 reloadWindow();
             }
         } else if (e.getSource() == reporteUI.btnBuscar) {
@@ -182,6 +198,8 @@ public class UI_ReporteClinicoController extends PanelController
                 // ProcesoUpdate.actualizarReporteClinico(rpClinico);
                 daoReporteClinico = new DAOReporteClinico();
                 daoReporteClinico.actualizarReporteClinico(rpClinico);
+                Reportes rp = new Reportes();
+                rp.reporteClinico(rpClinico.getCodigo());
                 reloadWindow();
             }
         } else if (e.getSource() == reporteUI.btnEliminar) {
