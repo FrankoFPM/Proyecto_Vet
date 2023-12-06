@@ -375,11 +375,12 @@ DELIMITER //
 CREATE PROCEDURE ValidarCredenciales(
     IN p_nombre_usuario VARCHAR(15),
     IN p_contraseña VARCHAR(15),
-    OUT valido BOOLEAN
+    OUT valido BOOLEAN,
+    OUT rol VARCHAR(15) -- Añade un parámetro de salida para el rol
 )
 BEGIN
     DECLARE v_cont INT;
-    SELECT COUNT(*) INTO v_cont
+    SELECT COUNT(*), cargo INTO v_cont, rol -- Añade 'rol' aquí
     FROM personal
     WHERE nick = p_nombre_usuario AND pass = p_contraseña;
     
@@ -387,6 +388,7 @@ BEGIN
         SET valido = TRUE;
     ELSE
         SET valido = FALSE;
+        SET rol = NULL; -- Asegúrate de que 'rol' sea NULL si las credenciales no son válidas
     END IF;
 END;
 //
@@ -744,6 +746,32 @@ BEGIN
 END //
 DELIMITER ;
 
+DELIMITER //
+CREATE PROCEDURE sp_validar_dni(IN dniInput VARCHAR(8), OUT existe BOOLEAN)
+BEGIN
+    DECLARE v_cont INT;
+    SELECT COUNT(*) INTO v_cont FROM cliente WHERE dni = dniInput;
+    IF v_cont > 0 THEN
+        SET existe = TRUE;
+    ELSE
+        SET existe = FALSE;
+    END IF;
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_validar_dni_personal(IN dniInput VARCHAR(8), OUT existe BOOLEAN)
+BEGIN
+    DECLARE v_cont INT;
+    SELECT COUNT(*) INTO v_cont FROM personal WHERE dni = dniInput;
+    IF v_cont > 0 THEN
+        SET existe = TRUE;
+    ELSE
+        SET existe = FALSE;
+    END IF;
+END //
+DELIMITER ;
+
 
 CALL sp_codigo_autogenerado_modificado("personal","id_registro","EMP-",4,@xcodigoCliente);
 SELECT @xcodigoCliente;
@@ -770,31 +798,37 @@ select * from personal;
 INSERT INTO personal (id_personal, nombre, apellido, pass, correo, dni, cargo, nick)
 VALUES 
 ('EMP-0001', 'Juan', 'Perez', '123', 'juan.perez@email.com', 12345678, 'Veterinario','juan'),
-('EMP-0002', 'Maria', 'Gomez', '123', 'maria.gomez@email.com', 23456789, 'Recep','mari'),
+('EMP-0002', 'Maria', 'Gomez', '123', 'maria.gomez@email.com', 23456789, 'Administrador','mari'),
 ('EMP-0003', 'Carlos', 'Rodriguez', '123', 'carlos.rodriguez@email.com', 34567890, 'venta','carlos');
  -- Insertar clientes
 INSERT INTO cliente(id_cliente, nombre, apellido, telefono, correo, dni, direccion)
 VALUES 
-('CLI-0001', 'Juan', 'Pérez', '123-456-7890', 'juan@example.com', 123456789, '123 Calle Principal'),
-('CLI-0002', 'Maria', 'Gonzalez', '098-765-4321', 'maria@example.com', 987654321, '456 Calle Secundaria'),
-('CLI-0003', 'Carlos', 'Rodriguez','111-222-3333','carlos@example.com','112233445','789 Calle Tercera');
+('CLI-0001', 'Juan', 'Pérez', '123457890', 'juan@example.com', 12345678, '123 Calle Principal'),
+('CLI-0002', 'Maria', 'Gonzalez', '976540321', 'maria@example.com', 98765431, '456 Calle Secundaria'),
+('CLI-0003', 'Carlos', 'Rodriguez','111222333','carlos@example.com','11223345','789 Calle Tercera');
 
 -- Insertar pacientes
-CALL sp_insertar_paciente('PAC-0001', 'Fido', 'perro', 'chiwan', 'Macho', 'negro', 'CLI-0001');
-CALL sp_insertar_paciente('PAC-0002', 'Rex', 'perro', 'labrador', 'Macho', 'marrón', 'CLI-0001');
-CALL sp_insertar_paciente('PAC-0003', 'Luna', 'gato', 'siamese', 'Hembra', 'blanco y negro', 'CLI-0001');
-CALL sp_insertar_paciente('PAC-0004', 'Bella', 'gato', 'persa', 'Hembra', 'gris', 'CLI-0002');
-CALL sp_insertar_paciente('PAC-0005', 'Max', 'perro', 'bulldog francés', 'Macho', 'blanco y negro', 'CLI-0002');
-CALL sp_insertar_paciente('PAC-0006', 'Simba', 'gato', 'bengalí', 'Macho', 'naranja y negro', 'CLI-0002');
-CALL sp_insertar_paciente('PAC-0007','Coco','loro','guacamayo azul','Macho','azul y amarillo','CLI-0003');
-CALL sp_insertar_paciente('PAC-0008','Nemo','pez','payaso','Macho','naranja y blanco','CLI-0003');
-CALL sp_insertar_paciente('PAC-0009','Daisy','conejo','angora','Hembra','blanco','CLI-0003');
+CALL sp_insertar_paciente('PAC-0001', 'Fido', 'perro', 'chiwan', 'macho', 'negro', 'CLI-0001');
+CALL sp_insertar_paciente('PAC-0002', 'Rex', 'perro', 'labrador', 'macho', 'marrón', 'CLI-0001');
+CALL sp_insertar_paciente('PAC-0003', 'Luna', 'gato', 'siamese', 'hembra', 'blanco y negro', 'CLI-0001');
+CALL sp_insertar_paciente('PAC-0004', 'Bella', 'gato', 'persa', 'hembra', 'gris', 'CLI-0002');
+CALL sp_insertar_paciente('PAC-0005', 'Max', 'perro', 'bulldog francés', 'macho', 'blanco y negro', 'CLI-0002');
+CALL sp_insertar_paciente('PAC-0006', 'Simba', 'gato', 'bengalí', 'macho', 'naranja y negro', 'CLI-0002');
+CALL sp_insertar_paciente('PAC-0007','Coco','loro','guacamayo azul','macho','azul y amarillo','CLI-0003');
+CALL sp_insertar_paciente('PAC-0008','Nemo','pez','payaso','macho','naranja y blanco','CLI-0003');
+CALL sp_insertar_paciente('PAC-0009','Daisy','conejo','angora','hembra','blanco','CLI-0003');
 
 -- Insertar un producto
 INSERT INTO Productos(id_producto, nombre, marca, precio, cantidad, categoria, fecha)
 VALUES ('PRO-0001', 'Consulta', 'propia', 100.00, 10, 'Servicio', '2023-10-13');
 INSERT INTO Productos(id_producto, nombre, marca, precio, cantidad, categoria, fecha)
 VALUES ('PRO-0002', 'Paracetamol', 'China', 200.00, 20, 'Producto', '2023-10-13');
+
+-- Insertar citas
+INSERT INTO cita(id_cita, id_cliente, cliente, paciente, veterinario, fecha, hora, estado) VALUES
+('CTA-0001', 'CLI-0001', 'Juan Perez', 'Firulais', 'Dr. Rodriguez', '2022-01-01', '10:00:00', 'Programada'),
+('CTA-0002', 'CLI-0002', 'Maria Lopez', 'Manchas', 'Dr. Rodriguez', '2022-01-02', '11:00:00', 'Cancelada'),
+('CTA-0003', 'CLI-0003', 'Carlos Gomez', 'Pelusa', 'Dr. Rodriguez', '2022-01-03', '12:00:00', 'Completa');
 
 /*
 DELIMITER //
