@@ -21,7 +21,8 @@ public class DashboardController implements ActionListener {
 
     public static Dashboard_UI vista;
     String user;
-    //panels
+    String role;
+    // panels
     Home_UI home = null;
     Cliente_UI cliente = null;
     Paciente_UI paciente = null;
@@ -30,12 +31,41 @@ public class DashboardController implements ActionListener {
     RPClinico_UI rpClinico = null;
     Inventario_UI inventario = null;
     RPVenta_UI rpVenta = null;
-    //model
+    // model
     DefaultTableModel modeloCita;
 
-    public DashboardController(Dashboard_UI dash, String user) {
+    public DashboardController(Dashboard_UI dash, String user, String role) {
         this.vista = dash;
         this.user = user;
+        this.role = role;
+        /*
+         * roles disponibles
+         * Veterinario
+         * Recepcionista
+         * Almacenista
+         * Vendedor
+         */
+        if (role.equals("Recepcionista")) {
+            vista.btnPersonal.setEnabled(false);
+            vista.btnInventario.setEnabled(false);
+            vista.btnRpClinico.setEnabled(false);
+            vista.btnRpVentas.setEnabled(false);
+        } else if (role.equals("Veterinario")) {
+            vista.btnPersonal.setEnabled(false);
+            vista.btnInventario.setEnabled(false);
+        } else if (role.equals("Almacenista")) {
+            vista.btnCliente.setEnabled(false);
+            vista.btnPersonal.setEnabled(false);
+            vista.btnCita.setEnabled(false);
+            vista.btnRpClinico.setEnabled(false);
+            vista.btnRpVentas.setEnabled(false);
+        } else if (role.equals("Vendedor")) {
+            vista.btnCliente.setEnabled(false);
+            vista.btnPersonal.setEnabled(false);
+            vista.btnCita.setEnabled(false);
+            vista.btnInventario.setEnabled(false);
+            vista.btnRpClinico.setEnabled(false);
+        }
         vista.btnHome.addActionListener(this);
         vista.btnCliente.addActionListener(this);
         vista.btnPaciente.addActionListener(this);
@@ -52,7 +82,7 @@ public class DashboardController implements ActionListener {
         vista.getRootPane().putClientProperty("JRootPane.titleBarForeground", Color.WHITE);
         vista.getRootPane().putClientProperty("JRootPane.titleBarBackground", new Color(23, 180, 252));
         vista.setLocationRelativeTo(null);
-        //ChangePanel(home);
+        // ChangePanel(home);
         showHome();
         vista.setVisible(true);
     }
@@ -82,19 +112,19 @@ public class DashboardController implements ActionListener {
         } else if (e.getSource() == vista.btnPaciente) {
             paciente = new Paciente_UI();
             UI_PacienteController controllerPaciente = new UI_PacienteController(paciente, vista);
-        }else if (e.getSource() == vista.btnPersonal) {
+        } else if (e.getSource() == vista.btnPersonal) {
             personal = new Personal_UI();
             UI_PersonalController controllerPersonal = new UI_PersonalController(personal, vista);
-        }else if (e.getSource() == vista.btnCita) {
+        } else if (e.getSource() == vista.btnCita) {
             cita = new Cita_UI();
             UI_CitaController controllerCita = new UI_CitaController(cita, vista);
-        }else if (e.getSource() == vista.btnRpClinico) {
+        } else if (e.getSource() == vista.btnRpClinico) {
             rpClinico = new RPClinico_UI();
             UI_ReporteClinicoController controllerRPclinico = new UI_ReporteClinicoController(rpClinico, vista);
-        }else if (e.getSource() == vista.btnInventario) {
+        } else if (e.getSource() == vista.btnInventario) {
             inventario = new Inventario_UI();
             UI_InventarioController controllerRPclinico = new UI_InventarioController(inventario, vista);
-        }else if (e.getSource() == vista.btnRpVentas) {
+        } else if (e.getSource() == vista.btnRpVentas) {
             rpVenta = new RPVenta_UI();
             UI_ReporteVentaController controllerRPventa = new UI_ReporteVentaController(rpVenta, vista);
         }
