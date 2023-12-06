@@ -187,7 +187,7 @@ public class UI_ReporteVentaController extends PanelController
     public void calcularPagos() {
         double total = sumaColumna();
         double impuesto = total * 0.18;
-        double importeFinal = total - impuesto;
+        double importeFinal = total + impuesto;
         VentaUI.lblTotal.setText("S/." + total);
         VentaUI.lblImpuesto.setText("S/." + impuesto);
         VentaUI.lblTotalFinal.setText("S/." + importeFinal);
